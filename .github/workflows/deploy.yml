@@ -1,4 +1,5 @@
-name: Deploy to AWS Lambda
+
+name: Deploy Node.js Lambda Function
 
 on:
   push:
@@ -10,29 +11,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      # Step 1: Checkout the repository
+      - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 20 # Match the Node.js version used in Lambda
 
-      - name: Install dependencies
-        run: npm install
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: npm ci --only=production
 
-      - name: Add Firebase credentials from secret
+      # Step 4: Package the Lambda function
+      - name: Package Lambda Function
+        run: zip -r code.zip index.js node_modules/
+
+      # Step 5: Configure AWS credentials
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1 # Specify your AWS region
+
+      # Step 6: Deploy the Lambda function
+      - name: Deploy Lambda Function
         run: |
-          mkdir -p firebase
-          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}" > firebase/serviceAccountKey.json
-
-      - name: Zip and upload to Lambda
-        run: |
-          zip -r function.zip . -x "*.git*" 
           aws lambda update-function-code \
-            --function-name YourLambdaFunctionName \
-            --zip-file fileb://function.zip
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: your-aws-region
+            --function-name arn:aws:lambda:ap-south-1:391560638701:function:text \
+            --zip-file fileb://code.zip
+      # Step 7: Clean up
+      - name: Clean Up
+        run: rm code.zip
