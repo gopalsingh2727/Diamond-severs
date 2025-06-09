@@ -1,12 +1,4 @@
-service: Diamond-severs
-
-
-frameworkVersion: '4.17.0'
-
-
-
-plugins:
-  - serverless-offline
+service: your-service-name
 
 provider:
   name: aws
