@@ -1,0 +1,32 @@
+
+  createMaterial:
+    handler: handlers/material/material.createMaterial
+    events:
+      - http:
+          path: material
+          method: post
+          cors: true
+
+  getMaterials:
+    handler: handlers/material/material.getMaterials
+    events:
+      - http:
+          path: material
+          method: get
+          cors: true
+
+  updateMaterial:
+    handler: handlers/material/material.updateMaterial
+    events:
+      - http:
+          path: material/{id}
+          method: put
+          cors: true
+
+  deleteMaterial:
+    handler: handlers/material/material.deleteMaterial
+    events:
+      - http:
+          path: material/{id}
+          method: delete
+          cors: true

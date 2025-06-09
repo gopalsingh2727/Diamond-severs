@@ -1,0 +1,32 @@
+
+  createMachineType:
+    handler: handlers/machineType/machineType.createMachineType
+    events:
+      - http:
+          path: machinetype
+          method: post
+          cors: true
+
+  getMachineTypes:
+    handler: handlers/machineType/machineType.getMachineTypes
+    events:
+      - http:
+          path: machinetype
+          method: get
+          cors: true
+
+  updateMachineType:
+    handler: handlers/machineType/machineType.updateMachineType
+    events:
+      - http:
+          path: machinetype/{id}
+          method: put
+          cors: true
+
+  deleteMachineType:
+    handler: handlers/machineType/machineType.deleteMachineType
+    events:
+      - http:
+          path: machinetype/{id}
+          method: delete
+          cors: true

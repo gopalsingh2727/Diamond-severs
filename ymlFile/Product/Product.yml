@@ -1,0 +1,32 @@
+
+  createProduct:
+    handler: handlers/product/product.createProduct
+    events:
+      - http:
+          path: product
+          method: post
+          cors: true
+
+  getProducts:
+    handler: handlers/product/product.getProducts
+    events:
+      - http:
+          path: product
+          method: get
+          cors: true
+
+  updateProduct:
+    handler: handlers/product/product.updateProduct
+    events:
+      - http:
+          path: product/{id}
+          method: put
+          cors: true
+
+  deleteProduct:
+    handler: handlers/product/product.deleteProduct
+    events:
+      - http:
+          path: product/{id}
+          method: delete
+          cors: true

@@ -1,0 +1,32 @@
+
+createCustomer:
+    handler: handlers/customer/customer.createCustomer
+    events:
+      - http:
+          path: customer
+          method: post
+          cors: true
+
+getCustomers:
+    handler: handlers/customer/customer.getCustomers
+    events:
+      - http:
+          path: customer
+          method: get
+          cors: true
+
+updateCustomer:
+    handler: handlers/customer/customer.updateCustomer
+    events:
+      - http:
+          path: customer/{id}
+          method: put
+          cors: true
+
+deleteCustomer:
+    handler: handlers/customer/customer.deleteCustomer
+    events:
+      - http:
+          path: customer/{id}
+          method: delete
+          cors: true

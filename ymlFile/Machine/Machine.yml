@@ -1,0 +1,32 @@
+
+  createMachine:
+    handler: handlers/machine/machine.createMachine
+    events:
+      - http:
+          path: machine
+          method: post
+          cors: true
+
+  getMachines:
+    handler: handlers/machine/machine.getMachines
+    events:
+      - http:
+          path: machine
+          method: get
+          cors: true
+
+  updateMachine:
+    handler: handlers/machine/machine.updateMachine
+    events:
+      - http:
+          path: machine/{id}
+          method: put
+          cors: true
+
+  deleteMachine:
+    handler: handlers/machine/machine.deleteMachine
+    events:
+      - http:
+          path: machine/{id}
+          method: delete
+          cors: true

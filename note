@@ -1,0 +1,96 @@
+{
+    "name": "branch c",
+    "location": "Gujarat",
+    "_id": "68353aea762eeac21a090c6c",
+    "createdAt": "2025-05-27T04:09:14.948Z",
+    "updatedAt": "2025-05-27T04:09:14.948Z",
+    "__v": 0,
+
+    "username":"gopal",
+   "password":"gopal27",
+   "branchId":"68353aea762eeac21a090c6c"
+},
+adimn ={
+    {
+   "username":"gopal",
+   "password":"gopal27"
+
+}
+
+
+}
+
+
+
+{
+    "message": "Customer created successfully",
+    "customer": {
+        "companyName": "ABC Enterprises",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phone1": "9876543210",
+        "phone2": "9123456789",
+        "whatsapp": "9876543210",
+        "telephone": "02212345678",
+        "address1": "123 Main Street",
+        "address2": "Apt 4B, Near Central Mall",
+        "state": "Maharashtra",
+        "pinCode": "400001",
+        "email": "john.doe@example.com",
+        "branchId": "68353aea762eeac21a090c6c",
+        "_id": "68354103cd8de19209e82101",
+        "createdAt": "2025-05-27T04:35:15.847Z",
+        "updatedAt": "2025-05-27T04:35:15.847Z",
+        "__v": 0
+    }
+}
+
+
+
+
+{
+    "type": "Laser Cutter",
+    "description": "High precision laser cutting machine",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "6835434464f69f5ed775444c",
+    "createdAt": "2025-05-27T04:44:52.202Z",
+    "updatedAt": "2025-05-27T04:44:52.202Z",
+    "__v": 0
+}
+
+
+
+{
+    "productTypeName": "T-Shirt",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "68354754fd4a698f401d48fc",
+    "createdAt": "2025-05-27T05:02:12.837Z",
+    "updatedAt": "2025-05-27T05:02:12.837Z",
+    "__v": 0
+}
+
+
+
+
+{
+    "materialTypeName": "Cotton Blend",
+    "productId": "6654f21cbb7c9f4c9b7e8123",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "68354b83658efca0ca1774bd",
+    "createdAt": "2025-05-27T05:20:03.222Z",
+    "updatedAt": "2025-05-27T05:20:03.222Z",
+    "__v": 0
+}
+
+
+
+
+{
+    "materialName": "Cotton Fabric",
+    "materialType": "68354b83658efca0ca1774bd",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "68354c3e8c596d52a90aef9a",
+    "createdAt": "2025-05-27T05:23:10.944Z",
+    "updatedAt": "2025-05-27T05:23:10.944Z",
+    "__v": 0
+}

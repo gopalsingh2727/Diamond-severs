@@ -1,0 +1,31 @@
+service: your-service-name
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-south-1
+  stage: dev
+  timeout: 30
+  environment:
+    MONGO_URI: ${env:MONGO_URI, 'mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'}
+
+plugins:
+  - serverless-plugin-include-dependencies
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+functions:
+  ${file(./ymlFile/index.yml)}
+
+
+ 
+  # Uncomment others as needed:
+  # ${file(./ymlFile/Customer/Customer.yml)}
+  # ${file(./ymlFile/Machine/Machine.yml)}
+  # ${file(./ymlFile/MachineType/MachineType.yml)}
+  
+  # ${file(./ymlFile/Material/Material.yml)}
+  # ${file(./ymlFile/MaterialCatalogue/MaterialType.yml)}
+  # ${file(./ymlFile/Product/Product.yml)}
+  # ${file(./ymlFile/ProductCatalogue/ProductType.yml)}
+  # ${file(./ymlFile/steps/Step.yml)}

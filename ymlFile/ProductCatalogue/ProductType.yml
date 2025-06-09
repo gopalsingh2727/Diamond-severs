@@ -1,0 +1,32 @@
+
+  createProductType:
+    handler: handlers/productType/productType.createProductType
+    events:
+      - http:
+          path: producttype
+          method: post
+          cors: true
+
+  getProductTypes:
+    handler: handlers/productType/productType.getProductTypes
+    events:
+      - http:
+          path: producttype
+          method: get
+          cors: true
+
+  updateProductType:
+    handler: handlers/productType/productType.updateProductType
+    events:
+      - http:
+          path: producttype/{id}
+          method: put
+          cors: true
+
+  deleteProductType:
+    handler: handlers/productType/productType.deleteProductType
+    events:
+      - http:
+          path: producttype/{id}
+          method: delete
+          cors: true

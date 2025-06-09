@@ -1,0 +1,32 @@
+
+  createMaterialType:
+    handler: handlers/MaterialType/materialType.createMaterialType
+    events:
+      - http:
+          path: material-type
+          method: post
+          cors: true
+
+  getMaterialTypes:
+    handler: handlers/MaterialType/materialType.getMaterialTypes
+    events:
+      - http:
+          path: material-type
+          method: get
+          cors: true
+
+  updateMaterialType:
+    handler: handlers/MaterialType/materialType.updateMaterialType
+    events:
+      - http:
+          path: material-type/{id}
+          method: put
+          cors: true
+
+  deleteMaterialType:
+    handler: handlers/MaterialType/materialType.deleteMaterialType
+    events:
+      - http:
+          path: material-type/{id}
+          method: delete
+          cors: true

@@ -1,0 +1,420 @@
+sls offline start           
+DOTENV: Loading environment variables from .env:
+branchId:"68353aea762eeac21a090c6c"
+location:"Gujarat"
+name: "branch c"
+
+mnanager
+{
+ "username":"gopal",
+  "password":"gopal"
+}
+
+
+
+type machine [
+
+
+{
+    "type": "testprint1",
+    "description": "High precision laser cutting machine",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "683e9b84296775c103e94e00",
+    "createdAt": "2025-06-03T06:51:48.426Z",
+    "updatedAt": "2025-06-03T06:51:48.426Z",
+    "__v": 0
+}
+
+{
+    "type": "testprint2",
+    "description": "High precision laser cutting machine",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "683e9bae296775c103e94e03",
+    "createdAt": "2025-06-03T06:52:30.129Z",
+    "updatedAt": "2025-06-03T06:52:30.129Z",
+    "__v": 0
+}
+
+{
+    "type": "testprint3",
+    "description": "High precision laser cutting machine",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "683e9bbb296775c103e94e06",
+    "createdAt": "2025-06-03T06:52:43.248Z",
+    "updatedAt": "2025-06-03T06:52:43.248Z",
+    "__v": 0
+}{
+    "type": "testprint4",
+    "description": "High precision laser cutting machine",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "683e9bc8296775c103e94e09",
+    "createdAt": "2025-06-03T06:52:56.888Z",
+    "updatedAt": "2025-06-03T06:52:56.888Z",
+    "__v": 0
+}
+
+]
+
+
+
+
+machine name 1 [
+    {
+    "message": "Machine created successfully",
+    "machine": {
+        "machineName": "Cutter-2",
+        "machineType": "683e9b84296775c103e94e00",
+        "sizeX": "200",
+        "sizeY": "300",
+        "sizeZ": "100",
+        "branchId": "68353aea762eeac21a090c6c",
+        "_id": "683e9c25c177b01d2f2e1d7a",
+        "createdAt": "2025-06-03T06:54:29.750Z",
+        "updatedAt": "2025-06-03T06:54:29.750Z",
+        "__v": 0
+    }
+}
+
+{
+    "message": "Machine created successfully",
+    "machine": {
+        "machineName": "Cutter-3",
+        "machineType": "683e9b84296775c103e94e00",
+        "sizeX": "200",
+        "sizeY": "300",
+        "sizeZ": "100",
+        "branchId": "68353aea762eeac21a090c6c",
+        "_id": "683e9c4bc177b01d2f2e1d80",
+        "createdAt": "2025-06-03T06:55:07.267Z",
+        "updatedAt": "2025-06-03T06:55:07.267Z",
+        "__v": 0
+    }
+}
+
+
+]
+
+
+machine name:[
+    {
+    "message": "Machine created successfully",
+    "machine": {
+        "machineName": "Cutrwe",
+        "machineType": "683e9bae296775c103e94e03",
+        "sizeX": "200",
+        "sizeY": "300",
+        "sizeZ": "100",
+        "branchId": "68353aea762eeac21a090c6c",
+        "_id": "683e9c88c177b01d2f2e1d84",
+        "createdAt": "2025-06-03T06:56:08.746Z",
+        "updatedAt": "2025-06-03T06:56:08.746Z",
+        "__v": 0
+    }
+}
+{
+    "message": "Machine created successfully",
+    "machine": {
+        "machineName": "Cutrwe23",
+        "machineType": "683e9bae296775c103e94e03",
+        "sizeX": "200",
+        "sizeY": "300",
+        "sizeZ": "100",
+        "branchId": "68353aea762eeac21a090c6c",
+        "_id": "683e9c92c177b01d2f2e1d88",
+        "createdAt": "2025-06-03T06:56:18.601Z",
+        "updatedAt": "2025-06-03T06:56:18.601Z",
+        "__v": 0
+    }
+}
+{
+    "message": "Machine created successfully",
+    "machine": {
+        "machineName": "Cutrweewe3",
+        "machineType": "683e9bae296775c103e94e03",
+        "sizeX": "200",
+        "sizeY": "300",
+        "sizeZ": "100",
+        "branchId": "68353aea762eeac21a090c6c",
+        "_id": "683e9c9cc177b01d2f2e1d8c",
+        "createdAt": "2025-06-03T06:56:28.341Z",
+        "updatedAt": "2025-06-03T06:56:28.341Z",
+        "__v": 0
+    }
+}
+]
+
+
+
+
+
+customer[
+    {
+    "message": "Customer created successfully",
+    "customer": {
+        "companyName": "ABC E",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phone1": "9876543210",
+        "phone2": "9123456789",
+        "whatsapp": "9876543210",
+        "telephone": "02212345678",
+        "address1": "123 Main Street",
+        "address2": "Apt 4B, Near Central Mall",
+        "state": "Maharashtra",
+        "pinCode": "400001",
+        "email": "john.doe@example.com",
+        "branchId": "68353aea762eeac21a090c6c",
+        "_id": "683e9d067f695629f51a27ac",
+        "createdAt": "2025-06-03T06:58:14.797Z",
+        "updatedAt": "2025-06-03T06:58:14.797Z",
+        "__v": 0
+    }
+}
+
+
+{
+    "message": "Customer created successfully",
+    "customer": {
+        "companyName": "ABC Erwwrw",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phone1": "9876543210",
+        "phone2": "9123456789",
+        "whatsapp": "9876543210",
+        "telephone": "02212345678",
+        "address1": "123 Main Street",
+        "address2": "Apt 4B, Near Central Mall",
+        "state": "Maharashtra",
+        "pinCode": "400001",
+        "email": "john.doe@example.com",
+        "branchId": "68353aea762eeac21a090c6c",
+        "_id": "683e9d207f695629f51a27af",
+        "createdAt": "2025-06-03T06:58:40.150Z",
+        "updatedAt": "2025-06-03T06:58:40.150Z",
+        "__v": 0
+    }
+}
+
+{
+    "message": "Customer created successfully",
+    "customer": {
+        "companyName": "ABC Erwwsfwwewew",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phone1": "9876543210",
+        "phone2": "9123456789",
+        "whatsapp": "9876543210",
+        "telephone": "02212345678",
+        "address1": "123 Main Street",
+        "address2": "Apt 4B, Near Central Mall",
+        "state": "Maharashtra",
+        "pinCode": "400001",
+        "email": "john.doe@example.com",
+        "branchId": "68353aea762eeac21a090c6c",
+        "_id": "683e9d2a7f695629f51a27b1",
+        "createdAt": "2025-06-03T06:58:50.451Z",
+        "updatedAt": "2025-06-03T06:58:50.451Z",
+        "__v": 0
+    }
+}
+
+{
+    "message": "Customer created successfully",
+    "customer": {
+        "companyName": "A",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phone1": "9876543210",
+        "phone2": "9123456789",
+        "whatsapp": "9876543210",
+        "telephone": "02212345678",
+        "address1": "123 Main Street",
+        "address2": "Apt 4B, Near Central Mall",
+        "state": "Maharashtra",
+        "pinCode": "400001",
+        "email": "john.doe@example.com",
+        "branchId": "68353aea762eeac21a090c6c",
+        "_id": "683e9d347f695629f51a27b3",
+        "createdAt": "2025-06-03T06:59:00.189Z",
+        "updatedAt": "2025-06-03T06:59:00.189Z",
+        "__v": 0
+    }
+}
+]
+
+
+operotos[
+    {
+  "username": "thisnot",
+  "password": "ggg",
+  "machineId": "683e9c4bc177b01d2f2e1d80",
+  "branchId": "68353aea762eeac21a090c6c"
+}
+
+
+{
+  "username": "Cutdr",
+  "password": "gdgt",
+  "machineId": "683e9c9cc177b01d2f2e1d8c",
+  "branchId": "68353aea762eeac21a090c6c"
+}
+
+
+{
+  "username": "Cutdewr",
+  "password": "gdgewt",
+  "machineId": "683e9c92c177b01d2f2e1d88",
+  "branchId": "68353aea762eeac21a090c6c"
+}
+]
+
+
+
+material {
+    {
+    "materialName": "Cotton F",
+    "materialType": "68354b83658efca0ca1774bd",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "683eac40cbc6b6d8d24ff727",
+    "createdAt": "2025-06-03T08:03:12.530Z",
+    "updatedAt": "2025-06-03T08:03:12.530Z",
+    "__v": 0
+}
+
+{
+    "materialName": "Cotto",
+    "materialType": "68354b83658efca0ca1774bd",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "683eac57cbc6b6d8d24ff72a",
+    "createdAt": "2025-06-03T08:03:35.526Z",
+    "updatedAt": "2025-06-03T08:03:35.526Z",
+    "__v": 0
+}
+
+{
+    "materialName": "Cotte",
+    "materialType": "68354b83658efca0ca1774bd",
+    "branchId": "68353aea762eeac21a090c6c",
+    "_id": "683eac63cbc6b6d8d24ff72e",
+    "createdAt": "2025-06-03T08:03:47.727Z",
+    "updatedAt": "2025-06-03T08:03:47.727Z",
+    "__v": 0
+}
+}
+
+
+
+"stepName": "Cutting & Finishing"[
+{
+  "stepName": "Cutting & Finishing",
+  "branchId": "68353aea762eeac21a090c6c",
+  "machines": [
+    {
+      "machineId": "683e9c4bc177b01d2f2e1d80",
+      "sequence": 1
+    },
+    {
+      "machineId": "683e9c9cc177b01d2f2e1d8c",
+      "sequence": 2
+    },
+     {
+      "machineId": "683e9c92c177b01d2f2e1d88",
+      "sequence": 3
+    }
+  ]
+   "stepId": "683eb1c755e2f0f66741743a"
+}
+
+]
+
+
+
+
+
+ {
+    "message": "Step created successfully",
+    "stepId": "683eb25b864f9b4382622999"{
+
+     "stepName": "Cutting ",
+  "branchId": "68353aea762eeac21a090c6c",
+  "machines": [
+    {
+      "machineId": "683e9c9cc177b01d2f2e1d8c",
+      "sequence": 1
+    },
+    {
+      "machineId": "683e9c4bc177b01d2f2e1d80",
+      "sequence": 2
+    },
+     {
+      "machineId": "683e9c92c177b01d2f2e1d88",
+      "sequence": 3
+    }
+  ]
+}
+    }
+
+}
+
+
+
+
+  {
+    "message": "Step created successfully",
+    "stepId": "683eb2a0864f9b438262299f"{
+        {
+      "stepName": "Cutting x",
+  "branchId": "68353aea762eeac21a090c6c",
+  "machines": [
+    {
+      "machineId": "683e9c92c177b01d2f2e1d88",
+      "sequence": 1
+    },
+    {
+      "machineId": "683e9c4bc177b01d2f2e1d80",
+      "sequence": 2
+    },
+     {
+      "machineId": "683e9c9cc177b01d2f2e1d8c",
+      "sequence": 3
+    }
+  ]
+
+}
+} 
+
+
+
+
+{
+    "message": "Order created successfully",
+    "orderId": "ORD-33-20250603-001",
+    "stepsCount": 1
+}
+
+
+
+
+
+{
+  "customerId": "683e9d067f695629f51a27ac",
+  "productId": "68354882e25ba900c3298d11", 
+  "productSize": {
+    "sizeX": 100,
+    "sizeY": 200, 
+    "sizeZ": 50
+  },
+  "materialId": "68354b83658efca0ca1774bd",
+  "materialWeight": 2.5,
+  "productPieces": 10,
+  "quantity": 5,
+  "steps": [
+    { "stepId": "683eb2a0864f9b438262299f" }
+
+  ],
+  "branchId": "68353aea762eeac21a090c6c"
+}
+
+
+
+

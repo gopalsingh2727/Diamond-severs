@@ -1,0 +1,32 @@
+
+  createStep:
+    handler: handlers/step/step.createStep
+    events:
+      - http:
+          path: step
+          method: post
+          cors: true
+
+  getSteps:
+    handler: handlers/step/step.getSteps
+    events:
+      - http:
+          path: step
+          method: get
+          cors: true
+
+  updateStep:
+    handler: handlers/step/step.updateStep
+    events:
+      - http:
+          path: step/{id}
+          method: put
+          cors: true
+
+  deleteStep:
+    handler: handlers/step/step.deleteStep
+    events:
+      - http:
+          path: step/{id}
+          method: delete
+          cors: true
