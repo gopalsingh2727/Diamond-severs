@@ -27,8 +27,7 @@ jobs:
 
       # Step 4: Package the Lambda function
       - name: Package Lambda Function
-        run: zip -r code.zip index.js node_modules/
-
+        run: zip -r code.zip handlers/ node_modules/ config/ firebase/ middlewares/ models/ sms/ utiles/ whatsapp/ ymlFile/ package.json
       # Step 5: Configure AWS credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
