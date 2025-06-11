@@ -171,6 +171,16 @@ getMachineTypes:
           method: get
           cors: true
 
+getAllMachineTypesWithMachines:
+    handler: handlers/machineType/machineType.getAllMachineTypesWithMachines
+    events:
+      - http:
+          path: getAllMachineTypesWithMachines
+          method: get
+          cors: true
+
+
+
 updateMachineType:
     handler: handlers/machineType/machineType.updateMachineType
     events:
@@ -197,8 +207,17 @@ createMachine:
           method: post
           cors: true
 
-getMachines:
-    handler: handlers/machine/machine.getMachines
+# getMachines:
+#     handler: handlers/machine/machine.getMachines
+#     events:
+#       - http:
+#           path: machine
+#           method: get
+#           cors: true
+
+
+getAllMachines:
+    handler: handlers/machine/machine.getAllMachines
     events:
       - http:
           path: machine
@@ -232,10 +251,18 @@ createProductType:
           cors: true
 
 getProductTypes:
-    handler: handlers/productType/productType.getProductTypes
+    handler: handlers/ProductCatalogue/productType.getProductTypes
     events:
       - http:
           path: producttype
+          method: get
+          cors: true
+
+getAllProductTypesWithProducts:
+    handler: handlers/ProductCatalogue/productType.getAllProductTypesWithProducts
+    events:
+      - http:
+          path: getAllProductTypesWithProducts
           method: get
           cors: true
 
@@ -305,6 +332,15 @@ getMaterialTypes:
           method: get
           cors: true
 
+
+getAllMaterialTypesWithMaterials:
+    handler: handlers/MaterialType/materialType.getAllMaterialTypesWithMaterials
+    events:
+      - http:
+          path: getAllMaterialTypesWithMaterials
+          method: get
+          cors: true
+
 updateMaterialType:
     handler: handlers/MaterialType/materialType.updateMaterialType
     events:
@@ -340,6 +376,11 @@ getMaterials:
           path: material
           method: get
           cors: true
+
+          
+
+
+
 
 updateMaterial:
     handler: handlers/material/material.updateMaterial

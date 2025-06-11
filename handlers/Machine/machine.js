@@ -1,9 +1,9 @@
 const Machine = require('../../models/Machine/machine');
 const verifyToken = require('../../utiles/verifyToken');
 const connect = require('../../config/mongodb/db');
-const MachineType = require('../../models/MachineType/machineType'); 
+const MachineType = require('../../models/MachineType/MachineType'); 
 const Branch = require('../../models/Branch/Branch');
-
+const mongoose = require("mongoose");
 // ✅ CREATE MACHINE
 module.exports.createMachine = async (event) => {
   await connect();
@@ -77,7 +77,7 @@ module.exports.createMachine = async (event) => {
 };
 
 // ✅ GET ALL MACHINES
-module.exports.getMachines = async (event) => {
+module.exports.getAllMachines = async (event) => {
   await connect();
   try {
     const authHeader = event.headers.authorization || event.headers.Authorization;

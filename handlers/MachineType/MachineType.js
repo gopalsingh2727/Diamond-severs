@@ -1,6 +1,7 @@
-const MachineType = require('../../models/machineType/machineType');
+const MachineType = require('../../models/MachineType/MachineType');
 const connect = require('../../config/mongodb/db');
 const verifyToken = require('../../utiles/verifyToken');
+const Machine = require('../../models/Machine/machine');
 
 
 module.exports.createMachineType = async (event) => {
@@ -28,7 +29,8 @@ module.exports.createMachineType = async (event) => {
       description: body.description,
       branchId: user.role === 'admin' ? body.branchId : user.branchId
     });
-
+     console.log(machineType);
+     
     await machineType.save();
     return {
       statusCode: 201,
@@ -47,20 +49,29 @@ module.exports.createMachineType = async (event) => {
 module.exports.getMachineTypes = async (event) => {
   await connect();
   try {
-    const user = verifyToken(event.headers.authorization);
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+    const user = verifyToken(authHeader);
 
-    let filter = {};
-    if (user.role === 'manager') {
-      filter.branchId = user.branchId;
+
+    if (user.role !== 'admin' && user.role !== 'manager') {
+      return {
+        statusCode: 403,
+        body: JSON.stringify({ message: 'Unauthorized' })
+      };
     }
 
+    // Filter for manager's own branch
+    const filter = user.role === 'manager' ? { branchId: user.branchId } : {};
+
     const machineTypes = await MachineType.find(filter);
+
     return {
       statusCode: 200,
       body: JSON.stringify(machineTypes)
     };
 
   } catch (error) {
+    console.error("getMachineTypes error:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ message: error.message })
@@ -130,6 +141,52 @@ module.exports.deleteMachineType = async (event) => {
     return {
       statusCode: 500,
       body: JSON.stringify({ message: error.message })
+    };
+  }
+};
+
+module.exports.getAllMachineTypesWithMachines = async (event) => {
+  await connect();
+
+  try {
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+    const user = verifyToken(authHeader);
+
+    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
+      return {
+        statusCode: 403,
+        body: JSON.stringify({ message: "Unauthorized access" }),
+      };
+    }
+
+    const filter = user.role === 'manager' ? { branchId: user.branchId } : {};
+
+    const machineTypes = await MachineType.find(filter);
+
+    // Attach machines manually to each machineType
+    const results = await Promise.all(
+      machineTypes.map(async (type) => {
+        const machines = await Machine.find({ machineType: type._id });
+        return {
+          ...type.toObject(),
+          machines,
+        };
+      })
+    );
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify(results),
+    };
+  } catch (err) {
+    console.error('Error fetching machine types with machines:', err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: err.message }),
     };
   }
 };

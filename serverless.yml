@@ -10,8 +10,6 @@ provider:
     MONGO_URI: ${env:MONGO_URI, 'mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'}
 
 plugins:
-  - serverless-plugin-include-dependencies
-  - serverless-dotenv-plugin
   - serverless-offline
 
 functions:

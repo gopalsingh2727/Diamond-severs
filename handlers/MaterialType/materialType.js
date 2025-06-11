@@ -1,6 +1,7 @@
 const MaterialType = require('../../models/MaterialType/materialType');
 const connect = require('../../config/mongodb/db');
 const verifyToken = require('../../utiles/verifyToken');
+const Material = require('../../models/Material/material');
 
 
 module.exports.createMaterialType = async (event) => {
@@ -129,3 +130,51 @@ module.exports.deleteMaterialType = async (event) => {
     return { statusCode: 500, body: JSON.stringify({ message: err.message }) };
   }
 };
+
+module.exports.getAllMaterialTypesWithMaterials = async (event) => {
+  await connect();
+
+  try {
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+    const user = verifyToken(authHeader);
+
+    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
+      return {
+        statusCode: 403,
+        body: JSON.stringify({ message: "Unauthorized access" }),
+      };
+    }
+
+    const filter = user.role === 'manager' ? { branchId: user.branchId } : {};
+
+    const materialTypes = await MaterialType.find(filter);
+
+    const results = await Promise.all(
+      materialTypes.map(async (type) => {
+        const materials = await Material.find({ materialType: type._id });
+        return {
+          ...type.toObject(),
+          materials,
+        };
+      })
+    );
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify(results),
+    };
+  } catch (err) {
+    console.error('Error fetching material types with materials:', err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: err.message }),
+    };
+  }
+};
+
+
+
