@@ -41,7 +41,7 @@ jobs:
       - name: Deploy Lambda Function
         run: |
           aws lambda update-function-code \
-            --function-name arn:aws:lambda:ap-south-1:391560638701:function:text \
+            --function-name arn:aws:lambda:ap-south-1:391560638701:function:27this \
             --zip-file fileb://code.zip
       # Step 7: Clean up
       - name: Clean Up
