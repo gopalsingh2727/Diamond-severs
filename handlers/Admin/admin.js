@@ -5,7 +5,35 @@ const User = require('../../models/Admin/Admin');
 
 // CREATE ADMIN (only once)
 module.exports.createAdmin = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false; // Avoid Lambda timeout
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  // Add CORS headers (optional but recommended)
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json'
+  };
+
+  // Handle preflight request
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: ''
+    };
+  }
+
+  // 🔐 Check API Key
+  const headers = event.headers || {};
+  const apiKey = headers['x-api-key'] || headers['X-API-Key'];
+  if (!apiKey || apiKey !== process.env.API_KEY) {
+    return {
+      statusCode: 403,
+      headers: corsHeaders,
+      body: JSON.stringify({ message: 'Forbidden: Invalid API key' }),
+    };
+  }
 
   try {
     await connectDB();
@@ -14,6 +42,7 @@ module.exports.createAdmin = async (event, context) => {
     if (existingAdmin) {
       return {
         statusCode: 403,
+        headers: corsHeaders,
         body: JSON.stringify({ message: 'Admin already exists' }),
       };
     }
@@ -22,6 +51,7 @@ module.exports.createAdmin = async (event, context) => {
     if (!username || !password) {
       return {
         statusCode: 400,
+        headers: corsHeaders,
         body: JSON.stringify({ message: 'Username and password are required' }),
       };
     }
@@ -31,6 +61,7 @@ module.exports.createAdmin = async (event, context) => {
 
     return {
       statusCode: 201,
+      headers: corsHeaders,
       body: JSON.stringify({ message: 'Admin created successfully' }),
     };
 
@@ -38,11 +69,12 @@ module.exports.createAdmin = async (event, context) => {
     console.error('CreateAdmin error:', error);
     return {
       statusCode: 500,
+      headers: corsHeaders,
       body: JSON.stringify({ message: 'Internal server error' }),
     };
   }
 };
-// ADMIN LOGIN
+
 module.exports.loginAdmin = async (event) => {
   console.log('Function started, event:', JSON.stringify(event, null, 2));
 
@@ -158,6 +190,127 @@ module.exports.loginAdmin = async (event) => {
         message: 'Internal server error',
         error: error.message // Remove in production
       })
+    };
+  }
+};
+
+
+
+module.exports.getAdmin = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Content-Type': 'application/json'
+  };
+
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: ''
+    };
+  }
+
+  // Check API Key
+  const headers = event.headers || {};
+  const apiKey = headers['x-api-key'] || headers['X-API-Key'];
+  if (!apiKey || apiKey !== process.env.API_KEY) {
+    return {
+      statusCode: 403,
+      headers: corsHeaders,
+      body: JSON.stringify({ message: 'Forbidden: Invalid API key' }),
+    };
+  }
+
+  try {
+    await connectDB();
+
+    const admin = await User.findOne({ role: 'admin' }).select('-password');
+    if (!admin) {
+      return {
+        statusCode: 404,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: 'Admin not found' }),
+      };
+    }
+
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: JSON.stringify(admin),
+    };
+
+  } catch (error) {
+    console.error('getAdmin error:', error);
+    return {
+      statusCode: 500,
+      headers: corsHeaders,
+      body: JSON.stringify({ message: 'Internal server error' }),
+    };
+  }
+};
+
+
+
+
+
+module.exports.deleteAdmin = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
+    'Access-Control-Allow-Methods': 'DELETE, OPTIONS',
+    'Content-Type': 'application/json'
+  };
+
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: ''
+    };
+  }
+
+  // Check API Key
+  const headers = event.headers || {};
+  const apiKey = headers['x-api-key'] || headers['X-API-Key'];
+  if (!apiKey || apiKey !== process.env.API_KEY) {
+    return {
+      statusCode: 403,
+      headers: corsHeaders,
+      body: JSON.stringify({ message: 'Forbidden: Invalid API key' }),
+    };
+  }
+
+  try {
+    await connectDB();
+
+    const deleted = await User.findOneAndDelete({ role: 'admin' });
+
+    if (!deleted) {
+      return {
+        statusCode: 404,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: 'Admin not found' }),
+      };
+    }
+
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: JSON.stringify({ message: 'Admin deleted successfully' }),
+    };
+
+  } catch (error) {
+    console.error('deleteAdmin error:', error);
+    return {
+      statusCode: 500,
+      headers: corsHeaders,
+      body: JSON.stringify({ message: 'Internal server error' }),
     };
   }
 };
