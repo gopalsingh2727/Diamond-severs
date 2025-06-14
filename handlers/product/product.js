@@ -3,29 +3,55 @@ const Product = require('../../models/product/product');
 const connect = require('../../config/mongodb/db');
 const verifyToken = require('../../utiles/verifyToken');
 
-// ✅ CREATE PRODUCT
+const respond = (statusCode, body) => ({
+  statusCode,
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
+  body: JSON.stringify(body),
+});
+
+const checkApiKey = (event) => {
+  const apiKey = event.headers['x-api-key'] || event.headers['X-Api-Key'];
+  return apiKey === process.env.API_KEY;
+};
+
+// CREATE PRODUCT
 module.exports.createProduct = async (event) => {
   await connect();
-  try {
-    const authHeader = event.headers.authorization || event.headers.Authorization;
-    const user = verifyToken(authHeader);
-    const body = JSON.parse(event.body);
 
-    if (user.role !== 'admin' && user.role !== 'manager') {
-      return { statusCode: 403, body: JSON.stringify({ message: 'Unauthorized' }) };
+  if (!checkApiKey(event)) {
+    return respond(403, { message: 'Invalid API key' });
+  }
+
+  try {
+    const authHeader = event.headers['authorization'] || event.headers['Authorization'];
+    let user;
+    try {
+      user = verifyToken(authHeader);
+    } catch {
+      return respond(401, { message: 'Invalid token' });
     }
 
+    const body = JSON.parse(event.body);
     const { productName, productType, price, sizeX, sizeY, sizeZ, branchId: bodyBranchId } = body;
 
-    if (!productName || !productType || !price || !sizeX || !sizeY || !sizeZ) {
-      return { statusCode: 400, body: JSON.stringify({ message: 'All fields are required' }) };
+    if (
+      [productName, productType, price, sizeX, sizeY, sizeZ].some(v => v === undefined)
+    ) {
+      return respond(400, { message: 'All fields are required' });
+    }
+
+    if (user.role !== 'admin' && user.role !== 'manager') {
+      return respond(403, { message: 'Unauthorized' });
     }
 
     const branchId = user.role === 'admin' ? bodyBranchId : user.branchId;
 
     const existing = await Product.findOne({ productName, branchId });
     if (existing) {
-      return { statusCode: 400, body: JSON.stringify({ message: 'Product name must be unique in this branch' }) };
+      return respond(400, { message: 'Product name must be unique in this branch' });
     }
 
     const product = new Product({
@@ -40,22 +66,29 @@ module.exports.createProduct = async (event) => {
 
     await product.save();
 
-    return {
-      statusCode: 201,
-      body: JSON.stringify({ message: 'Product created', product }),
-    };
+    return respond(201, { message: 'Product created', product });
   } catch (err) {
     console.error("Create product error:", err);
-    return { statusCode: 500, body: JSON.stringify({ message: err.message }) };
+    return respond(500, { message: err.message });
   }
 };
 
-// ✅ GET PRODUCTS
+// GET PRODUCTS
 module.exports.getProducts = async (event) => {
   await connect();
+
+  if (!checkApiKey(event)) {
+    return respond(403, { message: 'Invalid API key' });
+  }
+
   try {
-    const authHeader = event.headers.authorization || event.headers.Authorization;
-    const user = verifyToken(authHeader);
+    const authHeader = event.headers['authorization'] || event.headers['Authorization'];
+    let user;
+    try {
+      user = verifyToken(authHeader);
+    } catch {
+      return respond(401, { message: 'Invalid token' });
+    }
 
     let filter = {};
     if (user.role === 'manager') {
@@ -66,41 +99,51 @@ module.exports.getProducts = async (event) => {
       .populate('productType', 'name description')
       .populate('branchId', 'name location');
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: 'Products fetched',
-        count: products.length,
-        products,
-      }),
-    };
+    return respond(200, {
+      message: 'Products fetched',
+      count: products.length,
+      products,
+    });
   } catch (err) {
     console.error("Get products error:", err);
-    return { statusCode: 500, body: JSON.stringify({ message: err.message }) };
+    return respond(500, { message: err.message });
   }
 };
 
-// ✅ UPDATE PRODUCT
+// UPDATE PRODUCT
 module.exports.updateProduct = async (event) => {
   await connect();
+
+  if (!checkApiKey(event)) {
+    return respond(403, { message: 'Invalid API key' });
+  }
+
   try {
-    const authHeader = event.headers.authorization || event.headers.Authorization;
-    const user = verifyToken(authHeader);
-    const { id } = event.pathParameters;
-    const body = JSON.parse(event.body);
+    const authHeader = event.headers['authorization'] || event.headers['Authorization'];
+    let user;
+    try {
+      user = verifyToken(authHeader);
+    } catch {
+      return respond(401, { message: 'Invalid token' });
+    }
+
+    const { id } = event.pathParameters || {};
+    if (!id) return respond(400, { message: 'Product ID is required' });
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return { statusCode: 400, body: JSON.stringify({ message: 'Invalid product ID' }) };
+      return respond(400, { message: 'Invalid product ID' });
     }
 
     const product = await Product.findById(id);
-    if (!product) return { statusCode: 404, body: JSON.stringify({ message: 'Product not found' }) };
+    if (!product) return respond(404, { message: 'Product not found' });
 
     if (user.role !== 'admin' && user.branchId !== String(product.branchId)) {
-      return { statusCode: 403, body: JSON.stringify({ message: 'Unauthorized to update this product' }) };
+      return respond(403, { message: 'Unauthorized to update this product' });
     }
 
-    // Unique name check
+    const body = JSON.parse(event.body);
+
+    // Unique name check if changed
     if (body.productName && body.productName !== product.productName) {
       const nameExists = await Product.findOne({
         productName: body.productName,
@@ -108,7 +151,7 @@ module.exports.updateProduct = async (event) => {
         branchId: product.branchId,
       });
       if (nameExists) {
-        return { statusCode: 400, body: JSON.stringify({ message: 'Product name already exists' }) };
+        return respond(400, { message: 'Product name already exists' });
       }
     }
 
@@ -122,43 +165,49 @@ module.exports.updateProduct = async (event) => {
 
     await product.save();
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: 'Product updated successfully', product }),
-    };
+    return respond(200, { message: 'Product updated successfully', product });
   } catch (err) {
     console.error("Update product error:", err);
-    return { statusCode: 500, body: JSON.stringify({ message: err.message }) };
+    return respond(500, { message: err.message });
   }
 };
 
-// ✅ DELETE PRODUCT
+// DELETE PRODUCT
 module.exports.deleteProduct = async (event) => {
   await connect();
+
+  if (!checkApiKey(event)) {
+    return respond(403, { message: 'Invalid API key' });
+  }
+
   try {
-    const authHeader = event.headers.authorization || event.headers.Authorization;
-    const user = verifyToken(authHeader);
-    const { id } = event.pathParameters;
+    const authHeader = event.headers['authorization'] || event.headers['Authorization'];
+    let user;
+    try {
+      user = verifyToken(authHeader);
+    } catch {
+      return respond(401, { message: 'Invalid token' });
+    }
+
+    const { id } = event.pathParameters || {};
+    if (!id) return respond(400, { message: 'Product ID is required' });
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return { statusCode: 400, body: JSON.stringify({ message: 'Invalid product ID' }) };
+      return respond(400, { message: 'Invalid product ID' });
     }
 
     const product = await Product.findById(id);
-    if (!product) return { statusCode: 404, body: JSON.stringify({ message: 'Product not found' }) };
+    if (!product) return respond(404, { message: 'Product not found' });
 
     if (user.role !== 'admin' && user.branchId !== String(product.branchId)) {
-      return { statusCode: 403, body: JSON.stringify({ message: 'Unauthorized to delete this product' }) };
+      return respond(403, { message: 'Unauthorized to delete this product' });
     }
 
     await product.deleteOne();
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: 'Product deleted successfully' }),
-    };
+    return respond(200, { message: 'Product deleted successfully' });
   } catch (err) {
     console.error("Delete product error:", err);
-    return { statusCode: 500, body: JSON.stringify({ message: err.message }) };
+    return respond(500, { message: err.message });
   }
 };

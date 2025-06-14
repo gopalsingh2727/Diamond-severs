@@ -1,73 +1,87 @@
-
 const Step = require('../../models/steps/step');
 const connect = require('../../config/mongodb/db');
 const verifyToken = require('../../utiles/verifyToken');
 const mongoose = require('mongoose');
 
+const respond = (statusCode, body) => ({
+  statusCode,
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
+  body: JSON.stringify(body),
+});
+
+const checkApiKey = (event) => {
+  // Normalize headers to lowercase keys
+  const headers = {};
+  for (const key in event.headers) {
+    headers[key.toLowerCase()] = event.headers[key];
+  }
+  return headers['x-api-key'] === process.env.API_KEY;
+};
+
+const getAuthHeader = (event) => {
+  const headers = {};
+  for (const key in event.headers) {
+    headers[key.toLowerCase()] = event.headers[key];
+  }
+  return headers['authorization'] || null;
+};
+
 module.exports.createStep = async (event) => {
   await connect();
 
-  try {
-    const authHeader = event.headers.authorization || event.headers.Authorization;
-    const user = verifyToken(authHeader);
-    const body = JSON.parse(event.body);
+  // API key check
+  if (!checkApiKey(event)) {
+    return respond(401, { message: 'Invalid API key' });
+  }
 
-    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
-      return {
-        statusCode: 403,
-        body: JSON.stringify({ message: 'Only admin or manager can create steps' }),
-      };
+  try {
+    const authHeader = getAuthHeader(event);
+    let user;
+    try {
+      user = verifyToken(authHeader);
+    } catch {
+      return respond(401, { message: 'Invalid or missing token' });
     }
 
+    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
+      return respond(403, { message: 'Only admin or manager can create steps' });
+    }
+
+    const body = JSON.parse(event.body);
     const { stepName, machines, branchId } = body;
 
     if (!stepName || !Array.isArray(machines) || machines.length === 0 || !branchId) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: 'stepName, machines, and branchId are required' }),
-      };
+      return respond(400, { message: 'stepName, machines, and branchId are required' });
     }
 
     if (user.role === 'manager' && branchId !== user.branchId) {
-      return {
-        statusCode: 403,
-        body: JSON.stringify({ message: 'Manager can only create steps for their own branch' }),
-      };
+      return respond(403, { message: 'Manager can only create steps for their own branch' });
     }
-
 
     for (let i = 0; i < machines.length; i++) {
       if (typeof machines[i].sequence !== 'number') {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ message: `Machine at index ${i} is missing 'sequence'` }),
-        };
+        return respond(400, { message: `Machine at index ${i} is missing 'sequence'` });
       }
 
       if (!machines[i].machineId || !mongoose.Types.ObjectId.isValid(machines[i].machineId)) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ message: `Machine at index ${i} has an invalid machineId` }),
-        };
+        return respond(400, { message: `Machine at index ${i} has an invalid machineId` });
       }
     }
 
     const trimmedStepName = stepName.trim();
 
-    // Case-insensitive uniqueness check
     const exists = await Step.findOne({
       stepName: { $regex: new RegExp(`^${trimmedStepName}$`, 'i') },
       branchId
     });
 
     if (exists) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: 'Step name already exists in this branch' }),
-      };
+      return respond(400, { message: 'Step name already exists in this branch' });
     }
 
-    // Sort machines by sequence for consistency
     machines.sort((a, b) => a.sequence - b.sequence);
 
     const step = new Step({
@@ -78,27 +92,30 @@ module.exports.createStep = async (event) => {
 
     await step.save();
 
-    return {
-      statusCode: 201,
-      body: JSON.stringify({ message: 'Step created successfully', stepId: step._id }),
-    };
+    return respond(201, { message: 'Step created successfully', stepId: step._id });
   } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: err.message }),
-    };
+    return respond(500, { message: err.message });
   }
 };
 
 module.exports.updateStepStatus = async (event) => {
   await connect();
+
+  if (!checkApiKey(event)) {
+    return respond(401, { message: 'Invalid API key' });
+  }
+
   try {
-    const user = verifyToken(event.headers.authorization);
+    const authHeader = getAuthHeader(event);
+    let user;
+    try {
+      user = verifyToken(authHeader);
+    } catch {
+      return respond(401, { message: 'Invalid or missing token' });
+    }
+
     if (user.role !== 'operator') {
-      return {
-        statusCode: 403,
-        body: JSON.stringify({ message: 'Only operators can update step status' }),
-      };
+      return respond(403, { message: 'Only operators can update step status' });
     }
 
     const { stepId, machineId, status, reason } = JSON.parse(event.body);
@@ -106,7 +123,7 @@ module.exports.updateStepStatus = async (event) => {
     if (!step) throw new Error("Step not found");
 
     const machine = step.machines.find(
-      (m) => m.machineId.toString() === machineId && m.operatorId.toString() === user.id
+      (m) => m.machineId.toString() === machineId && m.operatorId && m.operatorId.toString() === user.id
     );
 
     if (!machine) throw new Error("Machine entry not found or unauthorized");
@@ -118,41 +135,38 @@ module.exports.updateStepStatus = async (event) => {
 
     await step.save();
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: 'Status updated', step }),
-    };
+    return respond(200, { message: 'Status updated', step });
   } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: err.message }),
-    };
+    return respond(500, { message: err.message });
   }
 };
 
 module.exports.getOperatorSteps = async (event) => {
   await connect();
+
+  if (!checkApiKey(event)) {
+    return respond(401, { message: 'Invalid API key' });
+  }
+
   try {
-    const user = verifyToken(event.headers.authorization);
+    const authHeader = getAuthHeader(event);
+    let user;
+    try {
+      user = verifyToken(authHeader);
+    } catch {
+      return respond(401, { message: 'Invalid or missing token' });
+    }
+
     if (user.role !== 'operator') {
-      return {
-        statusCode: 403,
-        body: JSON.stringify({ message: 'Only operators can view this' }),
-      };
+      return respond(403, { message: 'Only operators can view this' });
     }
 
     const steps = await Step.find({ 'machines.operatorId': user.id })
       .populate('machines.machineId')
       .populate('orderId');
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ steps }),
-    };
+    return respond(200, { steps });
   } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: err.message }),
-    };
+    return respond(500, { message: err.message });
   }
 };
