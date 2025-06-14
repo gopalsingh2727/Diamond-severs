@@ -9,7 +9,8 @@ provider:
   timeout: 30
   
   environment:
-    MONGO_URI: ${env:MONGO_URI, 'mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'}
+    MONGO_URI: ${env:MONGO_URI, 'mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'},
+    API_KEY: 27infinity.in_5f84c89315f74a2db149c06a93cf4820
 
 plugins:
   - serverless-offline
