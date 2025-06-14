@@ -2,14 +2,14 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const  connectDB  = require('../../config/mongodb/db');
 const User = require('../../models/Admin/Admin');
-const withCors = require('../../utiles/withCors');
-// CREATE ADMIN (only once)
-const createAdminHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
+const   withCors = require ('../../utiles/withCors')
+
+
+module.exports.createAdmin = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false; 
 
   try {
     await connectDB();
-
     const existingAdmin = await User.findOne({ role: 'admin' });
     if (existingAdmin) {
       return {
@@ -42,9 +42,8 @@ const createAdminHandler = async (event, context) => {
     };
   }
 };
-
 // ADMIN LOGIN
-const loginAdminHandler = async (event) => {
+module.exports.loginAdmin = async (event) => {
   await connectDB();
 
   const { username, password } = JSON.parse(event.body);
@@ -63,10 +62,7 @@ const loginAdminHandler = async (event) => {
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ token, user: admin, branches: [] }),
+    headers:withCors(),
+    body: JSON.stringify({ token }),
   };
 };
-
-// 👇 Export final wrapped functions
-module.exports.createAdmin = withCors(createAdminHandler);
-module.exports.loginAdmin = withCors(loginAdminHandler);
