@@ -2,10 +2,10 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const  connectDB  = require('../../config/mongodb/db');
 const User = require('../../models/Admin/Admin');
-
+const withCors = require('../../utiles/withCors');
 // CREATE ADMIN (only once)
-module.exports.createAdmin = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false; // Avoid Lambda timeout
+const createAdminHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
 
   try {
     await connectDB();
@@ -42,8 +42,9 @@ module.exports.createAdmin = async (event, context) => {
     };
   }
 };
+
 // ADMIN LOGIN
-module.exports.loginAdmin = async (event) => {
+const loginAdminHandler = async (event) => {
   await connectDB();
 
   const { username, password } = JSON.parse(event.body);
@@ -62,6 +63,10 @@ module.exports.loginAdmin = async (event) => {
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ token }),
+    body: JSON.stringify({ token, user: admin, branches: [] }),
   };
 };
+
+// 👇 Export final wrapped functions
+module.exports.createAdmin = withCors(createAdminHandler);
+module.exports.loginAdmin = withCors(loginAdminHandler);

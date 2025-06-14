@@ -1,4 +1,5 @@
 service: your-service-name
+configValidationMode: error
 
 provider:
   name: aws
@@ -6,6 +7,7 @@ provider:
   region: ap-south-1
   stage: dev
   timeout: 30
+  
   environment:
     MONGO_URI: ${env:MONGO_URI, 'mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'}
 

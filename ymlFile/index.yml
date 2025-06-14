@@ -481,7 +481,7 @@ updateOrderStepStatus:
 getCompletedOrders:
   handler: handlers/MachineOperator/MachineOperator.getCompletedOrders
   events:
-    - httpApi:
+    - http:
         path: /operators/orders/completed
         method: get
         cors: true
@@ -548,7 +548,7 @@ updateOperatorPassword:
 getOnePendingOrder:
   handler: handlers/MachineOperator/MachineOperator.getOnePendingOrder
   events:
-    - httpApi:
+    - http:
         path: /operators/orders/pending
         method: get
         cors: true
