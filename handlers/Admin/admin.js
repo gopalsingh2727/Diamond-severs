@@ -2,9 +2,9 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const  connectDB  = require('../../config/mongodb/db');
 const User = require('../../models/Admin/Admin');
-const   withCors = require ('../../utiles/withCors')
 
 
+// CREATE ADMIN (only once)
 module.exports.createAdmin = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false; 
 
@@ -62,7 +62,11 @@ module.exports.loginAdmin = async (event) => {
 
   return {
     statusCode: 200,
-    headers:withCors(),
+    headers:{
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+},
     body: JSON.stringify({ token }),
   };
 };
