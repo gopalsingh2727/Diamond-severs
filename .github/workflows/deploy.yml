@@ -1,47 +1,31 @@
-
-name: Deploy Node.js Lambda Function
+name: Deploy Lambda via Serverless
 
 on:
   push:
     branches:
-      - main
+      - main  
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20 # Match the Node.js version used in Lambda
+          node-version: 18
 
-      # Step 3: Install dependencies
-      - name: Install Dependencies
-        run: npm ci --only=production
+      - name: Install dependencies
+        run: npm ci
 
-      # Step 4: Package the Lambda function
-      - name: Package Lambda Function
-        run: zip -r code.zip handlers/ node_modules/ config/ firebase/ middlewares/ models/ sms/ utiles/ whatsapp/ ymlFile/ package.json
-      # Step 5: Configure AWS credentials
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1 # Specify your AWS region
+      - name: Setup Serverless
+        run: npm install -g serverless
 
-      # Step 6: Deploy the Lambda function
-      - name: Deploy Lambda Function
-        run: |
-          aws lambda update-function-code \
-            --function-name arn:aws:lambda:ap-south-1:391560638701:function:27this \
-            --zip-file fileb://code.zip
-      # Step 7: Clean up
-      - name: Clean Up
-        run: rm code.zip
+      - name: Deploy to AWS
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: sls deploy --stage dev
