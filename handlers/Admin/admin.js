@@ -3,13 +3,13 @@ const jwt = require('jsonwebtoken');
 const  connectDB  = require('../../config/mongodb/db');
 const User = require('../../models/Admin/Admin');
 
-
 // CREATE ADMIN (only once)
 module.exports.createAdmin = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false; 
+  context.callbackWaitsForEmptyEventLoop = false; // Avoid Lambda timeout
 
   try {
     await connectDB();
+
     const existingAdmin = await User.findOne({ role: 'admin' });
     if (existingAdmin) {
       return {
@@ -62,11 +62,6 @@ module.exports.loginAdmin = async (event) => {
 
   return {
     statusCode: 200,
-    headers:{
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-},
     body: JSON.stringify({ token }),
   };
 };
