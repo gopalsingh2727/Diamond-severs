@@ -44,24 +44,120 @@ module.exports.createAdmin = async (event, context) => {
 };
 // ADMIN LOGIN
 module.exports.loginAdmin = async (event) => {
-  await connectDB();
+  console.log('Function started, event:', JSON.stringify(event, null, 2));
 
-  const { username, password } = JSON.parse(event.body);
-  const admin = await User.findOne({ username, role: 'admin' });
+  // CORS headers for all responses
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json'
+  };
 
-  if (!admin || !(await admin.comparePassword(password))) {
+  // Handle preflight OPTIONS request
+  if (event.httpMethod === 'OPTIONS') {
+    console.log('Handling OPTIONS request');
     return {
-      statusCode: 401,
-      body: JSON.stringify({ message: 'Invalid credentials' }),
+      statusCode: 200,
+      headers: corsHeaders,
+      body: ''
     };
   }
 
-  const token = jwt.sign({ id: admin._id, role: admin.role }, process.env.JWT_SECRET, {
-    expiresIn: '1d',
-  });
+  try {
+    console.log('Starting POST request processing');
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ token }),
-  };
+    // ✅ API key check
+    const headers = event.headers || {};
+    const apiKey = headers['x-api-key'] || headers['X-API-Key'];
+    if (!apiKey || apiKey !== process.env.API_KEY) {
+      console.warn('Invalid or missing API key');
+      return {
+        statusCode: 403,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: 'Forbidden: Invalid API key' })
+      };
+    }
+
+    // Check environment variables
+    console.log('JWT_SECRET exists:', !!process.env.JWT_SECRET);
+
+    console.log('Attempting database connection...');
+    await connectDB();
+    console.log('Database connected successfully');
+
+    // Validate request body
+    if (!event.body) {
+      console.log('No request body provided');
+      return {
+        statusCode: 400,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: 'Request body is required' })
+      };
+    }
+
+    console.log('Parsing request body...');
+    const { username, password } = JSON.parse(event.body);
+    console.log('Username:', username, 'Password length:', password ? password.length : 0);
+
+    if (!username || !password) {
+      console.log('Missing username or password');
+      return {
+        statusCode: 400,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: 'Username and password are required' })
+      };
+    }
+
+    console.log('Searching for admin user...');
+    const admin = await User.findOne({ username, role: 'admin' });
+    console.log('Admin found:', !!admin);
+
+    if (!admin) {
+      console.log('Admin not found');
+      return {
+        statusCode: 401,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: 'Invalid credentials' })
+      };
+    }
+
+    console.log('Comparing password...');
+    const passwordMatch = await admin.comparePassword(password);
+    console.log('Password match:', passwordMatch);
+
+    if (!passwordMatch) {
+      console.log('Password does not match');
+      return {
+        statusCode: 401,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: 'Invalid credentials' })
+      };
+    }
+
+    console.log('Generating JWT token...');
+    const token = jwt.sign(
+      { id: admin._id, role: admin.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+    console.log('Token generated successfully');
+
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: JSON.stringify({ token })
+    };
+
+  } catch (error) {
+    console.error('Login error details:', error);
+    return {
+      statusCode: 500,
+      headers: corsHeaders,
+      body: JSON.stringify({
+        message: 'Internal server error',
+        error: error.message // Remove in production
+      })
+    };
+  }
 };
