@@ -4,16 +4,56 @@ const verifyToken = require('../../utiles/verifyToken');
 const Machine = require('../../models/Machine/machine');
 const mongoose = require('mongoose');
 
-module.exports.createMachineType = async (event) => {
-  await connect();
+// ❌ YOUR BROKEN createMachineType CORS SETUP:
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Content-Type': 'application/json'
+  // MISSING: 'Access-Control-Allow-Headers'
+  // MISSING: 'Access-Control-Allow-Methods'
+};
+// MISSING: OPTIONS handler completely
 
-  const headers = {
+// ✅ YOUR WORKING loginAdmin CORS SETUP:
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key', // ← THIS IS MISSING
+  'Access-Control-Allow-Methods': 'POST, OPTIONS', // ← THIS IS MISSING
+  'Content-Type': 'application/json'
+};
+
+// Handle preflight OPTIONS request (← THIS ENTIRE BLOCK IS MISSING)
+if (event.httpMethod === 'OPTIONS') {
+  console.log('Handling OPTIONS request');
+  return {
+    statusCode: 200,
+    headers: corsHeaders,
+    body: ''
+  };
+}
+
+// ===========================================
+// HERE'S YOUR EXACT createMachineType WITH ONLY THE MISSING CORS PARTS ADDED:
+// ===========================================
+
+module.exports.createMachineType = async (event) => {
+  // ✅ ADD THIS: Complete CORS headers (copy from your loginAdmin)
+  const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json'
-
   };
+
+  // ✅ ADD THIS: OPTIONS handler (copy from your loginAdmin)
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: ''
+    };
+  }
+
+  await connect();
 
   try {
     // ✅ Check API key
@@ -21,7 +61,7 @@ module.exports.createMachineType = async (event) => {
     if (!apiKey || apiKey !== process.env.API_KEY) {
       return {
         statusCode: 403,
-        headers,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders instead of headers
         body: JSON.stringify({ message: 'Invalid API key' }),
       };
     }
@@ -34,7 +74,7 @@ module.exports.createMachineType = async (event) => {
     } catch {
       return {
         statusCode: 401,
-        headers,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
         body: JSON.stringify({ message: 'Invalid or expired token' }),
       };
     }
@@ -43,7 +83,7 @@ module.exports.createMachineType = async (event) => {
     if (user.role !== 'admin' && user.role !== 'manager') {
       return {
         statusCode: 403,
-        headers,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
         body: JSON.stringify({ message: 'Unauthorized' }),
       };
     }
@@ -55,7 +95,7 @@ module.exports.createMachineType = async (event) => {
     } catch {
       return {
         statusCode: 400,
-        headers,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
         body: JSON.stringify({ message: 'Invalid JSON body' }),
       };
     }
@@ -64,7 +104,7 @@ module.exports.createMachineType = async (event) => {
     if (!body.type || !body.description) {
       return {
         statusCode: 400,
-        headers,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
         body: JSON.stringify({ message: 'type and description are required' }),
       };
     }
@@ -72,7 +112,7 @@ module.exports.createMachineType = async (event) => {
     if (user.role === 'admin' && !body.branchId) {
       return {
         statusCode: 400,
-        headers,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
         body: JSON.stringify({ message: 'branchId is required for admin' }),
       };
     }
@@ -81,7 +121,7 @@ module.exports.createMachineType = async (event) => {
     if (user.role === 'admin' && !mongoose.Types.ObjectId.isValid(body.branchId)) {
       return {
         statusCode: 400,
-        headers,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
         body: JSON.stringify({ message: 'Invalid branchId format' }),
       };
     }
@@ -91,7 +131,7 @@ module.exports.createMachineType = async (event) => {
     if (exists) {
       return {
         statusCode: 400,
-        headers,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
         body: JSON.stringify({ message: 'Machine type must be unique' }),
       };
     }
@@ -102,12 +142,12 @@ module.exports.createMachineType = async (event) => {
       description: body.description,
       branchId: user.role === 'admin' ? body.branchId : user.branchId
     });
-
+    
     await machineType.save();
-
+    
     return {
       statusCode: 201,
-      headers,
+      headers: corsHeaders, // ← CHANGE: use corsHeaders
       body: JSON.stringify(machineType)
     };
 
@@ -115,12 +155,11 @@ module.exports.createMachineType = async (event) => {
     console.error('Error creating machine type:', error);
     return {
       statusCode: 500,
-      headers,
+      headers: corsHeaders, // ← CHANGE: use corsHeaders
       body: JSON.stringify({ message: error.message }),
     };
   }
 };
-
 // ✅ Get All Machine Types
 module.exports.getMachineTypes = async (event) => {
   await connect();
