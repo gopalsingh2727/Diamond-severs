@@ -156,13 +156,20 @@ deleteCustomer:
 
 
 createMachineType:
-    handler: handlers/machineType/machineType.createMachineType
-    events:
-      - http:
-          path: machinetype
-          method: post
-          cors: true
-
+  handler: handlers/machineType/machineType.createMachineType
+  events:
+    - http:
+        path: machinetype
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - Authorization
+            - x-api-key
+          methods:
+            - OPTIONS
+            - POST
 getMachineTypes:
     handler: handlers/machineType/machineType.getMachineTypes
     events:
