@@ -7,7 +7,6 @@ const User = require('../../models/Admin/Admin');
 module.exports.createAdmin = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  // Add CORS headers (optional but recommended)
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
@@ -15,7 +14,6 @@ module.exports.createAdmin = async (event, context) => {
     'Content-Type': 'application/json'
   };
 
-  // Handle preflight request
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
@@ -24,19 +22,21 @@ module.exports.createAdmin = async (event, context) => {
     };
   }
 
-  // 🔐 Check API Key
-  const headers = event.headers || {};
-  const apiKey = headers['x-api-key'] || headers['X-API-Key'];
-  if (!apiKey || apiKey !== process.env.API_KEY) {
-    return {
-      statusCode: 403,
-      headers: corsHeaders,
-      body: JSON.stringify({ message: 'Forbidden: Invalid API key' }),
-    };
-  }
-
   try {
+    console.log('Incoming event:', JSON.stringify(event, null, 2));
+
+    const headers = event.headers || {};
+    const apiKey = headers['x-api-key'] || headers['X-API-Key'];
+    if (!apiKey || apiKey !== process.env.API_KEY) {
+      return {
+        statusCode: 403,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: 'Forbidden: Invalid API key' }),
+      };
+    }
+
     await connectDB();
+    console.log('DB connected');
 
     const existingAdmin = await User.findOne({ role: 'admin' });
     if (existingAdmin) {
@@ -47,7 +47,20 @@ module.exports.createAdmin = async (event, context) => {
       };
     }
 
-    const { username, password } = JSON.parse(event.body);
+    let body;
+    try {
+      body = typeof event.body === 'string' ? JSON.parse(event.body) : event.body;
+    } catch (err) {
+      console.error('Body parse failed', err);
+      return {
+        statusCode: 400,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: 'Invalid JSON body' }),
+      };
+    }
+
+    const { username, password } = body;
+
     if (!username || !password) {
       return {
         statusCode: 400,
@@ -58,6 +71,7 @@ module.exports.createAdmin = async (event, context) => {
 
     const admin = new User({ username, password, role: 'admin' });
     await admin.save();
+    console.log('Admin saved');
 
     return {
       statusCode: 201,
@@ -70,7 +84,7 @@ module.exports.createAdmin = async (event, context) => {
     return {
       statusCode: 500,
       headers: corsHeaders,
-      body: JSON.stringify({ message: 'Internal server error' }),
+      body: JSON.stringify({ message: 'Internal server error', error: error.message }),
     };
   }
 };

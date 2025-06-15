@@ -1,27 +1,32 @@
 
-createAdmin:
+
+  # ---------- Admin ----------
+  createAdmin:
     handler: handlers/Admin/admin.createAdmin
     events:
       - http:
           path: admin/create
           method: post
           cors: true
-loginAdmin:
+
+  loginAdmin:
     handler: handlers/Admin/admin.loginAdmin
     events:
       - http:
           path: admin/login
           method: post
           cors: true
-createBranch:
-  handler: handlers/Branch/Branch.createBranch
-  events:
-    - http:
-        path: branch/create
-        method: post
-        cors: true
 
-getAllBranches:
+  # ---------- Branch ----------
+  createBranch:
+    handler: handlers/Branch/Branch.createBranch
+    events:
+      - http:
+          path: branch/create
+          method: post
+          cors: true
+
+  getAllBranches:
     handler: handlers/Branch/Branch.getAllBranches
     events:
       - http:
@@ -29,7 +34,7 @@ getAllBranches:
           method: get
           cors: true
 
-updateBranch:
+  updateBranch:
     handler: handlers/Branch/Branch.updateBranch
     events:
       - http:
@@ -37,7 +42,7 @@ updateBranch:
           method: put
           cors: true
 
-deleteBranch:
+  deleteBranch:
     handler: handlers/Branch/Branch.deleteBranch
     events:
       - http:
@@ -45,8 +50,7 @@ deleteBranch:
           method: delete
           cors: true
 
-
-selectBranch:
+  selectBranch:
     handler: handlers/Branch/Branch.selectBranch
     events:
       - http:
@@ -54,19 +58,16 @@ selectBranch:
           method: post
           cors: true
 
-
-
-createManager:
+  # ---------- Manager ----------
+  createManager:
     handler: handlers/Manager/Manager.createManager
     events:
       - http:
           path: manager/create
           method: post
           cors: true
-      
 
-
-managerLogin:
+  managerLogin:
     handler: handlers/Manager/Manager.managerLogin
     events:
       - http:
@@ -74,7 +75,7 @@ managerLogin:
           method: post
           cors: true
 
-getAllManagers:
+  getAllManagers:
     handler: handlers/Manager/Manager.getAllManagers
     events:
       - http:
@@ -82,7 +83,7 @@ getAllManagers:
           method: get
           cors: true
 
-getMyBranch:
+  getMyBranch:
     handler: handlers/Manager/Manager.getMyBranch
     events:
       - http:
@@ -90,10 +91,7 @@ getMyBranch:
           method: get
           cors: true
 
-
-
-
-updateManager:
+  updateManager:
     handler: handlers/Manager/Manager.updateManager
     events:
       - http:
@@ -101,7 +99,7 @@ updateManager:
           method: put
           cors: true
 
-deleteManager:
+  deleteManager:
     handler: handlers/Manager/Manager.deleteManager
     events:
       - http:
@@ -109,15 +107,8 @@ deleteManager:
           method: delete
           cors: true
 
-
-
-
-
-
-
-
-
-createCustomer:
+  # ---------- Customer ----------
+  createCustomer:
     handler: handlers/Customer/customer.createCustomer
     events:
       - http:
@@ -125,7 +116,7 @@ createCustomer:
           method: post
           cors: true
 
-getCustomers:
+  getCustomers:
     handler: handlers/Customer/customer.getCustomers
     events:
       - http:
@@ -133,7 +124,7 @@ getCustomers:
           method: get
           cors: true
 
-updateCustomer:
+  updateCustomer:
     handler: handlers/Customer/customer.updateCustomer
     events:
       - http:
@@ -141,7 +132,7 @@ updateCustomer:
           method: put
           cors: true
 
-deleteCustomer:
+  deleteCustomer:
     handler: handlers/Customer/customer.deleteCustomer
     events:
       - http:
@@ -149,28 +140,16 @@ deleteCustomer:
           method: delete
           cors: true
 
+  # ---------- Machine Type ----------
+  createMachineType:
+    handler: handlers/machineType/machineType.createMachineType
+    events:
+      - http:
+          path: createMachineType/machinetype
+          method: post
+          cors: true
 
-
-
-
-
-
-createMachineType:
-  handler: handlers/machineType/machineType.createMachineType
-  events:
-    - http:
-        path: machinetype
-        method: post
-        cors:
-          origin: '*'
-          headers:
-            - Content-Type
-            - Authorization
-            - x-api-key
-          methods:
-            - OPTIONS
-            - POST
-getMachineTypes:
+  getMachineTypes:
     handler: handlers/machineType/machineType.getMachineTypes
     events:
       - http:
@@ -178,7 +157,7 @@ getMachineTypes:
           method: get
           cors: true
 
-getAllMachineTypesWithMachines:
+  getAllMachineTypesWithMachines:
     handler: handlers/machineType/machineType.getAllMachineTypesWithMachines
     events:
       - http:
@@ -186,9 +165,7 @@ getAllMachineTypesWithMachines:
           method: get
           cors: true
 
-
-
-updateMachineType:
+  updateMachineType:
     handler: handlers/machineType/machineType.updateMachineType
     events:
       - http:
@@ -196,7 +173,7 @@ updateMachineType:
           method: put
           cors: true
 
-deleteMachineType:
+  deleteMachineType:
     handler: handlers/machineType/machineType.deleteMachineType
     events:
       - http:
@@ -204,9 +181,8 @@ deleteMachineType:
           method: delete
           cors: true
 
-
-
-createMachine:
+  # ---------- Machine ----------
+  createMachine:
     handler: handlers/machine/machine.createMachine
     events:
       - http:
@@ -214,16 +190,7 @@ createMachine:
           method: post
           cors: true
 
-# getMachines:
-#     handler: handlers/machine/machine.getMachines
-#     events:
-#       - http:
-#           path: machine
-#           method: get
-#           cors: true
-
-
-getAllMachines:
+  getAllMachines:
     handler: handlers/machine/machine.getAllMachines
     events:
       - http:
@@ -231,7 +198,7 @@ getAllMachines:
           method: get
           cors: true
 
-updateMachine:
+  updateMachine:
     handler: handlers/machine/machine.updateMachine
     events:
       - http:
@@ -239,7 +206,7 @@ updateMachine:
           method: put
           cors: true
 
-deleteMachine:
+  deleteMachine:
     handler: handlers/machine/machine.deleteMachine
     events:
       - http:
@@ -247,9 +214,8 @@ deleteMachine:
           method: delete
           cors: true
 
-
-
-createProductType:
+  # ---------- Product Type ----------
+  createProductType:
     handler: handlers/ProductCatalogue/productType.createProductType
     events:
       - http:
@@ -257,7 +223,7 @@ createProductType:
           method: post
           cors: true
 
-getProductTypes:
+  getProductTypes:
     handler: handlers/ProductCatalogue/productType.getProductTypes
     events:
       - http:
@@ -265,7 +231,7 @@ getProductTypes:
           method: get
           cors: true
 
-getAllProductTypesWithProducts:
+  getAllProductTypesWithProducts:
     handler: handlers/ProductCatalogue/productType.getAllProductTypesWithProducts
     events:
       - http:
@@ -273,24 +239,24 @@ getAllProductTypesWithProducts:
           method: get
           cors: true
 
-updateProductType:
-    handler: handlers/productType/productType.updateProductType
+  updateProductType:
+    handler: handlers/ProductCatalogue/productType.updateProductType
     events:
       - http:
           path: producttype/{id}
           method: put
           cors: true
 
-deleteProductType:
-    handler: handlers/productType/productType.deleteProductType
+  deleteProductType:
+    handler: handlers/ProductCatalogue/productType.deleteProductType
     events:
       - http:
           path: producttype/{id}
           method: delete
           cors: true
 
-
-createProduct:
+  # ---------- Product ----------
+  createProduct:
     handler: handlers/product/product.createProduct
     events:
       - http:
@@ -298,7 +264,7 @@ createProduct:
           method: post
           cors: true
 
-getProducts:
+  getProducts:
     handler: handlers/product/product.getProducts
     events:
       - http:
@@ -306,7 +272,7 @@ getProducts:
           method: get
           cors: true
 
-updateProduct:
+  updateProduct:
     handler: handlers/product/product.updateProduct
     events:
       - http:
@@ -314,7 +280,7 @@ updateProduct:
           method: put
           cors: true
 
-deleteProduct:
+  deleteProduct:
     handler: handlers/product/product.deleteProduct
     events:
       - http:
@@ -322,8 +288,8 @@ deleteProduct:
           method: delete
           cors: true
 
-
-createMaterialType:
+  # ---------- Material Type ----------
+  createMaterialType:
     handler: handlers/MaterialType/materialType.createMaterialType
     events:
       - http:
@@ -331,7 +297,7 @@ createMaterialType:
           method: post
           cors: true
 
-getMaterialTypes:
+  getMaterialTypes:
     handler: handlers/MaterialType/materialType.getMaterialTypes
     events:
       - http:
@@ -339,8 +305,7 @@ getMaterialTypes:
           method: get
           cors: true
 
-
-getAllMaterialTypesWithMaterials:
+  getAllMaterialTypesWithMaterials:
     handler: handlers/MaterialType/materialType.getAllMaterialTypesWithMaterials
     events:
       - http:
@@ -348,7 +313,7 @@ getAllMaterialTypesWithMaterials:
           method: get
           cors: true
 
-updateMaterialType:
+  updateMaterialType:
     handler: handlers/MaterialType/materialType.updateMaterialType
     events:
       - http:
@@ -356,7 +321,7 @@ updateMaterialType:
           method: put
           cors: true
 
-deleteMaterialType:
+  deleteMaterialType:
     handler: handlers/MaterialType/materialType.deleteMaterialType
     events:
       - http:
@@ -364,11 +329,8 @@ deleteMaterialType:
           method: delete
           cors: true
 
-
-
-
-
-createMaterial:
+  # ---------- Material ----------
+  createMaterial:
     handler: handlers/material/material.createMaterial
     events:
       - http:
@@ -376,7 +338,7 @@ createMaterial:
           method: post
           cors: true
 
-getMaterials:
+  getMaterials:
     handler: handlers/material/material.getMaterials
     events:
       - http:
@@ -384,12 +346,7 @@ getMaterials:
           method: get
           cors: true
 
-          
-
-
-
-
-updateMaterial:
+  updateMaterial:
     handler: handlers/material/material.updateMaterial
     events:
       - http:
@@ -397,7 +354,7 @@ updateMaterial:
           method: put
           cors: true
 
-deleteMaterial:
+  deleteMaterial:
     handler: handlers/material/material.deleteMaterial
     events:
       - http:
@@ -405,19 +362,16 @@ deleteMaterial:
           method: delete
           cors: true
 
-
-
-
-
-createStep:
-    handler: handlers/steps/steps.createStep
+  # ---------- Step ----------
+  createStep:
+    handler: handlers/step/step.createStep
     events:
       - http:
           path: step
           method: post
-     
+          cors: true
 
-getSteps:
+  getSteps:
     handler: handlers/step/step.getSteps
     events:
       - http:
@@ -425,7 +379,7 @@ getSteps:
           method: get
           cors: true
 
-updateStep:
+  updateStep:
     handler: handlers/step/step.updateStep
     events:
       - http:
@@ -433,7 +387,7 @@ updateStep:
           method: put
           cors: true
 
-deleteStep:
+  deleteStep:
     handler: handlers/step/step.deleteStep
     events:
       - http:
@@ -441,83 +395,84 @@ deleteStep:
           method: delete
           cors: true
 
+  # ---------- Email ----------
+  sendMarketingToSelected:
+    handler: handlers/email/sendMarketingToSelected.sendMarketingToSelected
+    events:
+      - http:
+          path: email/marketing/selected
+          method: post
+          cors: true
 
+  # ---------- Machine Operator (httpApi) ----------
+  createOperator:
+    handler: handlers/MachineOperator/MachineOperator.createOperator
+    events:
+      - httpApi:
+          path: /operators
+          method: post
 
-sendMarketingToSelected:
-  handler: handlers/email/sendMarketingToSelected.sendMarketingToSelected
-  events:
-    - http:
-        path: email/marketing/selected
-        method: post
-        cors: true
-
-
-
-
-
-
-
-createOperator:
-  handler: handlers/MachineOperator/MachineOperator.createOperator
-  events:
-    - httpApi:
-        path: /operators
-        method: post
-
-operatorLogin:
+  operatorLogin:
     handler: handlers/MachineOperator/MachineOperator.operatorLogin
     events:
       - httpApi:
           path: /operators/login
           method: post
 
-getOperatorOrders:
+  getOperatorOrders:
     handler: handlers/MachineOperator/MachineOperator.getOperatorOrders
     events:
       - httpApi:
           path: /operators/orders
           method: get
 
-updateOrderStepStatus:
-  handler: handlers/MachineOperator/MachineOperator.updateMachineStatus
-  events:
-    - httpApi:
-        path: /operators/orders/{orderId}/status
-        method: put
-      
-getCompletedOrders:
-  handler: handlers/MachineOperator/MachineOperator.getCompletedOrders
-  events:
-    - http:
-        path: /operators/orders/completed
-        method: get
-        cors: true
+  updateOrderStepStatus:
+    handler: handlers/MachineOperator/MachineOperator.updateMachineStatus
+    events:
+      - httpApi:
+          path: /operators/orders/{orderId}/status
+          method: put
 
-# getPendingOrders:
-#   handler: handlers/MachineOperator/MachineOperator.getPendingOrders
-#   events:
-#     - httpApi:
-#         path: /operators/orders/pending
-#         method: get
-#         cors: true
-       
+  getCompletedOrders:
+    handler: handlers/MachineOperator/MachineOperator.getCompletedOrders
+    events:
+      - http:
+          path: /operators/orders/completed
+          method: get
+          cors: true
 
+  getOneInProgressOrder:
+    handler: handlers/MachineOperator/MachineOperator.getOneInProgressOrder
+    events:
+      - httpApi:
+          path: /operators/orders/in-progress
+          method: get
 
-createOrder:
+  updateOperatorPassword:
+    handler: handlers/MachineOperator/MachineOperator.updateOperatorPassword
+    events:
+      - httpApi:
+          path: /operators/update-password
+          method: put
+
+  getOnePendingOrder:
+    handler: handlers/MachineOperator/MachineOperator.getOnePendingOrder
+    events:
+      - http:
+          path: /operators/orders/pending
+          method: get
+          cors: true
+
+  # ---------- Orders ----------
+  createOrder:
     handler: handlers/oders/oders.createOrder
     events:
       - http:
           path: orders
           method: post
           cors: true
-         
 
-
-          
-
-
-
-getOrdersByBranchId:
+  getOrdersByBranchId:
     handler: handlers/oders/oders.getOrdersByBranchId
     events:
       - http:
@@ -528,42 +483,3 @@ getOrdersByBranchId:
             parameters:
               querystrings:
                 branchId: true
-
-
-
-getOneInProgressOrder:
-  handler: handlers/MachineOperator/MachineOperator.getOneInProgressOrder
-  events:
-    - httpApi:
-        path: /operators/orders/in-progress
-        method: get
-
-
-
-updateOperatorPassword:
-  handler: handlers/MachineOperator/MachineOperator.updateOperatorPassword
-  events:
-    - httpApi:
-        path: /operators/update-password
-        method: put
- 
-
-
-
-
-
-getOnePendingOrder:
-  handler: handlers/MachineOperator/MachineOperator.getOnePendingOrder
-  events:
-    - http:
-        path: /operators/orders/pending
-        method: get
-        cors: true
-
-# getOneCompletedOrder:
-#   handler: handlers/MachineOperator/MachineOperator.getOneCompletedOrder
-#   events:
-#     - httpApi:
-#         path: /operators/orders/completed
-#         method: get
-#         cors: true

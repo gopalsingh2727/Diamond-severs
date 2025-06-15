@@ -24,59 +24,17 @@ const checkApiKey = (event) => {
 };
 
 
-// STEP 1: Test basic function (deploy this first)
 module.exports.createMachineType = async (event) => {
-  console.log('=== createMachineType STARTED ===');
-  
+  // Check API key using your existing helper function
+  if (!checkApiKey(event)) {
+    return respond(401, { message: 'Invalid API key' });
+  }
+
+  // Connect to database using your existing function
+  await connect();
+
   try {
-    // Test 1: Basic response
-    console.log('Test 1: Basic response working');
-    return respond(200, { message: 'createMachineType function is working', timestamp: new Date() });
-    
-    /* UNCOMMENT STEP BY STEP AFTER EACH ONE WORKS:
-    
-    // Test 2: API Key check
-    console.log('Test 2: Checking API key');
-    if (!checkApiKey(event)) {
-      console.log('API key check failed');
-      return respond(401, { message: 'Invalid API key' });
-    }
-    console.log('API key check passed');
-    return respond(200, { message: 'API key working' });
-    
-    // Test 3: Database connection
-    console.log('Test 3: Connecting to database');
-    await connect();
-    console.log('Database connected successfully');
-    return respond(200, { message: 'Database connection working' });
-    
-    // Test 4: Token verification
-    console.log('Test 4: Verifying token');
-    const authHeader = event.headers.authorization || event.headers.Authorization;
-    let user;
-    try {
-      user = verifyToken(authHeader);
-      console.log('User verified:', user);
-    } catch (tokenError) {
-      console.log('Token verification failed:', tokenError);
-      return respond(401, { message: 'Invalid token' });
-    }
-    return respond(200, { message: 'Token verification working', user });
-    
-    // Test 5: Body parsing
-    console.log('Test 5: Parsing body');
-    const body = JSON.parse(event.body);
-    console.log('Body parsed:', body);
-    return respond(200, { message: 'Body parsing working', body });
-    
-    // Test 6: Model import test
-    console.log('Test 6: Testing MachineType model');
-    console.log('MachineType model:', typeof MachineType);
-    return respond(200, { message: 'MachineType model imported', modelType: typeof MachineType });
-    
-    // Test 7: Full logic (uncomment only after all above tests pass)
-    console.log('Test 7: Full function logic');
-    
+    // Parse and verify token (exact same pattern as your working function)
     const authHeader = event.headers.authorization || event.headers.Authorization;
     let user;
     try {
@@ -85,13 +43,16 @@ module.exports.createMachineType = async (event) => {
       return respond(401, { message: 'Invalid token' });
     }
 
+    // Check user permissions (exact same pattern)
     if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
       return respond(403, { message: 'Unauthorized' });
     }
 
+    // Parse request body
     const body = JSON.parse(event.body);
     const { type, description, branchId: bodyBranchId } = body;
 
+    // Validate required fields
     if (!type) {
       return respond(400, { message: 'Machine type is required' });
     }
@@ -100,12 +61,14 @@ module.exports.createMachineType = async (event) => {
       return respond(400, { message: 'Description is required' });
     }
 
+    // Determine branchId (same logic as your working function)
     const branchId = user.role === 'admin' ? bodyBranchId : user.branchId;
     
     if (!branchId) {
       return respond(400, { message: 'Branch ID is required' });
     }
 
+    // Check if machine type already exists (case-insensitive, same branch)
     const exists = await MachineType.findOne({
       type: { $regex: `^${type}$`, $options: 'i' },
       branchId,
@@ -115,6 +78,7 @@ module.exports.createMachineType = async (event) => {
       return respond(400, { message: 'Machine type already exists in this branch' });
     }
 
+    // Create and save new machine type
     const machineType = new MachineType({ 
       type, 
       description, 
@@ -123,14 +87,12 @@ module.exports.createMachineType = async (event) => {
     
     await machineType.save();
 
+    // Return success response using your helper function
     return respond(201, machineType);
-    */
-    
+
   } catch (error) {
-    console.error('=== ERROR in createMachineType ===');
-    console.error('Error message:', error.message);
-    console.error('Error stack:', error.stack);
-    return respond(500, { message: 'Function error: ' + error.message });
+    console.error('Create Machine Type Error:', error);
+    return respond(500, { message: error.message });
   }
 };
 // ✅ Get All Machine Types
