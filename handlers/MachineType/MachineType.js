@@ -4,160 +4,95 @@ const verifyToken = require('../../utiles/verifyToken');
 const Machine = require('../../models/Machine/machine');
 const mongoose = require('mongoose');
 
-// ❌ YOUR BROKEN createMachineType CORS SETUP:
-const headers = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/json'
-  // MISSING: 'Access-Control-Allow-Headers'
-  // MISSING: 'Access-Control-Allow-Methods'
+const respond = (statusCode, body) => ({
+  statusCode,
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
+  body: JSON.stringify(body),
+});
+
+const checkApiKey = (event) => {
+  
+  const headers = event.headers || {};
+  const apiKeyHeader = Object.keys(headers).find(
+    (h) => h.toLowerCase() === 'x-api-key'
+  );
+  const apiKey = apiKeyHeader ? headers[apiKeyHeader] : null;
+  return apiKey === process.env.API_KEY;
 };
-// MISSING: OPTIONS handler completely
 
-// ✅ YOUR WORKING loginAdmin CORS SETUP:
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key', // ← THIS IS MISSING
-  'Access-Control-Allow-Methods': 'POST, OPTIONS', // ← THIS IS MISSING
-  'Content-Type': 'application/json'
-};
-
-// Handle preflight OPTIONS request (← THIS ENTIRE BLOCK IS MISSING)
-if (event.httpMethod === 'OPTIONS') {
-  console.log('Handling OPTIONS request');
-  return {
-    statusCode: 200,
-    headers: corsHeaders,
-    body: ''
-  };
-}
-
-// ===========================================
-// HERE'S YOUR EXACT createMachineType WITH ONLY THE MISSING CORS PARTS ADDED:
-// ===========================================
 
 module.exports.createMachineType = async (event) => {
-  // ✅ ADD THIS: Complete CORS headers (copy from your loginAdmin)
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Content-Type': 'application/json'
-  };
-
-  // ✅ ADD THIS: OPTIONS handler (copy from your loginAdmin)
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 200,
-      headers: corsHeaders,
-      body: ''
-    };
+  // Check API key using your existing helper function
+  if (!checkApiKey(event)) {
+    return respond(401, { message: 'Invalid API key' });
   }
 
+  // Connect to database using your existing function
   await connect();
 
   try {
-    // ✅ Check API key
-    const apiKey = event.headers['x-api-key'];
-    if (!apiKey || apiKey !== process.env.API_KEY) {
-      return {
-        statusCode: 403,
-        headers: corsHeaders, // ← CHANGE: use corsHeaders instead of headers
-        body: JSON.stringify({ message: 'Invalid API key' }),
-      };
-    }
-
-    // ✅ Parse token
+    // Parse and verify token (exact same pattern as your working function)
     const authHeader = event.headers.authorization || event.headers.Authorization;
     let user;
     try {
       user = verifyToken(authHeader);
     } catch {
-      return {
-        statusCode: 401,
-        headers: corsHeaders, // ← CHANGE: use corsHeaders
-        body: JSON.stringify({ message: 'Invalid or expired token' }),
-      };
+      return respond(401, { message: 'Invalid token' });
     }
 
-    // ✅ Only admin or manager allowed
-    if (user.role !== 'admin' && user.role !== 'manager') {
-      return {
-        statusCode: 403,
-        headers: corsHeaders, // ← CHANGE: use corsHeaders
-        body: JSON.stringify({ message: 'Unauthorized' }),
-      };
+    // Check user permissions (exact same pattern)
+    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
+      return respond(403, { message: 'Unauthorized' });
     }
 
-    // ✅ Parse body
-    let body;
-    try {
-      body = JSON.parse(event.body);
-    } catch {
-      return {
-        statusCode: 400,
-        headers: corsHeaders, // ← CHANGE: use corsHeaders
-        body: JSON.stringify({ message: 'Invalid JSON body' }),
-      };
+    // Parse request body
+    const body = JSON.parse(event.body);
+    const { type, description, branchId: bodyBranchId } = body;
+
+    // Validate required fields
+    if (!type) {
+      return respond(400, { message: 'Machine type is required' });
     }
 
-    // ✅ Validate required fields
-    if (!body.type || !body.description) {
-      return {
-        statusCode: 400,
-        headers: corsHeaders, // ← CHANGE: use corsHeaders
-        body: JSON.stringify({ message: 'type and description are required' }),
-      };
+    if (!description) {
+      return respond(400, { message: 'Description is required' });
     }
 
-    if (user.role === 'admin' && !body.branchId) {
-      return {
-        statusCode: 400,
-        headers: corsHeaders, // ← CHANGE: use corsHeaders
-        body: JSON.stringify({ message: 'branchId is required for admin' }),
-      };
+    // Determine branchId (same logic as your working function)
+    const branchId = user.role === 'admin' ? bodyBranchId : user.branchId;
+    
+    if (!branchId) {
+      return respond(400, { message: 'Branch ID is required' });
     }
 
-    // ✅ Optional: validate ObjectId format
-    if (user.role === 'admin' && !mongoose.Types.ObjectId.isValid(body.branchId)) {
-      return {
-        statusCode: 400,
-        headers: corsHeaders, // ← CHANGE: use corsHeaders
-        body: JSON.stringify({ message: 'Invalid branchId format' }),
-      };
-    }
+    // Check if machine type already exists (case-insensitive, same branch)
+    const exists = await MachineType.findOne({
+      type: { $regex: `^${type}$`, $options: 'i' },
+      branchId,
+    });
 
-    // ✅ Check uniqueness
-    const exists = await MachineType.findOne({ type: body.type });
     if (exists) {
-      return {
-        statusCode: 400,
-        headers: corsHeaders, // ← CHANGE: use corsHeaders
-        body: JSON.stringify({ message: 'Machine type must be unique' }),
-      };
+      return respond(400, { message: 'Machine type already exists in this branch' });
     }
 
-    // ✅ Create and save
-    const machineType = new MachineType({
-      type: body.type,
-      description: body.description,
-      branchId: user.role === 'admin' ? body.branchId : user.branchId
+    // Create and save new machine type
+    const machineType = new MachineType({ 
+      type, 
+      description, 
+      branchId 
     });
     
     await machineType.save();
-    
-    return {
-      statusCode: 201,
-      headers: corsHeaders, // ← CHANGE: use corsHeaders
-      body: JSON.stringify(machineType)
-    };
+
+    // Return success response using your helper function
+    return respond(201, machineType);
 
   } catch (error) {
-    console.error('Error creating machine type:', error);
-    return {
-      statusCode: 500,
-      headers: corsHeaders, // ← CHANGE: use corsHeaders
-      body: JSON.stringify({ message: error.message }),
-    };
+    console.error('Create Machine Type Error:', error);
+    return respond(500, { message: error.message });
   }
 };
 // ✅ Get All Machine Types
