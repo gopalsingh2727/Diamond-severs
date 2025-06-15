@@ -8,14 +8,14 @@ const uploadImageToFirebase = require('../../firebase/firebaseConfig')
 const { parse } = require('lambda-multipart-parser');
 const fs = require('fs');
 const path = require("path");
-const fs = require("fs");
-const path = require("path");
 
 
 
 
-const { parse } = require("./utils/multipartParser");
-const { uploadImageToFirebase } = require("./utils/uploadToFirebase");
+
+
+
+
 
 module.exports.createCustomer = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;

@@ -86,7 +86,7 @@ getMyBranch:
     handler: handlers/Manager/Manager.getMyBranch
     events:
       - http:
-          path: manager/
+          path: manager/getMyBranch
           method: get
           cors: true
 
