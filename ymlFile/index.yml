@@ -163,6 +163,10 @@
           path: machinetype
           method: get
           cors: true
+          request:
+            parameters:
+              querystrings:
+                branchId: true
 
   getAllMachineTypesWithMachines:
     handler: handlers/machineType/machineType.getAllMachineTypesWithMachines
@@ -171,6 +175,10 @@
           path: getAllMachineTypesWithMachines
           method: get
           cors: true
+          request:
+            parameters:
+              querystrings:
+                branchId: true
 
   updateMachineType:
     handler: handlers/machineType/machineType.updateMachineType
@@ -278,11 +286,7 @@
           path: product
           method: get
           cors: true
-          request:
-          parameters:
-            querystrings:
-              branchId: true
-
+          
   updateProduct:
     handler: handlers/product/product.updateProduct
     events:
