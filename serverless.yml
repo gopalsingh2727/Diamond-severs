@@ -15,6 +15,18 @@ provider:
 plugins:
   - serverless-offline
 
+package:
+  exclude:
+    - .git/**
+    - .gitignore
+    - README.md
+    - .DS_Store
+    - .env*
+  include:
+    - handlers/**
+    - models/**
+    - node_modules/**
+
 functions:
   ${file(./ymlFile/index.yml)}
 

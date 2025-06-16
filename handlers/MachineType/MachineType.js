@@ -1,4 +1,5 @@
-const MachineType = require('../../models/MachineType/MachineType');
+const path = require('path');
+const MachineType = require(path.join(__dirname, '../../models/MachineType/MachineType'));
 const connect = require('../../config/mongodb/db');
 const verifyToken = require('../../utiles/verifyToken');
 const Machine = require('../../models/Machine/machine');
@@ -62,9 +63,9 @@ module.exports.createMachineType = async (event) => {
       return respond(403, { message: 'Unauthorized' });
     }
 
-    // Parse request body - handle the payload wrapper
+   
     const body = JSON.parse(event.body);
-    const { type, description, bodyBranchId } = body.payload || body; // Handle both structures
+    const { type, description, bodyBranchId } = body.payload || body; 
 
     // Validate required fields
     if (!type) {
