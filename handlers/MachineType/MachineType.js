@@ -1,107 +1,154 @@
-const path = require('path');
-const MachineType = require(path.join(__dirname, '../../models/MachineType/MachineType'));
+const MachineType = require('../../models/MachineType/MachineType');
 const connect = require('../../config/mongodb/db');
 const verifyToken = require('../../utiles/verifyToken');
 const Machine = require('../../models/Machine/machine');
+const mongoose = require('mongoose');
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Content-Type': 'application/json'
 
-const respond = (statusCode, body) => ({
-  statusCode,
-  headers: {
-   'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
-    'Access-Control-Allow-Methods': 'post, OPTIONS',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(body),
-});
-
-const checkApiKey = (event) => {
-  
-  const headers = event.headers || {};
-  const apiKeyHeader = Object.keys(headers).find(
-    (h) => h.toLowerCase() === 'x-api-key'
-  );
-  const apiKey = apiKeyHeader ? headers[apiKeyHeader] : null;
-  return apiKey === process.env.API_KEY;
 };
 
 
+// ✅ YOUR WORKING loginAdmin CORS SETUP:
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key', // ← THIS IS MISSING
+  'Access-Control-Allow-Methods': 'POST, OPTIONS', // ← THIS IS MISSING
+  'Content-Type': 'application/json'
+};
+
+// Handle preflight OPTIONS request (← THIS ENTIRE BLOCK IS MISSING)
+
+
+// ===========================================
+// HERE'S YOUR EXACT createMachineType WITH ONLY THE MISSING CORS PARTS ADDED:
+// ===========================================
+
 module.exports.createMachineType = async (event) => {
-  // Handle preflight OPTIONS request
+  // ✅ ADD THIS: Complete CORS headers (copy from your loginAdmin)
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json'
+  };
+
+  // ✅ ADD THIS: OPTIONS handler (copy from your loginAdmin)
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type,Authorization,x-api-key',
-        'Access-Control-Allow-Methods': 'POST,OPTIONS'
-      },
+      headers: corsHeaders,
       body: ''
     };
   }
 
-  if (!checkApiKey(event)) {
-    return respond(401, { message: 'Invalid API key' });
-  }
-
-  // Connect to database
   await connect();
 
   try {
-    // Parse and verify token
+    // ✅ Check API key
+    const apiKey = event.headers['x-api-key'];
+    if (!apiKey || apiKey !== process.env.API_KEY) {
+      return {
+        statusCode: 403,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders instead of headers
+        body: JSON.stringify({ message: 'Invalid API key' }),
+      };
+    }
+
+    // ✅ Parse token
     const authHeader = event.headers.authorization || event.headers.Authorization;
     let user;
     try {
       user = verifyToken(authHeader);
     } catch {
-      return respond(401, { message: 'Invalid token' });
+      return {
+        statusCode: 401,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
+        body: JSON.stringify({ message: 'Invalid or expired token' }),
+      };
     }
 
-    // Check user permissions
-    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
-      return respond(403, { message: 'Unauthorized' });
+    // ✅ Only admin or manager allowed
+    if (user.role !== 'admin' && user.role !== 'manager') {
+      return {
+        statusCode: 403,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
+        body: JSON.stringify({ message: 'Unauthorized' }),
+      };
     }
 
-   
-    const body = JSON.parse(event.body);
-    const { type, description, bodyBranchId } = body.payload || body; 
-
-    // Validate required fields
-    if (!type) {
-      return respond(400, { message: 'Machine type is required' });
-    }
-    if (!description) {
-      return respond(400, { message: 'Description is required' });
-    }
-
-    // Determine branchId
-    const branchId = user.role === 'admin' ? bodyBranchId : user.branchId;
-    if (!branchId) {
-      return respond(400, { message: 'Branch ID is required' });
+    // ✅ Parse body
+    let body;
+    try {
+      body = JSON.parse(event.body);
+    } catch {
+      return {
+        statusCode: 400,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
+        body: JSON.stringify({ message: 'Invalid JSON body' }),
+      };
     }
 
-    // Check if machine type already exists
-    const exists = await MachineType.findOne({
-      type: { $regex: `^${type}$`, $options: 'i' },
-      branchId,
-    });
+    // ✅ Validate required fields
+    if (!body.type || !body.description) {
+      return {
+        statusCode: 400,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
+        body: JSON.stringify({ message: 'type and description are required' }),
+      };
+    }
+
+    if (user.role === 'admin' && !body.branchId) {
+      return {
+        statusCode: 400,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
+        body: JSON.stringify({ message: 'branchId is required for admin' }),
+      };
+    }
+
+    // ✅ Optional: validate ObjectId format
+    if (user.role === 'admin' && !mongoose.Types.ObjectId.isValid(body.branchId)) {
+      return {
+        statusCode: 400,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
+        body: JSON.stringify({ message: 'Invalid branchId format' }),
+      };
+    }
+
+    // ✅ Check uniqueness
+    const exists = await MachineType.findOne({ type: body.type });
     if (exists) {
-      return respond(400, { message: 'Machine type already exists in this branch' });
+      return {
+        statusCode: 400,
+        headers: corsHeaders, // ← CHANGE: use corsHeaders
+        body: JSON.stringify({ message: 'Machine type must be unique' }),
+      };
     }
 
-    // Create and save new machine type
+    // ✅ Create and save
     const machineType = new MachineType({
-      type,
-      description,
-      branchId
+      type: body.type,
+      description: body.description,
+      branchId: user.role === 'admin' ? body.branchId : user.branchId
     });
+    
     await machineType.save();
+    
+    return {
+      statusCode: 201,
+      headers: corsHeaders, // ← CHANGE: use corsHeaders
+      body: JSON.stringify(machineType)
+    };
 
-    return respond(201, machineType);
   } catch (error) {
-    console.error('Create Machine Type Error:', error);
-    return respond(500, { message: error.message });
+    console.error('Error creating machine type:', error);
+    return {
+      statusCode: 500,
+      headers: corsHeaders, // ← CHANGE: use corsHeaders
+      body: JSON.stringify({ message: error.message }),
+    };
   }
 };
 // ✅ Get All Machine Types
@@ -110,8 +157,6 @@ module.exports.getMachineTypes = async (event) => {
 
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json'
   };
 
