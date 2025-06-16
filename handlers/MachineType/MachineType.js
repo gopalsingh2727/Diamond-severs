@@ -2,13 +2,15 @@ const MachineType = require('../../models/MachineType/MachineType');
 const connect = require('../../config/mongodb/db');
 const verifyToken = require('../../utiles/verifyToken');
 const Machine = require('../../models/Machine/machine');
-const mongoose = require('mongoose');
+
 
 const respond = (statusCode, body) => ({
   statusCode,
   headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
+   'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
+    'Access-Control-Allow-Methods': 'post, OPTIONS',
+    'Content-Type': 'application/json'
   },
   body: JSON.stringify(body),
 });
@@ -25,7 +27,7 @@ const checkApiKey = (event) => {
 
 
 module.exports.createMachineType = async (event) => {
-  // Check API key using your existing helper function
+
   if (!checkApiKey(event)) {
     return respond(401, { message: 'Invalid API key' });
   }
@@ -101,6 +103,8 @@ module.exports.getMachineTypes = async (event) => {
 
   const headers = {
     'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json'
   };
 
