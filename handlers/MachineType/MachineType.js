@@ -142,11 +142,11 @@ module.exports.getMachineTypes = async (event) => {
   await connect();
 
   const headers = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization, x-api-key, x-branch-id",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Content-Type": "application/json"
-};
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization, x-api-key",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Content-Type": "application/json"
+  };
 
   // ✅ Handle preflight OPTIONS request
   if (event.httpMethod === "OPTIONS") {
@@ -189,12 +189,10 @@ module.exports.getMachineTypes = async (event) => {
       };
     }
 
-    // ✅ Role-based filtering
-    const requestHeaders = event.headers || {};
-    const branchIdKey = Object.keys(requestHeaders).find(
-      (key) => key.toLowerCase() === "x-branch-id"
-    );
-    const requestedBranchId = requestHeaders[branchIdKey] || null;
+    // ✅ Role-based filtering using only query param
+    const requestedBranchId = event.queryStringParameters?.branchId || null;
+    console.log(requestedBranchId);
+    
 
     let filter = {};
     if (user.role === "manager") {
