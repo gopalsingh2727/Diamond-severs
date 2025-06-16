@@ -27,19 +27,28 @@ const checkApiKey = (event) => {
 
 
 module.exports.createMachineType = async (event) => {
+  // Handle preflight OPTIONS request
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,Authorization,x-api-key',
+        'Access-Control-Allow-Methods': 'POST,OPTIONS'
+      },
+      body: ''
+    };
+  }
 
-  
-   
-  
   if (!checkApiKey(event)) {
     return respond(401, { message: 'Invalid API key' });
   }
 
-  // Connect to database using your existing function
+  // Connect to database
   await connect();
 
   try {
-    // Parse and verify token (exact same pattern as your working function)
+    // Parse and verify token
     const authHeader = event.headers.authorization || event.headers.Authorization;
     let user;
     try {
@@ -48,53 +57,47 @@ module.exports.createMachineType = async (event) => {
       return respond(401, { message: 'Invalid token' });
     }
 
-    // Check user permissions (exact same pattern)
+    // Check user permissions
     if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
       return respond(403, { message: 'Unauthorized' });
     }
 
-    // Parse request body
+    // Parse request body - handle the payload wrapper
     const body = JSON.parse(event.body);
-    const { type, description, branchId: bodyBranchId } = body;
+    const { type, description, bodyBranchId } = body.payload || body; // Handle both structures
 
     // Validate required fields
     if (!type) {
       return respond(400, { message: 'Machine type is required' });
     }
-
     if (!description) {
       return respond(400, { message: 'Description is required' });
     }
 
-    // Determine branchId (same logic as your working function)
+    // Determine branchId
     const branchId = user.role === 'admin' ? bodyBranchId : user.branchId;
-    
     if (!branchId) {
       return respond(400, { message: 'Branch ID is required' });
     }
 
-    // Check if machine type already exists (case-insensitive, same branch)
+    // Check if machine type already exists
     const exists = await MachineType.findOne({
       type: { $regex: `^${type}$`, $options: 'i' },
       branchId,
     });
-
     if (exists) {
       return respond(400, { message: 'Machine type already exists in this branch' });
     }
 
     // Create and save new machine type
-    const machineType = new MachineType({ 
-      type, 
-      description, 
-      branchId 
+    const machineType = new MachineType({
+      type,
+      description,
+      branchId
     });
-    
     await machineType.save();
 
-    // Return success response using your helper function
     return respond(201, machineType);
-
   } catch (error) {
     console.error('Create Machine Type Error:', error);
     return respond(500, { message: error.message });

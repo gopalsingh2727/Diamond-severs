@@ -142,12 +142,28 @@
 
   # ---------- Machine Type ----------
   createMachineType:
-    handler: handlers/MachineType/MachineType.createMachineType
-    events:
-      - http:
-          path: createMachineType/machinetype
-          method: post
-          cors: true
+  handler: handlers/MachineType/MachineType.createMachineType
+  events:
+    - http:
+        path: createMachineType/machinetype
+        method: post
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - Authorization
+            - x-api-key
+          allowCredentials: false
+    - http:
+        path: createMachineType/machinetype
+        method: options
+        cors:
+          origin: '*'
+          headers:
+            - Content-Type
+            - Authorization
+            - x-api-key
+          allowCredentials: false
 
   getMachineTypes:
     handler: handlers/MachineType/MachineType.getMachineTypes
