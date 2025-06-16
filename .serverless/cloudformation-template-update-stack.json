@@ -510,7 +510,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Admin/admin.createAdmin",
         "Runtime": "nodejs20.x",
@@ -520,7 +520,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -541,7 +542,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Admin/admin.loginAdmin",
         "Runtime": "nodejs20.x",
@@ -551,7 +552,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -572,7 +574,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Branch/Branch.createBranch",
         "Runtime": "nodejs20.x",
@@ -582,7 +584,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -603,7 +606,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Branch/Branch.getAllBranches",
         "Runtime": "nodejs20.x",
@@ -613,7 +616,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -634,7 +638,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Branch/Branch.updateBranch",
         "Runtime": "nodejs20.x",
@@ -644,7 +648,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -665,7 +670,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Branch/Branch.deleteBranch",
         "Runtime": "nodejs20.x",
@@ -675,7 +680,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -696,7 +702,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Branch/Branch.selectBranch",
         "Runtime": "nodejs20.x",
@@ -706,7 +712,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -727,7 +734,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Manager/Manager.createManager",
         "Runtime": "nodejs20.x",
@@ -737,7 +744,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -758,7 +766,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Manager/Manager.managerLogin",
         "Runtime": "nodejs20.x",
@@ -768,7 +776,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -789,7 +798,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Manager/Manager.getAllManagers",
         "Runtime": "nodejs20.x",
@@ -799,7 +808,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -820,7 +830,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Manager/Manager.getMyBranch",
         "Runtime": "nodejs20.x",
@@ -830,7 +840,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -851,7 +862,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Manager/Manager.updateManager",
         "Runtime": "nodejs20.x",
@@ -861,7 +872,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -882,7 +894,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Manager/Manager.deleteManager",
         "Runtime": "nodejs20.x",
@@ -892,7 +904,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -913,7 +926,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Customer/customer.createCustomer",
         "Runtime": "nodejs20.x",
@@ -923,7 +936,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -944,7 +958,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Customer/customer.getCustomers",
         "Runtime": "nodejs20.x",
@@ -954,7 +968,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -975,7 +990,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Customer/customer.updateCustomer",
         "Runtime": "nodejs20.x",
@@ -985,7 +1000,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1006,7 +1022,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/Customer/customer.deleteCustomer",
         "Runtime": "nodejs20.x",
@@ -1016,7 +1032,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1037,9 +1054,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
-        "Handler": "handlers/machineType/machineType.createMachineType",
+        "Handler": "handlers/MachineType/MachineType.createMachineType",
         "Runtime": "nodejs20.x",
         "FunctionName": "this27-dev-createMachineType",
         "MemorySize": 1024,
@@ -1047,7 +1064,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1068,9 +1086,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
-        "Handler": "handlers/machineType/machineType.getMachineTypes",
+        "Handler": "handlers/MachineType/MachineType.getMachineTypes",
         "Runtime": "nodejs20.x",
         "FunctionName": "this27-dev-getMachineTypes",
         "MemorySize": 1024,
@@ -1078,7 +1096,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1099,7 +1118,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/machineType/machineType.getAllMachineTypesWithMachines",
         "Runtime": "nodejs20.x",
@@ -1109,7 +1128,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1130,7 +1150,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/machineType/machineType.updateMachineType",
         "Runtime": "nodejs20.x",
@@ -1140,7 +1160,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1161,9 +1182,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
-        "Handler": "handlers/machineType/machineType.deleteMachineType",
+        "Handler": "handlers/MachineType/MachineType.deleteMachineType",
         "Runtime": "nodejs20.x",
         "FunctionName": "this27-dev-deleteMachineType",
         "MemorySize": 1024,
@@ -1171,7 +1192,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1192,7 +1214,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/machine/machine.createMachine",
         "Runtime": "nodejs20.x",
@@ -1202,7 +1224,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1223,7 +1246,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/machine/machine.getAllMachines",
         "Runtime": "nodejs20.x",
@@ -1233,7 +1256,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1254,7 +1278,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/machine/machine.updateMachine",
         "Runtime": "nodejs20.x",
@@ -1264,7 +1288,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1285,7 +1310,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/machine/machine.deleteMachine",
         "Runtime": "nodejs20.x",
@@ -1295,7 +1320,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1316,7 +1342,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/ProductCatalogue/productType.createProductType",
         "Runtime": "nodejs20.x",
@@ -1326,7 +1352,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1347,7 +1374,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/ProductCatalogue/productType.getProductTypes",
         "Runtime": "nodejs20.x",
@@ -1357,7 +1384,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1378,7 +1406,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/ProductCatalogue/productType.getAllProductTypesWithProducts",
         "Runtime": "nodejs20.x",
@@ -1388,7 +1416,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1409,7 +1438,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/ProductCatalogue/productType.updateProductType",
         "Runtime": "nodejs20.x",
@@ -1419,7 +1448,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1440,7 +1470,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/ProductCatalogue/productType.deleteProductType",
         "Runtime": "nodejs20.x",
@@ -1450,7 +1480,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1471,7 +1502,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/product/product.createProduct",
         "Runtime": "nodejs20.x",
@@ -1481,7 +1512,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1502,7 +1534,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/product/product.getProducts",
         "Runtime": "nodejs20.x",
@@ -1512,7 +1544,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1533,7 +1566,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/product/product.updateProduct",
         "Runtime": "nodejs20.x",
@@ -1543,7 +1576,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1564,7 +1598,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/product/product.deleteProduct",
         "Runtime": "nodejs20.x",
@@ -1574,7 +1608,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1595,7 +1630,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MaterialType/materialType.createMaterialType",
         "Runtime": "nodejs20.x",
@@ -1605,7 +1640,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1626,7 +1662,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MaterialType/materialType.getMaterialTypes",
         "Runtime": "nodejs20.x",
@@ -1636,7 +1672,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1657,7 +1694,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MaterialType/materialType.getAllMaterialTypesWithMaterials",
         "Runtime": "nodejs20.x",
@@ -1667,7 +1704,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1688,7 +1726,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MaterialType/materialType.updateMaterialType",
         "Runtime": "nodejs20.x",
@@ -1698,7 +1736,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1719,7 +1758,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MaterialType/materialType.deleteMaterialType",
         "Runtime": "nodejs20.x",
@@ -1729,7 +1768,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1750,7 +1790,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/material/material.createMaterial",
         "Runtime": "nodejs20.x",
@@ -1760,7 +1800,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1781,7 +1822,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/material/material.getMaterials",
         "Runtime": "nodejs20.x",
@@ -1791,7 +1832,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1812,7 +1854,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/material/material.updateMaterial",
         "Runtime": "nodejs20.x",
@@ -1822,7 +1864,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1843,7 +1886,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/material/material.deleteMaterial",
         "Runtime": "nodejs20.x",
@@ -1853,7 +1896,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1874,7 +1918,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/step/step.createStep",
         "Runtime": "nodejs20.x",
@@ -1884,7 +1928,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1905,7 +1950,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/step/step.getSteps",
         "Runtime": "nodejs20.x",
@@ -1915,7 +1960,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1936,7 +1982,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/step/step.updateStep",
         "Runtime": "nodejs20.x",
@@ -1946,7 +1992,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1967,7 +2014,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/step/step.deleteStep",
         "Runtime": "nodejs20.x",
@@ -1977,7 +2024,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -1998,7 +2046,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/email/sendMarketingToSelected.sendMarketingToSelected",
         "Runtime": "nodejs20.x",
@@ -2008,7 +2056,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2029,7 +2078,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MachineOperator/MachineOperator.createOperator",
         "Runtime": "nodejs20.x",
@@ -2039,7 +2088,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2060,7 +2110,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MachineOperator/MachineOperator.operatorLogin",
         "Runtime": "nodejs20.x",
@@ -2070,7 +2120,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2091,7 +2142,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MachineOperator/MachineOperator.getOperatorOrders",
         "Runtime": "nodejs20.x",
@@ -2101,7 +2152,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2122,7 +2174,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MachineOperator/MachineOperator.updateMachineStatus",
         "Runtime": "nodejs20.x",
@@ -2132,7 +2184,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2153,7 +2206,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MachineOperator/MachineOperator.getCompletedOrders",
         "Runtime": "nodejs20.x",
@@ -2163,7 +2216,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2184,7 +2238,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MachineOperator/MachineOperator.getOneInProgressOrder",
         "Runtime": "nodejs20.x",
@@ -2194,7 +2248,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2215,7 +2270,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MachineOperator/MachineOperator.updateOperatorPassword",
         "Runtime": "nodejs20.x",
@@ -2225,7 +2280,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2246,7 +2302,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/MachineOperator/MachineOperator.getOnePendingOrder",
         "Runtime": "nodejs20.x",
@@ -2256,7 +2312,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2277,7 +2334,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/oders/oders.createOrder",
         "Runtime": "nodejs20.x",
@@ -2287,7 +2344,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2308,7 +2366,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/this27/dev/1750045315243-2025-06-16T03:41:55.243Z/this27.zip"
+          "S3Key": "serverless/this27/dev/1750086428073-2025-06-16T15:07:08.073Z/this27.zip"
         },
         "Handler": "handlers/oders/oders.getOrdersByBranchId",
         "Runtime": "nodejs20.x",
@@ -2318,7 +2376,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820"
+            "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+            "JWT_SECRET": "yourSecr33232"
           }
         },
         "Role": {
@@ -2332,594 +2391,594 @@
         "GetOrdersByBranchIdLogGroup"
       ]
     },
-    "CreateAdminLambdaVersionl74hobmRii4zF2piPf4hV06IindmFsmDxFmmgYaOA": {
+    "CreateAdminLambdaVersionSiNFmmlRUUi8fpaIaS3wA6FRnYHnxIQMdHZD3gAVwY": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateAdminLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "LoginAdminLambdaVersionbfVFt76rUz6GkT9ezxHVyzHoBlKYceV5xOf8uD4CQ": {
+    "LoginAdminLambdaVersionv6ISKjQTw0hgi4Gcdic1kYKbNO4MQhY6UdMnKa4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "LoginAdminLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateBranchLambdaVersionnXYKrRstf7Ew5tHA9487csfVDu7qo6ysoz17Iezx58": {
+    "CreateBranchLambdaVersion1AarVFerEHjuMToP05gA4p4hx81mNSbVbEsY67STXDc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateBranchLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetAllBranchesLambdaVersionXUHD0gvUQzmqKsmtFPylXakWk0ebJHZMP1gZzqQIE": {
+    "GetAllBranchesLambdaVersionmbBWSWqpqK3Rdy91YHi6zSVFsScjZXyJ6mc78DhQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllBranchesLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateBranchLambdaVersionwo1dXFSBiIklmFhOx65KzivqhZArv04CJjn2QtvXs": {
+    "UpdateBranchLambdaVersionQbIJOLuZ5FAi5WopJtuo26bxm7FCTJJCsaVvbCjXk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateBranchLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "DeleteBranchLambdaVersionAWQuSYzXhWwYo503J02DuIbrXTW5msPyWbllxyQlU": {
+    "DeleteBranchLambdaVersiontMncBAouJ5UdPORft7scgDk25zFX8iHQRxWIoUXIE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteBranchLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "SelectBranchLambdaVersioniX4BebedoboWpAkjWoOilCbkxvlheoEtpDQmF3cQD2g": {
+    "SelectBranchLambdaVersion4UqeK5ZrvK1rztRGYbUOuTHwy607v5tozZJnSpI4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "SelectBranchLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateManagerLambdaVersionYGonkGY6WgtS1f4UoHS7Of3QJIYS33m9ns49oqr0Hvc": {
+    "CreateManagerLambdaVersionDiq75pZmxpHl8BH9wxJFCmY50Fb6eA3aVZ7t1Aj34": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateManagerLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "ManagerLoginLambdaVersionBCahLjmaQqUvJmPx3ZfaHV4KHAtocPzWkXOx9rRe7AI": {
+    "ManagerLoginLambdaVersionOGSoQeaf5Ah8WSNa2MVKw1cvwRLdQBOgQi92uqnDkdg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ManagerLoginLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetAllManagersLambdaVersion3hk3qGWm0DJVdBiThMBISYr8zrMUj53o68F5mp8ZbYM": {
+    "GetAllManagersLambdaVersionXOUCAJPAejcuOOKCUryaJQ6qFqW2DtbYrPHzMXHwk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllManagersLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetMyBranchLambdaVersion9pY480LJfCEkkRZPNgaLRmUxMYnv4UcZCXEBzBthA": {
+    "GetMyBranchLambdaVersion7kUbxUuOGcGHGj4fW8QWKqKfmkvN09TUhkVxvvEA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetMyBranchLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateManagerLambdaVersionwnYphA35uBipDVLQ6J4gh29DQk8lDKH7mi7JIMWH0": {
+    "UpdateManagerLambdaVersiontizd4BJrNUPiltQFgcoZkSLtg3n2uX9y9rlsFeXmg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateManagerLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "DeleteManagerLambdaVersionjcOOwAvN22aB1cevMwB59o6gyPkjewlT7gD4nmDDk": {
+    "DeleteManagerLambdaVersiond7wa2Ug2ozilSX8vRaZ8YUTvsaj6DFRlt5enZxcnB58": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteManagerLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateCustomerLambdaVersionshLvN6T3KA1fnTT29H45fKQshZ4G4CjmOK0Ky52CyY": {
+    "CreateCustomerLambdaVersionVdg7HsPdlXHuczIPz62KLKBKkJzDgtNYhRCheQnx9i8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateCustomerLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetCustomersLambdaVersionzxtd6LHMJNoY7kP56Jfu6Y3lqRwCUocyz5XMaQ0cWw": {
+    "GetCustomersLambdaVersionWjXYTP8R7OglfOlL57HvPQeCal6sVtKPuWfMSDHzks": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetCustomersLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateCustomerLambdaVersiongS82GrZAxftv0SGzS8q252RNbhuFUSx3HzrLB1Uf8": {
+    "UpdateCustomerLambdaVersioneqwBCvFukEOvEe1qMTzD8lR4WYPosHOzFEmXjkLwOk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateCustomerLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "DeleteCustomerLambdaVersionGLiuipIPCgEYOV7AQgldKtHLWtDVgwZrj9gZFLEPLg4": {
+    "DeleteCustomerLambdaVersionvOEqJy1K7ULB31Qz7BIpCHWdDCioEMBBH9VZmKGlU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteCustomerLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateMachineTypeLambdaVersionGRokL0NZLzjuLYE2OAwNQ4CMnskK6rCfh0duBhlzE": {
+    "CreateMachineTypeLambdaVersionQ6DALPwAce1thgeLXrrakMM9Ftf9JqkNU1Pl9oil80": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateMachineTypeLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetMachineTypesLambdaVersion8bDx8yAwQgWDgKU7vMUqjhMbzfoMdVz0UcFjOxpYs": {
+    "GetMachineTypesLambdaVersionDv7g6YdZ4TIJyxUrNlzVPFWoS4N0QIZBoDld8EiHtWE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetMachineTypesLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetAllMachineTypesWithMachinesLambdaVersionAOKICtchFrFds35mqSJ8hVAbmIU4iU1PXrikLFvpg": {
+    "GetAllMachineTypesWithMachinesLambdaVersionWDJhsg68zek0OpwCVxWAfLPWbGG3lQ4ycjt7OCwU8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllMachineTypesWithMachinesLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateMachineTypeLambdaVersionGhPbjJdNri1tBtPjl3TlBea7LSYI8OTdbphwOoB4": {
+    "UpdateMachineTypeLambdaVersionsLAN7O8ifAb13bf9uLXNEkyrqw2L8qn9HNUvQno2T4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateMachineTypeLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "DeleteMachineTypeLambdaVersionkhjyKqpoHKtpj6o48cCZorNxsPf3ihzg3CR9yriSD90": {
+    "DeleteMachineTypeLambdaVersion0ZNgMKSDa3rjRw22AEKBlMzgfTE7svqcULJMWKO23c": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteMachineTypeLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateMachineLambdaVersionlX4dBrIP0utzvUYgFGd5XSfEeZJYQK9oLCIDhHqRlDI": {
+    "CreateMachineLambdaVersionD8F6QepZ8MP0hodB7d9pUOF8wkd5qHvRKcf0IzZRY": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateMachineLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetAllMachinesLambdaVersionzmvw1kY7IlHsY4p0giHAc7jxKsNWU6eBz7Uy3Ycpc": {
+    "GetAllMachinesLambdaVersionlXYj8DXIceXoc7E9v8fNbotY1ievWYH9VUau5MZiR0s": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllMachinesLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateMachineLambdaVersionEipp14M1ebqVeSK6s54Pd4vZTf91q7uFN1trirX6bXo": {
+    "UpdateMachineLambdaVersionYgWdbEKDP4sgHQ0HrMvfpixqahVaIOEw5RMVnC63Xyg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateMachineLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "DeleteMachineLambdaVersionOeraX3nwNWjppwcqXoDPZGXUrl8LFD1Q6369LIdkRE": {
+    "DeleteMachineLambdaVersionMCeYOS0TlZIvvUCGXrtgjHb2ES8HgOnV5cXIrgX5nM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteMachineLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateProductTypeLambdaVersionrcIMfQvuVOqzDmtZ1x9TYuayJ5hoQ0T0aDgoBKyd0": {
+    "CreateProductTypeLambdaVersionU2kz8Zm5DmV7ofB6jSriwrjs0xwIt2HPe6h7tHe8k": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateProductTypeLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetProductTypesLambdaVersionIE4LIeJP08sjXfXfHsimWRNDeSC0fGDOQNn84F1Q": {
+    "GetProductTypesLambdaVersionJmzTF3UY99ajd0zv1scCrsAHPS9P0tZb3LEgID9zNc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetProductTypesLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetAllProductTypesWithProductsLambdaVersionp3qc8UKLPIN65I8hBhHV7xfBSJBO4MjUxyBJCu1RDA": {
+    "GetAllProductTypesWithProductsLambdaVersionvLMEg8TMQbUWHdSzVlW6Q3MSZ0ZVVqqDMwkd3bBfzw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllProductTypesWithProductsLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateProductTypeLambdaVersiontqIUAmkR8Xp33bT8CWLH93iCexIbYXgibGNSGLyQ8": {
+    "UpdateProductTypeLambdaVersionrgZx5qGdnDey7D27u8oo0deQ4pPD4ZuDES7IYcw9FA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateProductTypeLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "DeleteProductTypeLambdaVersioncv0Y0J5rpoEWggECkLZsO8SZZdlZbMafyPXnQIdVYus": {
+    "DeleteProductTypeLambdaVersion0qkHQ99HGKIm3QCfAN4ZYv0f7tt8HuDHkpBdkyO8Ro": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteProductTypeLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateProductLambdaVersiong7ttm9R6OVgxmAy9joJcR94esenP3CUFqsCorKtG1eA": {
+    "CreateProductLambdaVersionudgkn3NUco7pPRH0GW7GmPZBV10RbQSW6wHydY2UIuo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateProductLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetProductsLambdaVersionnq2r3TR3StkfF9lEbCXk6spEXjJu7g3hwSMKsKr8OM": {
+    "GetProductsLambdaVersion6oiZv1D8L1r7hIycbxwT6dbXmTWOuCHpGNoPZ0Q8Dc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetProductsLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateProductLambdaVersiond4v4X1uqOFcfTGs8S107YZ23ujjciDfojatZagnLlY": {
+    "UpdateProductLambdaVersionExjYHa6JVh6ihwI57bs7I0gg4zBvw7qopB44pYVFqY": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateProductLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "DeleteProductLambdaVersionlMOghpXdyqacIePjRb2YTXxE8sKAwPDFe98eYEbk": {
+    "DeleteProductLambdaVersionc9uuIQL4QVjY1Imc7gNp58yqxmTTLUaBk5N2NaYvo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteProductLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateMaterialTypeLambdaVersionoTXwZEWlU9VoAjv8mwRIpdM09qp4zqeVc7tf44jAsE": {
+    "CreateMaterialTypeLambdaVersionbZyJPaJyCJG3ffAtnkGky3EXVxVYCzGbqOgkA7OxU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateMaterialTypeLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetMaterialTypesLambdaVersionH2wK6Os4hnpUF5lqVoXEy1Mbm9dC6OG5Qiom1ripvo": {
+    "GetMaterialTypesLambdaVersionjsy0CZLJaV7fp3jlseqspy5gdat7YAb1HzplH3uRYfs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetMaterialTypesLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetAllMaterialTypesWithMaterialsLambdaVersion9Jrr64kTpReMXXOOglv5EbIWJShJIhUww8k9XBEU": {
+    "GetAllMaterialTypesWithMaterialsLambdaVersion25iukQK5VMkcX64zHrK8jtV337uSH9wvSxc8DJXfODg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllMaterialTypesWithMaterialsLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateMaterialTypeLambdaVersionJx9bAkgatW9wUs3JmyqmKHBg99OU3YF5Nz5qLVTWec": {
+    "UpdateMaterialTypeLambdaVersionfQbdd8vbmDrHSx7INGIcMMZgEs6wQPrbw0FEefuGDU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateMaterialTypeLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "DeleteMaterialTypeLambdaVersionwf29WywvSoV7vPeFFD2cpI0F8aYfSw4cLGcpxyHPfk": {
+    "DeleteMaterialTypeLambdaVersiondaGHvOjg7pjaEY3Y8GWFEytiurZilWXhFO4TafFo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteMaterialTypeLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateMaterialLambdaVersiondHJOKMRGiDQVYojEFGhYkkohOJDkRxq1FGSo91PH78": {
+    "CreateMaterialLambdaVersionSSIHJk7u2A8zxyT38Mqgywm2tg3D2fORzECuLZEg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateMaterialLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetMaterialsLambdaVersion2qFZOKrx4ZACkYh9bfuOY8w5rC7d4QUwvAvXg4V8": {
+    "GetMaterialsLambdaVersionPbhKM5bsQ3Gqaxp044xmmFYBrjUGVbzs08Ykg9Os": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetMaterialsLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateMaterialLambdaVersion4t9vRomt8ISft5LHa1MqTV85bADL6fJb0Yl6nyffs": {
+    "UpdateMaterialLambdaVersionAMKfFVY47OuFGhgNEUJJSThl8o785cqIz3pWYBnzis": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateMaterialLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "DeleteMaterialLambdaVersionDqDGuIqtnfW0NSuTbFNcFoF8I0lRExiEuyHi81HhAo": {
+    "DeleteMaterialLambdaVersion2o1mlmT45ewAZGepAonNlr9tdBIghfCZliDvjulFrAA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteMaterialLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateStepLambdaVersionztDy8tsc38AjFjSnpVd0jDnanEP7vlu35h3vh4LL3U": {
+    "CreateStepLambdaVersion226bRLjWP2A78SAx2iVN8KbaZwvawgJD8SdvA9YyQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateStepLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetStepsLambdaVersionScUFlLMnBsbrOeIfvRaQzPSnLTIPDzQeiZdhxsfR0": {
+    "GetStepsLambdaVersion5ceW4Xfj7nc83R9ehCbeqC1I2ggeeZYqTMsIk8iSWo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetStepsLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateStepLambdaVersionGp1SpLjQpafyqW0n016fsXNbzywCALNNTHtx6yrYs": {
+    "UpdateStepLambdaVersionh0Xafn548YwcTUuDWRXgMq2pNzE6RBY2ip95SxzDuU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateStepLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "DeleteStepLambdaVersionwFHfhmj7s66opVVQQ4IEUMhkgVABIKcGojbwiPwGw": {
+    "DeleteStepLambdaVersionng9MLfmjV54IRmUwhfXq0903UW7hycU98AEq33F2E": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteStepLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "SendMarketingToSelectedLambdaVersioneovqcytt1SpvWpwl0w3Gnj5YDzIih4ylGwAyAjXNKs": {
+    "SendMarketingToSelectedLambdaVersionNB6RH9VO69KKX4l5OCRinDy8jOKsRIyoc77TRbbzh4I": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "SendMarketingToSelectedLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateOperatorLambdaVersionZuQez7yxBy3zftpqbMAnPbF9b4EXPyBa3Nnw0A01oI": {
+    "CreateOperatorLambdaVersion07QRRVcAFjQojRE3X8nUj8EAnloBSvFrJR0rIsG244": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateOperatorLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "OperatorLoginLambdaVersionsh7fADl9dWecJ3KLKXOiokQREbsnnFz0WjB41CWK2Yk": {
+    "OperatorLoginLambdaVersiongQC0UMjD4hICgvtH5SKIUSYCWcVdJSc8GlNl6rHe0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "OperatorLoginLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetOperatorOrdersLambdaVersionpSlBnAQVWXJVlkNdaSJEZ6n6a5dnUzfjX2YvcbFfFw": {
+    "GetOperatorOrdersLambdaVersion5l7MYSNe9jfSRvQr5tSQit0TbZaAtzorziXylnoPKn4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetOperatorOrdersLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateOrderStepStatusLambdaVersion8ZzyTN9rYgwbjN2BZxUHoPW7HYw1w5CbcQWxLVU4": {
+    "UpdateOrderStepStatusLambdaVersionpfWYgsOCDlQ6gqDfMc8j9FdyYQc81eGUOTqk7MtY8g": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateOrderStepStatusLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetCompletedOrdersLambdaVersionie0Z7pWKbZ547P7O4s7SmJaQgxCR4l130yt5FYShdfc": {
+    "GetCompletedOrdersLambdaVersion5DIHzZHPf2ej0yuWiMNHDAS6wUTAmFfiWjfwBFn2Rw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetCompletedOrdersLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetOneInProgressOrderLambdaVersionL8lYdsULKHXC3aPmANdAfRBNuqDvIqJn6wop8azWUM": {
+    "GetOneInProgressOrderLambdaVersionY0lNvkO8PbBN2QyNPOsdHRSdqR0UdWeWsR88axVDJ0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetOneInProgressOrderLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "UpdateOperatorPasswordLambdaVersionLEnfxZl7785mhoK0XPaZGxTk7IeB71AAVwl2rYWfg": {
+    "UpdateOperatorPasswordLambdaVersionSKFCGuD8EqLFOGKhqcNJZByiyVeyyBWXuzLHVu1pyvw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateOperatorPasswordLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetOnePendingOrderLambdaVersion19EZwxRdwv7jJeIjOC93if4jR01fUydMraKiR4VK9A": {
+    "GetOnePendingOrderLambdaVersionkzntGip8BlL94v3cQpc2pZw8VUEwelM15NHkFqfIsg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetOnePendingOrderLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "CreateOrderLambdaVersioncLi4lPXwoNqgnPvxXFp2jvx8tRL0rlAt610mgGico": {
+    "CreateOrderLambdaVersionMdKSLOyKyihh7rhynKVjjtGaPI4R1J44hY9royxH4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateOrderLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
-    "GetOrdersByBranchIdLambdaVersion4izZxwh4PeTaBFKjXM4DOM5aBY1SB2TZQVLhD9ZA": {
+    "GetOrdersByBranchIdLambdaVersionZ3D0zmrRIYuBsD0ihZX32a8CCpWxutTrsDTZ5R2fM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetOrdersByBranchIdLambdaFunction"
         },
-        "CodeSha256": "f8m2A4Gghpic3lnfz9aOrmK41/1AC3jsZhcLox97JD4="
+        "CodeSha256": "exjUgIr4NgU+K7AR67bfR+1SgYxwjNacqBprWG909SQ="
       }
     },
     "ApiGatewayRestApi": {
@@ -7590,7 +7649,7 @@
         "Name": "this27-dev | Validate request body and querystring parameters"
       }
     },
-    "ApiGatewayDeployment1750045307673": {
+    "ApiGatewayDeployment1750086419822": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -10134,7 +10193,7 @@
     "CreateAdminLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateAdminLambdaVersionl74hobmRii4zF2piPf4hV06IindmFsmDxFmmgYaOA"
+        "Ref": "CreateAdminLambdaVersionSiNFmmlRUUi8fpaIaS3wA6FRnYHnxIQMdHZD3gAVwY"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateAdminLambdaFunctionQualifiedArn"
@@ -10143,7 +10202,7 @@
     "LoginAdminLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "LoginAdminLambdaVersionbfVFt76rUz6GkT9ezxHVyzHoBlKYceV5xOf8uD4CQ"
+        "Ref": "LoginAdminLambdaVersionv6ISKjQTw0hgi4Gcdic1kYKbNO4MQhY6UdMnKa4"
       },
       "Export": {
         "Name": "sls-this27-dev-LoginAdminLambdaFunctionQualifiedArn"
@@ -10152,7 +10211,7 @@
     "CreateBranchLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateBranchLambdaVersionnXYKrRstf7Ew5tHA9487csfVDu7qo6ysoz17Iezx58"
+        "Ref": "CreateBranchLambdaVersion1AarVFerEHjuMToP05gA4p4hx81mNSbVbEsY67STXDc"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateBranchLambdaFunctionQualifiedArn"
@@ -10161,7 +10220,7 @@
     "GetAllBranchesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllBranchesLambdaVersionXUHD0gvUQzmqKsmtFPylXakWk0ebJHZMP1gZzqQIE"
+        "Ref": "GetAllBranchesLambdaVersionmbBWSWqpqK3Rdy91YHi6zSVFsScjZXyJ6mc78DhQ"
       },
       "Export": {
         "Name": "sls-this27-dev-GetAllBranchesLambdaFunctionQualifiedArn"
@@ -10170,7 +10229,7 @@
     "UpdateBranchLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateBranchLambdaVersionwo1dXFSBiIklmFhOx65KzivqhZArv04CJjn2QtvXs"
+        "Ref": "UpdateBranchLambdaVersionQbIJOLuZ5FAi5WopJtuo26bxm7FCTJJCsaVvbCjXk"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateBranchLambdaFunctionQualifiedArn"
@@ -10179,7 +10238,7 @@
     "DeleteBranchLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteBranchLambdaVersionAWQuSYzXhWwYo503J02DuIbrXTW5msPyWbllxyQlU"
+        "Ref": "DeleteBranchLambdaVersiontMncBAouJ5UdPORft7scgDk25zFX8iHQRxWIoUXIE"
       },
       "Export": {
         "Name": "sls-this27-dev-DeleteBranchLambdaFunctionQualifiedArn"
@@ -10188,7 +10247,7 @@
     "SelectBranchLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "SelectBranchLambdaVersioniX4BebedoboWpAkjWoOilCbkxvlheoEtpDQmF3cQD2g"
+        "Ref": "SelectBranchLambdaVersion4UqeK5ZrvK1rztRGYbUOuTHwy607v5tozZJnSpI4"
       },
       "Export": {
         "Name": "sls-this27-dev-SelectBranchLambdaFunctionQualifiedArn"
@@ -10197,7 +10256,7 @@
     "CreateManagerLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateManagerLambdaVersionYGonkGY6WgtS1f4UoHS7Of3QJIYS33m9ns49oqr0Hvc"
+        "Ref": "CreateManagerLambdaVersionDiq75pZmxpHl8BH9wxJFCmY50Fb6eA3aVZ7t1Aj34"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateManagerLambdaFunctionQualifiedArn"
@@ -10206,7 +10265,7 @@
     "ManagerLoginLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ManagerLoginLambdaVersionBCahLjmaQqUvJmPx3ZfaHV4KHAtocPzWkXOx9rRe7AI"
+        "Ref": "ManagerLoginLambdaVersionOGSoQeaf5Ah8WSNa2MVKw1cvwRLdQBOgQi92uqnDkdg"
       },
       "Export": {
         "Name": "sls-this27-dev-ManagerLoginLambdaFunctionQualifiedArn"
@@ -10215,7 +10274,7 @@
     "GetAllManagersLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllManagersLambdaVersion3hk3qGWm0DJVdBiThMBISYr8zrMUj53o68F5mp8ZbYM"
+        "Ref": "GetAllManagersLambdaVersionXOUCAJPAejcuOOKCUryaJQ6qFqW2DtbYrPHzMXHwk"
       },
       "Export": {
         "Name": "sls-this27-dev-GetAllManagersLambdaFunctionQualifiedArn"
@@ -10224,7 +10283,7 @@
     "GetMyBranchLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetMyBranchLambdaVersion9pY480LJfCEkkRZPNgaLRmUxMYnv4UcZCXEBzBthA"
+        "Ref": "GetMyBranchLambdaVersion7kUbxUuOGcGHGj4fW8QWKqKfmkvN09TUhkVxvvEA"
       },
       "Export": {
         "Name": "sls-this27-dev-GetMyBranchLambdaFunctionQualifiedArn"
@@ -10233,7 +10292,7 @@
     "UpdateManagerLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateManagerLambdaVersionwnYphA35uBipDVLQ6J4gh29DQk8lDKH7mi7JIMWH0"
+        "Ref": "UpdateManagerLambdaVersiontizd4BJrNUPiltQFgcoZkSLtg3n2uX9y9rlsFeXmg"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateManagerLambdaFunctionQualifiedArn"
@@ -10242,7 +10301,7 @@
     "DeleteManagerLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteManagerLambdaVersionjcOOwAvN22aB1cevMwB59o6gyPkjewlT7gD4nmDDk"
+        "Ref": "DeleteManagerLambdaVersiond7wa2Ug2ozilSX8vRaZ8YUTvsaj6DFRlt5enZxcnB58"
       },
       "Export": {
         "Name": "sls-this27-dev-DeleteManagerLambdaFunctionQualifiedArn"
@@ -10251,7 +10310,7 @@
     "CreateCustomerLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateCustomerLambdaVersionshLvN6T3KA1fnTT29H45fKQshZ4G4CjmOK0Ky52CyY"
+        "Ref": "CreateCustomerLambdaVersionVdg7HsPdlXHuczIPz62KLKBKkJzDgtNYhRCheQnx9i8"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateCustomerLambdaFunctionQualifiedArn"
@@ -10260,7 +10319,7 @@
     "GetCustomersLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetCustomersLambdaVersionzxtd6LHMJNoY7kP56Jfu6Y3lqRwCUocyz5XMaQ0cWw"
+        "Ref": "GetCustomersLambdaVersionWjXYTP8R7OglfOlL57HvPQeCal6sVtKPuWfMSDHzks"
       },
       "Export": {
         "Name": "sls-this27-dev-GetCustomersLambdaFunctionQualifiedArn"
@@ -10269,7 +10328,7 @@
     "UpdateCustomerLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateCustomerLambdaVersiongS82GrZAxftv0SGzS8q252RNbhuFUSx3HzrLB1Uf8"
+        "Ref": "UpdateCustomerLambdaVersioneqwBCvFukEOvEe1qMTzD8lR4WYPosHOzFEmXjkLwOk"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateCustomerLambdaFunctionQualifiedArn"
@@ -10278,7 +10337,7 @@
     "DeleteCustomerLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteCustomerLambdaVersionGLiuipIPCgEYOV7AQgldKtHLWtDVgwZrj9gZFLEPLg4"
+        "Ref": "DeleteCustomerLambdaVersionvOEqJy1K7ULB31Qz7BIpCHWdDCioEMBBH9VZmKGlU"
       },
       "Export": {
         "Name": "sls-this27-dev-DeleteCustomerLambdaFunctionQualifiedArn"
@@ -10287,7 +10346,7 @@
     "CreateMachineTypeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateMachineTypeLambdaVersionGRokL0NZLzjuLYE2OAwNQ4CMnskK6rCfh0duBhlzE"
+        "Ref": "CreateMachineTypeLambdaVersionQ6DALPwAce1thgeLXrrakMM9Ftf9JqkNU1Pl9oil80"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateMachineTypeLambdaFunctionQualifiedArn"
@@ -10296,7 +10355,7 @@
     "GetMachineTypesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetMachineTypesLambdaVersion8bDx8yAwQgWDgKU7vMUqjhMbzfoMdVz0UcFjOxpYs"
+        "Ref": "GetMachineTypesLambdaVersionDv7g6YdZ4TIJyxUrNlzVPFWoS4N0QIZBoDld8EiHtWE"
       },
       "Export": {
         "Name": "sls-this27-dev-GetMachineTypesLambdaFunctionQualifiedArn"
@@ -10305,7 +10364,7 @@
     "GetAllMachineTypesWithMachinesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllMachineTypesWithMachinesLambdaVersionAOKICtchFrFds35mqSJ8hVAbmIU4iU1PXrikLFvpg"
+        "Ref": "GetAllMachineTypesWithMachinesLambdaVersionWDJhsg68zek0OpwCVxWAfLPWbGG3lQ4ycjt7OCwU8"
       },
       "Export": {
         "Name": "sls-this27-dev-GetAllMachineTypesWithMachinesLambdaFunctionQualifiedArn"
@@ -10314,7 +10373,7 @@
     "UpdateMachineTypeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateMachineTypeLambdaVersionGhPbjJdNri1tBtPjl3TlBea7LSYI8OTdbphwOoB4"
+        "Ref": "UpdateMachineTypeLambdaVersionsLAN7O8ifAb13bf9uLXNEkyrqw2L8qn9HNUvQno2T4"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateMachineTypeLambdaFunctionQualifiedArn"
@@ -10323,7 +10382,7 @@
     "DeleteMachineTypeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteMachineTypeLambdaVersionkhjyKqpoHKtpj6o48cCZorNxsPf3ihzg3CR9yriSD90"
+        "Ref": "DeleteMachineTypeLambdaVersion0ZNgMKSDa3rjRw22AEKBlMzgfTE7svqcULJMWKO23c"
       },
       "Export": {
         "Name": "sls-this27-dev-DeleteMachineTypeLambdaFunctionQualifiedArn"
@@ -10332,7 +10391,7 @@
     "CreateMachineLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateMachineLambdaVersionlX4dBrIP0utzvUYgFGd5XSfEeZJYQK9oLCIDhHqRlDI"
+        "Ref": "CreateMachineLambdaVersionD8F6QepZ8MP0hodB7d9pUOF8wkd5qHvRKcf0IzZRY"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateMachineLambdaFunctionQualifiedArn"
@@ -10341,7 +10400,7 @@
     "GetAllMachinesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllMachinesLambdaVersionzmvw1kY7IlHsY4p0giHAc7jxKsNWU6eBz7Uy3Ycpc"
+        "Ref": "GetAllMachinesLambdaVersionlXYj8DXIceXoc7E9v8fNbotY1ievWYH9VUau5MZiR0s"
       },
       "Export": {
         "Name": "sls-this27-dev-GetAllMachinesLambdaFunctionQualifiedArn"
@@ -10350,7 +10409,7 @@
     "UpdateMachineLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateMachineLambdaVersionEipp14M1ebqVeSK6s54Pd4vZTf91q7uFN1trirX6bXo"
+        "Ref": "UpdateMachineLambdaVersionYgWdbEKDP4sgHQ0HrMvfpixqahVaIOEw5RMVnC63Xyg"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateMachineLambdaFunctionQualifiedArn"
@@ -10359,7 +10418,7 @@
     "DeleteMachineLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteMachineLambdaVersionOeraX3nwNWjppwcqXoDPZGXUrl8LFD1Q6369LIdkRE"
+        "Ref": "DeleteMachineLambdaVersionMCeYOS0TlZIvvUCGXrtgjHb2ES8HgOnV5cXIrgX5nM"
       },
       "Export": {
         "Name": "sls-this27-dev-DeleteMachineLambdaFunctionQualifiedArn"
@@ -10368,7 +10427,7 @@
     "CreateProductTypeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateProductTypeLambdaVersionrcIMfQvuVOqzDmtZ1x9TYuayJ5hoQ0T0aDgoBKyd0"
+        "Ref": "CreateProductTypeLambdaVersionU2kz8Zm5DmV7ofB6jSriwrjs0xwIt2HPe6h7tHe8k"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateProductTypeLambdaFunctionQualifiedArn"
@@ -10377,7 +10436,7 @@
     "GetProductTypesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetProductTypesLambdaVersionIE4LIeJP08sjXfXfHsimWRNDeSC0fGDOQNn84F1Q"
+        "Ref": "GetProductTypesLambdaVersionJmzTF3UY99ajd0zv1scCrsAHPS9P0tZb3LEgID9zNc"
       },
       "Export": {
         "Name": "sls-this27-dev-GetProductTypesLambdaFunctionQualifiedArn"
@@ -10386,7 +10445,7 @@
     "GetAllProductTypesWithProductsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllProductTypesWithProductsLambdaVersionp3qc8UKLPIN65I8hBhHV7xfBSJBO4MjUxyBJCu1RDA"
+        "Ref": "GetAllProductTypesWithProductsLambdaVersionvLMEg8TMQbUWHdSzVlW6Q3MSZ0ZVVqqDMwkd3bBfzw"
       },
       "Export": {
         "Name": "sls-this27-dev-GetAllProductTypesWithProductsLambdaFunctionQualifiedArn"
@@ -10395,7 +10454,7 @@
     "UpdateProductTypeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateProductTypeLambdaVersiontqIUAmkR8Xp33bT8CWLH93iCexIbYXgibGNSGLyQ8"
+        "Ref": "UpdateProductTypeLambdaVersionrgZx5qGdnDey7D27u8oo0deQ4pPD4ZuDES7IYcw9FA"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateProductTypeLambdaFunctionQualifiedArn"
@@ -10404,7 +10463,7 @@
     "DeleteProductTypeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteProductTypeLambdaVersioncv0Y0J5rpoEWggECkLZsO8SZZdlZbMafyPXnQIdVYus"
+        "Ref": "DeleteProductTypeLambdaVersion0qkHQ99HGKIm3QCfAN4ZYv0f7tt8HuDHkpBdkyO8Ro"
       },
       "Export": {
         "Name": "sls-this27-dev-DeleteProductTypeLambdaFunctionQualifiedArn"
@@ -10413,7 +10472,7 @@
     "CreateProductLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateProductLambdaVersiong7ttm9R6OVgxmAy9joJcR94esenP3CUFqsCorKtG1eA"
+        "Ref": "CreateProductLambdaVersionudgkn3NUco7pPRH0GW7GmPZBV10RbQSW6wHydY2UIuo"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateProductLambdaFunctionQualifiedArn"
@@ -10422,7 +10481,7 @@
     "GetProductsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetProductsLambdaVersionnq2r3TR3StkfF9lEbCXk6spEXjJu7g3hwSMKsKr8OM"
+        "Ref": "GetProductsLambdaVersion6oiZv1D8L1r7hIycbxwT6dbXmTWOuCHpGNoPZ0Q8Dc"
       },
       "Export": {
         "Name": "sls-this27-dev-GetProductsLambdaFunctionQualifiedArn"
@@ -10431,7 +10490,7 @@
     "UpdateProductLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateProductLambdaVersiond4v4X1uqOFcfTGs8S107YZ23ujjciDfojatZagnLlY"
+        "Ref": "UpdateProductLambdaVersionExjYHa6JVh6ihwI57bs7I0gg4zBvw7qopB44pYVFqY"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateProductLambdaFunctionQualifiedArn"
@@ -10440,7 +10499,7 @@
     "DeleteProductLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteProductLambdaVersionlMOghpXdyqacIePjRb2YTXxE8sKAwPDFe98eYEbk"
+        "Ref": "DeleteProductLambdaVersionc9uuIQL4QVjY1Imc7gNp58yqxmTTLUaBk5N2NaYvo"
       },
       "Export": {
         "Name": "sls-this27-dev-DeleteProductLambdaFunctionQualifiedArn"
@@ -10449,7 +10508,7 @@
     "CreateMaterialTypeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateMaterialTypeLambdaVersionoTXwZEWlU9VoAjv8mwRIpdM09qp4zqeVc7tf44jAsE"
+        "Ref": "CreateMaterialTypeLambdaVersionbZyJPaJyCJG3ffAtnkGky3EXVxVYCzGbqOgkA7OxU"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateMaterialTypeLambdaFunctionQualifiedArn"
@@ -10458,7 +10517,7 @@
     "GetMaterialTypesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetMaterialTypesLambdaVersionH2wK6Os4hnpUF5lqVoXEy1Mbm9dC6OG5Qiom1ripvo"
+        "Ref": "GetMaterialTypesLambdaVersionjsy0CZLJaV7fp3jlseqspy5gdat7YAb1HzplH3uRYfs"
       },
       "Export": {
         "Name": "sls-this27-dev-GetMaterialTypesLambdaFunctionQualifiedArn"
@@ -10467,7 +10526,7 @@
     "GetAllMaterialTypesWithMaterialsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllMaterialTypesWithMaterialsLambdaVersion9Jrr64kTpReMXXOOglv5EbIWJShJIhUww8k9XBEU"
+        "Ref": "GetAllMaterialTypesWithMaterialsLambdaVersion25iukQK5VMkcX64zHrK8jtV337uSH9wvSxc8DJXfODg"
       },
       "Export": {
         "Name": "sls-this27-dev-GetAllMaterialTypesWithMaterialsLambdaFunctionQualifiedArn"
@@ -10476,7 +10535,7 @@
     "UpdateMaterialTypeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateMaterialTypeLambdaVersionJx9bAkgatW9wUs3JmyqmKHBg99OU3YF5Nz5qLVTWec"
+        "Ref": "UpdateMaterialTypeLambdaVersionfQbdd8vbmDrHSx7INGIcMMZgEs6wQPrbw0FEefuGDU"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateMaterialTypeLambdaFunctionQualifiedArn"
@@ -10485,7 +10544,7 @@
     "DeleteMaterialTypeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteMaterialTypeLambdaVersionwf29WywvSoV7vPeFFD2cpI0F8aYfSw4cLGcpxyHPfk"
+        "Ref": "DeleteMaterialTypeLambdaVersiondaGHvOjg7pjaEY3Y8GWFEytiurZilWXhFO4TafFo"
       },
       "Export": {
         "Name": "sls-this27-dev-DeleteMaterialTypeLambdaFunctionQualifiedArn"
@@ -10494,7 +10553,7 @@
     "CreateMaterialLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateMaterialLambdaVersiondHJOKMRGiDQVYojEFGhYkkohOJDkRxq1FGSo91PH78"
+        "Ref": "CreateMaterialLambdaVersionSSIHJk7u2A8zxyT38Mqgywm2tg3D2fORzECuLZEg"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateMaterialLambdaFunctionQualifiedArn"
@@ -10503,7 +10562,7 @@
     "GetMaterialsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetMaterialsLambdaVersion2qFZOKrx4ZACkYh9bfuOY8w5rC7d4QUwvAvXg4V8"
+        "Ref": "GetMaterialsLambdaVersionPbhKM5bsQ3Gqaxp044xmmFYBrjUGVbzs08Ykg9Os"
       },
       "Export": {
         "Name": "sls-this27-dev-GetMaterialsLambdaFunctionQualifiedArn"
@@ -10512,7 +10571,7 @@
     "UpdateMaterialLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateMaterialLambdaVersion4t9vRomt8ISft5LHa1MqTV85bADL6fJb0Yl6nyffs"
+        "Ref": "UpdateMaterialLambdaVersionAMKfFVY47OuFGhgNEUJJSThl8o785cqIz3pWYBnzis"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateMaterialLambdaFunctionQualifiedArn"
@@ -10521,7 +10580,7 @@
     "DeleteMaterialLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteMaterialLambdaVersionDqDGuIqtnfW0NSuTbFNcFoF8I0lRExiEuyHi81HhAo"
+        "Ref": "DeleteMaterialLambdaVersion2o1mlmT45ewAZGepAonNlr9tdBIghfCZliDvjulFrAA"
       },
       "Export": {
         "Name": "sls-this27-dev-DeleteMaterialLambdaFunctionQualifiedArn"
@@ -10530,7 +10589,7 @@
     "CreateStepLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateStepLambdaVersionztDy8tsc38AjFjSnpVd0jDnanEP7vlu35h3vh4LL3U"
+        "Ref": "CreateStepLambdaVersion226bRLjWP2A78SAx2iVN8KbaZwvawgJD8SdvA9YyQ"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateStepLambdaFunctionQualifiedArn"
@@ -10539,7 +10598,7 @@
     "GetStepsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetStepsLambdaVersionScUFlLMnBsbrOeIfvRaQzPSnLTIPDzQeiZdhxsfR0"
+        "Ref": "GetStepsLambdaVersion5ceW4Xfj7nc83R9ehCbeqC1I2ggeeZYqTMsIk8iSWo"
       },
       "Export": {
         "Name": "sls-this27-dev-GetStepsLambdaFunctionQualifiedArn"
@@ -10548,7 +10607,7 @@
     "UpdateStepLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateStepLambdaVersionGp1SpLjQpafyqW0n016fsXNbzywCALNNTHtx6yrYs"
+        "Ref": "UpdateStepLambdaVersionh0Xafn548YwcTUuDWRXgMq2pNzE6RBY2ip95SxzDuU"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateStepLambdaFunctionQualifiedArn"
@@ -10557,7 +10616,7 @@
     "DeleteStepLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteStepLambdaVersionwFHfhmj7s66opVVQQ4IEUMhkgVABIKcGojbwiPwGw"
+        "Ref": "DeleteStepLambdaVersionng9MLfmjV54IRmUwhfXq0903UW7hycU98AEq33F2E"
       },
       "Export": {
         "Name": "sls-this27-dev-DeleteStepLambdaFunctionQualifiedArn"
@@ -10566,7 +10625,7 @@
     "SendMarketingToSelectedLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "SendMarketingToSelectedLambdaVersioneovqcytt1SpvWpwl0w3Gnj5YDzIih4ylGwAyAjXNKs"
+        "Ref": "SendMarketingToSelectedLambdaVersionNB6RH9VO69KKX4l5OCRinDy8jOKsRIyoc77TRbbzh4I"
       },
       "Export": {
         "Name": "sls-this27-dev-SendMarketingToSelectedLambdaFunctionQualifiedArn"
@@ -10575,7 +10634,7 @@
     "CreateOperatorLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateOperatorLambdaVersionZuQez7yxBy3zftpqbMAnPbF9b4EXPyBa3Nnw0A01oI"
+        "Ref": "CreateOperatorLambdaVersion07QRRVcAFjQojRE3X8nUj8EAnloBSvFrJR0rIsG244"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateOperatorLambdaFunctionQualifiedArn"
@@ -10584,7 +10643,7 @@
     "OperatorLoginLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "OperatorLoginLambdaVersionsh7fADl9dWecJ3KLKXOiokQREbsnnFz0WjB41CWK2Yk"
+        "Ref": "OperatorLoginLambdaVersiongQC0UMjD4hICgvtH5SKIUSYCWcVdJSc8GlNl6rHe0"
       },
       "Export": {
         "Name": "sls-this27-dev-OperatorLoginLambdaFunctionQualifiedArn"
@@ -10593,7 +10652,7 @@
     "GetOperatorOrdersLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetOperatorOrdersLambdaVersionpSlBnAQVWXJVlkNdaSJEZ6n6a5dnUzfjX2YvcbFfFw"
+        "Ref": "GetOperatorOrdersLambdaVersion5l7MYSNe9jfSRvQr5tSQit0TbZaAtzorziXylnoPKn4"
       },
       "Export": {
         "Name": "sls-this27-dev-GetOperatorOrdersLambdaFunctionQualifiedArn"
@@ -10602,7 +10661,7 @@
     "UpdateOrderStepStatusLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateOrderStepStatusLambdaVersion8ZzyTN9rYgwbjN2BZxUHoPW7HYw1w5CbcQWxLVU4"
+        "Ref": "UpdateOrderStepStatusLambdaVersionpfWYgsOCDlQ6gqDfMc8j9FdyYQc81eGUOTqk7MtY8g"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateOrderStepStatusLambdaFunctionQualifiedArn"
@@ -10611,7 +10670,7 @@
     "GetCompletedOrdersLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetCompletedOrdersLambdaVersionie0Z7pWKbZ547P7O4s7SmJaQgxCR4l130yt5FYShdfc"
+        "Ref": "GetCompletedOrdersLambdaVersion5DIHzZHPf2ej0yuWiMNHDAS6wUTAmFfiWjfwBFn2Rw"
       },
       "Export": {
         "Name": "sls-this27-dev-GetCompletedOrdersLambdaFunctionQualifiedArn"
@@ -10620,7 +10679,7 @@
     "GetOneInProgressOrderLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetOneInProgressOrderLambdaVersionL8lYdsULKHXC3aPmANdAfRBNuqDvIqJn6wop8azWUM"
+        "Ref": "GetOneInProgressOrderLambdaVersionY0lNvkO8PbBN2QyNPOsdHRSdqR0UdWeWsR88axVDJ0"
       },
       "Export": {
         "Name": "sls-this27-dev-GetOneInProgressOrderLambdaFunctionQualifiedArn"
@@ -10629,7 +10688,7 @@
     "UpdateOperatorPasswordLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateOperatorPasswordLambdaVersionLEnfxZl7785mhoK0XPaZGxTk7IeB71AAVwl2rYWfg"
+        "Ref": "UpdateOperatorPasswordLambdaVersionSKFCGuD8EqLFOGKhqcNJZByiyVeyyBWXuzLHVu1pyvw"
       },
       "Export": {
         "Name": "sls-this27-dev-UpdateOperatorPasswordLambdaFunctionQualifiedArn"
@@ -10638,7 +10697,7 @@
     "GetOnePendingOrderLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetOnePendingOrderLambdaVersion19EZwxRdwv7jJeIjOC93if4jR01fUydMraKiR4VK9A"
+        "Ref": "GetOnePendingOrderLambdaVersionkzntGip8BlL94v3cQpc2pZw8VUEwelM15NHkFqfIsg"
       },
       "Export": {
         "Name": "sls-this27-dev-GetOnePendingOrderLambdaFunctionQualifiedArn"
@@ -10647,7 +10706,7 @@
     "CreateOrderLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateOrderLambdaVersioncLi4lPXwoNqgnPvxXFp2jvx8tRL0rlAt610mgGico"
+        "Ref": "CreateOrderLambdaVersionMdKSLOyKyihh7rhynKVjjtGaPI4R1J44hY9royxH4"
       },
       "Export": {
         "Name": "sls-this27-dev-CreateOrderLambdaFunctionQualifiedArn"
@@ -10656,7 +10715,7 @@
     "GetOrdersByBranchIdLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetOrdersByBranchIdLambdaVersion4izZxwh4PeTaBFKjXM4DOM5aBY1SB2TZQVLhD9ZA"
+        "Ref": "GetOrdersByBranchIdLambdaVersionZ3D0zmrRIYuBsD0ihZX32a8CCpWxutTrsDTZ5R2fM"
       },
       "Export": {
         "Name": "sls-this27-dev-GetOrdersByBranchIdLambdaFunctionQualifiedArn"

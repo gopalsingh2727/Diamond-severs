@@ -4,20 +4,6 @@ const verifyToken = require('../../utiles/verifyToken');
 const Machine = require('../../models/Machine/machine');
 const mongoose = require('mongoose');
 
-const headers = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/json'
-
-};
-
-
-// ✅ YOUR WORKING loginAdmin CORS SETUP:
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key', // ← THIS IS MISSING
-  'Access-Control-Allow-Methods': 'POST, OPTIONS', // ← THIS IS MISSING
-  'Content-Type': 'application/json'
-};
 
 // Handle preflight OPTIONS request (← THIS ENTIRE BLOCK IS MISSING)
 
@@ -156,22 +142,33 @@ module.exports.getMachineTypes = async (event) => {
   await connect();
 
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json'
-  };
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, x-api-key, x-branch-id",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Content-Type": "application/json"
+};
+
+  // ✅ Handle preflight OPTIONS request
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ message: "CORS preflight successful" }),
+    };
+  }
 
   try {
     // ✅ API key check
-    const apiKey = event.headers['x-api-key'];
+    const apiKey = event.headers["x-api-key"];
     if (!apiKey || apiKey !== process.env.API_KEY) {
       return {
         statusCode: 403,
         headers,
-        body: JSON.stringify({ message: 'Invalid API key' }),
+        body: JSON.stringify({ message: "Invalid API key" }),
       };
     }
 
-    // ✅ Token auth check
+    // ✅ Token check
     const authHeader = event.headers.authorization || event.headers.Authorization;
     let user;
     try {
@@ -180,35 +177,46 @@ module.exports.getMachineTypes = async (event) => {
       return {
         statusCode: 401,
         headers,
-        body: JSON.stringify({ message: 'Invalid or expired token' }),
+        body: JSON.stringify({ message: "Invalid or expired token" }),
       };
     }
 
-    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
+    if (!user || (user.role !== "admin" && user.role !== "manager")) {
       return {
         statusCode: 403,
         headers,
-        body: JSON.stringify({ message: 'Unauthorized' }),
+        body: JSON.stringify({ message: "Unauthorized" }),
       };
     }
 
-    // ✅ Filter machine types based on role
-    const filter = user.role === 'manager' ? { branchId: user.branchId } : {};
+    // ✅ Role-based filtering
+    const requestHeaders = event.headers || {};
+    const branchIdKey = Object.keys(requestHeaders).find(
+      (key) => key.toLowerCase() === "x-branch-id"
+    );
+    const requestedBranchId = requestHeaders[branchIdKey] || null;
 
+    let filter = {};
+    if (user.role === "manager") {
+      filter.branchId = user.branchId;
+    } else if (user.role === "admin" && requestedBranchId) {
+      filter.branchId = requestedBranchId;
+    }
+
+    // ✅ Fetch from DB
     const machineTypes = await MachineType.find(filter);
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(machineTypes)
+      body: JSON.stringify(machineTypes),
     };
-
   } catch (error) {
     console.error("getMachineTypes error:", error);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ message: error.message })
+      body: JSON.stringify({ message: error.message }),
     };
   }
 };

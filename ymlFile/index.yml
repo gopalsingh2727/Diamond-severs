@@ -141,6 +141,13 @@
           cors: true
 
   # ---------- Machine Type ----------
+
+
+
+
+
+
+  
   createMachineType:
     handler: handlers/MachineType/MachineType.createMachineType
     events:
@@ -271,6 +278,10 @@
           path: product
           method: get
           cors: true
+          request:
+          parameters:
+            querystrings:
+              branchId: true
 
   updateProduct:
     handler: handlers/product/product.updateProduct
