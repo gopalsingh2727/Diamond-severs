@@ -142,7 +142,7 @@
 
   # ---------- Machine Type ----------
   createMachineType:
-    handler: handlers/machineType/machineType.createMachineType
+    handler: handlers/MachineType/MachineType.createMachineType
     events:
       - http:
           path: createMachineType/machinetype
@@ -150,7 +150,7 @@
           cors: true
 
   getMachineTypes:
-    handler: handlers/machineType/machineType.getMachineTypes
+    handler: handlers/MachineType/MachineType.getMachineTypes
     events:
       - http:
           path: machinetype
@@ -174,7 +174,7 @@
           cors: true
 
   deleteMachineType:
-    handler: handlers/machineType/machineType.deleteMachineType
+    handler: handlers/MachineType/MachineType.deleteMachineType
     events:
       - http:
           path: machinetype/{id}

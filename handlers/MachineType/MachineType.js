@@ -28,6 +28,9 @@ const checkApiKey = (event) => {
 
 module.exports.createMachineType = async (event) => {
 
+  
+   
+  
   if (!checkApiKey(event)) {
     return respond(401, { message: 'Invalid API key' });
   }
