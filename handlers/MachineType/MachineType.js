@@ -5,15 +5,9 @@ const Machine = require('../../models/Machine/machine');
 const mongoose = require('mongoose');
 
 
-// Handle preflight OPTIONS request (← THIS ENTIRE BLOCK IS MISSING)
-
-
-// ===========================================
-// HERE'S YOUR EXACT createMachineType WITH ONLY THE MISSING CORS PARTS ADDED:
-// ===========================================
 
 module.exports.createMachineType = async (event) => {
-  // ✅ ADD THIS: Complete CORS headers (copy from your loginAdmin)
+ 
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
@@ -21,7 +15,7 @@ module.exports.createMachineType = async (event) => {
     'Content-Type': 'application/json'
   };
 
-  // ✅ ADD THIS: OPTIONS handler (copy from your loginAdmin)
+  
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
@@ -33,17 +27,17 @@ module.exports.createMachineType = async (event) => {
   await connect();
 
   try {
-    // ✅ Check API key
+   
     const apiKey = event.headers['x-api-key'];
     if (!apiKey || apiKey !== process.env.API_KEY) {
       return {
         statusCode: 403,
-        headers: corsHeaders, // ← CHANGE: use corsHeaders instead of headers
+        headers: corsHeaders, 
         body: JSON.stringify({ message: 'Invalid API key' }),
       };
     }
 
-    // ✅ Parse token
+   
     const authHeader = event.headers.authorization || event.headers.Authorization;
     let user;
     try {
@@ -89,7 +83,7 @@ module.exports.createMachineType = async (event) => {
     if (user.role === 'admin' && !body.branchId) {
       return {
         statusCode: 400,
-        headers: corsHeaders, // ← CHANGE: use corsHeaders
+        headers: corsHeaders, 
         body: JSON.stringify({ message: 'branchId is required for admin' }),
       };
     }
@@ -189,7 +183,7 @@ module.exports.getMachineTypes = async (event) => {
       };
     }
 
-    // ✅ Role-based filtering using only query param
+   
     const requestedBranchId = event.queryStringParameters?.branchId || null;
     console.log(requestedBranchId);
     
@@ -386,6 +380,7 @@ module.exports.getAllMachineTypesWithMachines = async (event) => {
   const headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
+    
   };
 
   try {

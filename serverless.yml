@@ -6,7 +6,7 @@ provider:
   runtime: nodejs20.x
   region: ap-south-1
   stage: dev
-  timeout: 30
+  timeout: 60
   
   environment:
     MONGO_URI: ${env:MONGO_URI, 'mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'},

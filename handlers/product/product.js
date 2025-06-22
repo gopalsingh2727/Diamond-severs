@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Product = require('../../models/product/product');
 const connect = require('../../config/mongodb/db');
 const verifyToken = require('../../utiles/verifyToken');
-
+const productType = require('../../models/productCatalogue/productType')
+const Branch = require('../../models/branch/branch')
 const respond = (statusCode, body) => ({
   statusCode,
   headers: {
@@ -96,8 +97,8 @@ module.exports.getProducts = async (event) => {
     }
 
     const products = await Product.find(filter)
-      .populate('productType', 'name description')
-      .populate('branchId', 'name location');
+      .populate('productType', 'name ,description')
+      .populate('branchId', 'name ,location');
 
     return respond(200, {
       message: 'Products fetched',

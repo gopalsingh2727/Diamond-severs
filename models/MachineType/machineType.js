@@ -4,7 +4,7 @@ const machineTypeSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
-    unique: true, // globally unique
+    unique: true, 
     trim: true
   },
   description: {

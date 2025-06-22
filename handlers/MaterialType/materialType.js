@@ -31,6 +31,8 @@ module.exports.createMaterialType = async (event) => {
     let user;
     try {
       user = verifyToken(authHeader);
+      console.log(user);
+      
     } catch {
       return respond(401, { message: 'Invalid token' });
     }
@@ -71,19 +73,24 @@ module.exports.getMaterialTypes = async (event) => {
   }
 
   try {
+    const authHeader = event.headers.authorization || event.headers.Authorization;
     let user;
     try {
-      user = verifyToken(event.headers.authorization);
+      user = verifyToken(authHeader);
     } catch {
       return respond(401, { message: 'Invalid token' });
     }
 
     let filter = {};
-    if (user.role === 'manager') {
-      filter.branchId = user.branchId;
-    }
 
-    const materialTypes = await MaterialType.find(filter).populate('productId');
+if (user.role === "manager") {
+  filter.branchId = user.branchId;
+} else if (user.role === "admin" && event.queryStringParameters?.branchId) {
+  filter.branchId = event.queryStringParameters.branchId;
+}
+
+
+const materialTypes = await MaterialType.find(filter);
     return respond(200, materialTypes);
   } catch (err) {
     return respond(500, { message: err.message });
@@ -99,9 +106,10 @@ module.exports.updateMaterialType = async (event) => {
   }
 
   try {
+    const authHeader = event.headers.authorization || event.headers.Authorization;
     let user;
     try {
-      user = verifyToken(event.headers.authorization);
+      user = verifyToken(authHeader);
     } catch {
       return respond(401, { message: 'Invalid token' });
     }
@@ -141,9 +149,10 @@ module.exports.deleteMaterialType = async (event) => {
   }
 
   try {
+    const authHeader = event.headers.authorization || event.headers.Authorization;
     let user;
     try {
-      user = verifyToken(event.headers.authorization);
+       user = verifyToken(authHeader);
     } catch {
       return respond(401, { message: 'Invalid token' });
     }

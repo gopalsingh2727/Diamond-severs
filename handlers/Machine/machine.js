@@ -161,7 +161,7 @@ module.exports.getAllMachines = async (event) => {
       };
     }
 
-    const user = await verifyToken(authHeader); // if async
+    const user = await verifyToken(authHeader); 
     if (!user || !user.role) {
       return {
         statusCode: 403,
@@ -173,7 +173,7 @@ module.exports.getAllMachines = async (event) => {
     const query = {};
     const params = event.queryStringParameters || {};
 
-    // 🧠 Role-based filtering
+
     if (user.role === 'manager') {
       query.branchId = user.branchId;
     } else if (user.role === 'admin' && params.branchId) {
@@ -222,12 +222,12 @@ module.exports.getAllMachines = async (event) => {
   }
 };
 
-// ✅ GET ONE MACHINE
-const mongoose = require('mongoose');
-const { verifyToken } = require('../utils/jwt'); // adjust path if needed
-const { connect } = require('../db'); // adjust path if needed
-const Machine = require('../models/Machine'); // adjust path if needed
-const Branch = require('../models/Branch'); // if needed
+// // ✅ GET ONE MACHINE
+// const mongoose = require('mongoose');
+// const { verifyToken } = require('../utils/jwt'); // adjust path if needed
+// const { connect } = require('../db'); // adjust path if needed
+// const Machine = require('../models/Machine'); // adjust path if needed
+// const Branch = require('../models/Branch'); // if needed
 
 module.exports.getOneMachine = async (event) => {
   await connect();

@@ -16,7 +16,6 @@ const path = require("path");
 
 
 
-
 module.exports.createCustomer = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
@@ -28,6 +27,7 @@ module.exports.createCustomer = async (event, context) => {
     "Content-Type": "application/json",
   };
 
+  // Handle preflight OPTIONS request
   if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
@@ -36,10 +36,11 @@ module.exports.createCustomer = async (event, context) => {
     };
   }
 
-  await connect();
-
   try {
-    // Validate API Key
+    // Connect to database
+    await connect();
+
+    // API Key validation
     const apiKey = headers["x-api-key"] || headers["X-API-Key"];
     if (!apiKey || apiKey !== process.env.API_KEY) {
       return {
@@ -49,6 +50,7 @@ module.exports.createCustomer = async (event, context) => {
       };
     }
 
+    // User authentication and authorization
     const authHeader = headers.authorization || headers.Authorization;
     const user = await verifyToken(authHeader);
 
@@ -60,31 +62,168 @@ module.exports.createCustomer = async (event, context) => {
       };
     }
 
-    let data;
+    // Parse request data based on content type
+    let data = {};
     let imageFile = null;
     const contentType = headers["content-type"] || headers["Content-Type"] || "";
+    
+    console.log("Content-Type:", contentType);
+    console.log("Is multipart:", contentType.includes("multipart/form-data"));
+    console.log("Raw event body:", event.body);
 
     if (contentType.includes("multipart/form-data")) {
-      const result = await parse(event);
-      data = result.fields || {};
-      if (result.files?.length > 0) {
-        imageFile = result.files.find((f) => f.fieldname === "image");
-      }
-    } else {
-      data = JSON.parse(event.body);
-    }
+      try {
+        const result = await parse(event);
+        console.log("Parsed multipart result:", JSON.stringify(result, null, 2));
+        
+        // FIXED: Handle parser that only extracts files but not form fields
+        // Check if form data is embedded within the files array
+        if (result.files && Array.isArray(result.files)) {
+          // Look for text fields that might be mixed with files
+          result.files.forEach(item => {
+            if (item.fieldname && !item.filename && item.content) {
+              // This is likely a text field stored as a "file"
+              try {
+                data[item.fieldname] = item.content.toString('utf8');
+              } catch (e) {
+                data[item.fieldname] = item.content;
+              }
+            } else if (item.fieldname && item.value !== undefined) {
+              // Some parsers store text fields with a 'value' property
+              data[item.fieldname] = item.value;
+            }
+          });
+          
+          // Find actual image file
+          imageFile = result.files.find(f => f.filename && f.contentType && f.contentType.startsWith('image/'));
+        }
+        
+        // Check other possible structures
+        if (Object.keys(data).length === 0) {
+          if (result.fields) {
+            data = result.fields;
+          } else if (result.body && result.body.fields) {
+            data = result.body.fields;
+          } else if (result.form) {
+            data = result.form;
+          } else {
+            // Try to extract from root level, excluding known file properties
+            Object.keys(result).forEach(key => {
+              if (!['files', 'file'].includes(key) && typeof result[key] !== 'object') {
+                data[key] = result[key];
+              }
+            });
+          }
+        }
+        
+        // Convert single-item arrays to strings (common with multipart parsers)
+        Object.keys(data).forEach(key => {
+          if (Array.isArray(data[key]) && data[key].length === 1) {
+            data[key] = data[key][0];
+          }
+        });
+        
+        console.log("Processed form data:", JSON.stringify(data, null, 2));
+        console.log("Image file found:", !!imageFile);
 
-    const requiredFields = ["firstName", "lastName", "phone1", "address1", "state", "pinCode"];
-    for (const field of requiredFields) {
-      if (!data[field]) {
+        // If we still don't have form data, provide detailed debugging
+        if (Object.keys(data).length === 0) {
+          console.error("No form fields found in parsed result");
+          
+          // Log detailed structure of files array for debugging
+          if (result.files) {
+            console.log("Files array structure:");
+            result.files.forEach((file, index) => {
+              console.log(`File ${index}:`, {
+                fieldname: file.fieldname,
+                filename: file.filename,
+                contentType: file.contentType,
+                hasContent: !!file.content,
+                contentLength: file.content ? file.content.length : 0,
+                otherProps: Object.keys(file).filter(k => !['fieldname', 'filename', 'contentType', 'content'].includes(k))
+              });
+            });
+          }
+          
+          return {
+            statusCode: 400,
+            headers: corsHeaders,
+            body: JSON.stringify({ 
+              message: "No form fields found in multipart data. Check if your client is sending form fields correctly.",
+              debugInfo: {
+                resultKeys: Object.keys(result),
+                hasFields: !!result.fields,
+                hasBodyFields: !!(result.body && result.body.fields),
+                hasForm: !!result.form,
+                filesCount: result.files ? result.files.length : 0,
+                fileStructure: result.files ? result.files.map(f => ({
+                  fieldname: f.fieldname,
+                  filename: f.filename,
+                  hasContent: !!f.content,
+                  contentType: f.contentType
+                })) : []
+              }
+            }),
+          };
+        }
+        
+      } catch (parseError) {
+        console.error("Multipart parsing error:", parseError);
         return {
           statusCode: 400,
           headers: corsHeaders,
-          body: JSON.stringify({ message: `Missing required field: ${field}` }),
+          body: JSON.stringify({ 
+            message: "Failed to parse multipart form data",
+            error: parseError.message 
+          }),
+        };
+      }
+    } else {
+      // Ensure event.body exists and is not empty
+      if (!event.body) {
+        return {
+          statusCode: 400,
+          headers: corsHeaders,
+          body: JSON.stringify({ message: "Request body is required" }),
+        };
+      }
+      
+      try {
+        data = JSON.parse(event.body);
+        console.log("Parsed JSON data:", JSON.stringify(data, null, 2));
+      } catch (parseError) {
+        console.error("JSON parsing error:", parseError);
+        return {
+          statusCode: 400,
+          headers: corsHeaders,
+          body: JSON.stringify({ message: "Invalid JSON in request body" }),
         };
       }
     }
 
+    // Validate required fields
+    const requiredFields = ["firstName", "lastName", "phone1", "address1", "state", "pinCode"];
+    console.log("Validating required fields...");
+    console.log("Available data keys:", Object.keys(data));
+    
+    for (const field of requiredFields) {
+      console.log(`Checking field '${field}':`, data[field]);
+      if (!data[field] || (typeof data[field] === 'string' && data[field].trim() === '')) {
+        console.error(`Missing or empty required field: ${field}`);
+        return {
+          statusCode: 400,
+          headers: corsHeaders,
+          body: JSON.stringify({ 
+            message: `Missing required field: ${field}`,
+            receivedFields: Object.keys(data),
+            fieldValue: data[field],
+            allData: data // ADDED: Include all data for debugging
+          }),
+        };
+      }
+    }
+
+    // Create customer object
     const customer = new Customer({
       companyName: data.companyName,
       firstName: data.firstName,
@@ -103,6 +242,7 @@ module.exports.createCustomer = async (event, context) => {
 
     let tmpFilePath;
 
+    // Handle image upload from multipart form data
     if (imageFile?.content) {
       const ext = path.extname(imageFile.filename).toLowerCase();
       const allowedTypes = [".jpg", ".jpeg", ".png", ".webp"];
@@ -118,7 +258,9 @@ module.exports.createCustomer = async (event, context) => {
       fs.writeFileSync(tmpFilePath, imageFile.content);
       const firebaseUrl = await uploadImageToFirebase(tmpFilePath, imageFile.filename);
       customer.imageUrl = firebaseUrl;
-    } else if (data.imageBase64 && data.imageName) {
+    } 
+    // Handle base64 image upload
+    else if (data.imageBase64 && data.imageName) {
       const ext = path.extname(data.imageName).toLowerCase();
       const allowedTypes = [".jpg", ".jpeg", ".png", ".webp"];
       if (!allowedTypes.includes(ext)) {
@@ -136,8 +278,10 @@ module.exports.createCustomer = async (event, context) => {
       customer.imageUrl = firebaseUrl;
     }
 
+    // Save customer to database
     await customer.save();
 
+    // Clean up temporary file
     if (tmpFilePath) {
       try {
         fs.unlinkSync(tmpFilePath);
@@ -154,11 +298,15 @@ module.exports.createCustomer = async (event, context) => {
   } catch (err) {
     console.error("Error creating customer:", err);
 
+    // Handle different types of errors
     const isDuplicate = err.code === 11000;
+    const statusCode = isDuplicate ? 400 : 500;
+    const message = isDuplicate ? "Duplicate entry" : (err.message || "Internal server error");
+
     return {
-      statusCode: isDuplicate ? 400 : 500,
+      statusCode,
       headers: corsHeaders,
-      body: JSON.stringify({ message: isDuplicate ? "Duplicate entry" : err.message }),
+      body: JSON.stringify({ message }),
     };
   }
 };
