@@ -1,5 +1,6 @@
 
 
+
   # ---------- Admin ----------
   createAdmin:
     handler: handlers/Admin/admin.createAdmin
@@ -504,24 +505,69 @@
           path: orders
           method: post
           cors: true
+  
 
-  getOrdersByBranchId:
-    handler: handlers/oders/oders.getOrdersByBranchId
+  getAllOrders:
+    handler: handlers/oders/oders.getAllOrders
     events:
       - http:
           path: orders
           method: get
           cors: true
 
+  getCustomerOrders:
+        handler: handlers/oders/oders.getCustomerOrders
+        events:
+        - http:
+           path: orders/customer
+           method: get
+           cors: true
 
+
+
+  # getOrdersByBranchId:
+  #   handler: handlers/oders/oders.getOrdersByBranchId
+  #   events:
+  #     - http:
+  #         path: orders
+  #         method: get
+  #         cors: true
+
+
+
+
+  createDeviceAccess:
+    handler: handlers/devicesForControlPanelMachineCreate/createdevices.createDeviceAccess
+    events:
+     - http:
+         path: device-access
+         method: post
+         cors: true
+
+  getDeviceAccessList:
+    handler: handlers/devicesForControlPanelMachineCreate/createdevices.getDeviceAccessList
+    events:
+     - http:
+         path: device-access
+         method: get
+         cors: true
+   
+  updateDeviceAccess:
+    handler: handlers/devicesForControlPanelMachineCreate/createdevices.updateDeviceAccess
+    events:
+     - http: 
+         path: device-access/{id}
+         method: put
+         cors: true 
 
 #----------------createOperator:----------------------
   createOperator:
     handler: handlers/MachineOperator/MachineOperator.createOperator
     events:
-      - httpApi:
+      - http:
           path: /operators
           method: post
+          cors: true
 
 
   getOperators:
@@ -559,3 +605,133 @@
             parameters:
               paths:
                 id: true
+
+
+#------------------loginDeviceForControllPanel-------------
+
+  loginDeviceForControllPanel:
+    handler: handlers/devicesForControlPanelCreate/devicesForControlPanelCreate.loginDeviceForControllPanel
+    events:
+     - http:
+         path: device-access/login
+         method: post
+         cors: true
+ 
+  getDeviceMachines:
+    handler: handlers/deviceAddmachine/deviceAddmachine.getDeviceMachines
+    events:
+     - http: 
+        path: device-access/machines
+        method: get
+        cors: true
+
+  machineOperatorLogin:
+    handler: handlers/deviceAddmachine/deviceAddmachine.machineOperatorLogin
+    events:
+     - http:  
+        path: device-access/operator-login
+        method: post
+        cors: true
+
+ 
+ # Add this to your serverless.yml
+
+  # ✅ CORRECT YAML FORMAT - Copy this exactly
+
+  machineAllPendingOrders:
+    handler: handlers/deviceAddmachine/deviceAddmachine.machineAllPendingOrders
+    events:
+      - http: 
+          path: device-access/machineAllPendingOrders
+          method: post
+          cors: true
+
+  MachineStartOrder:
+    handler: handlers/deviceAddmachine/deviceAddmachine.MachineStartOrder
+    events:
+      - http: 
+          path: device-access/MachineStartOrder
+          method: post
+          cors: true
+ 
+  MachineOrderSave:
+    handler: handlers/deviceAddmachine/deviceAddmachine.MachineOrderSave
+    events:
+      - http: 
+          path: device-access/MachineOrderSave
+          method: post
+          cors: true
+
+  MachineOrderStop:
+    handler: handlers/deviceAddmachine/deviceAddmachine.MachineOrderStop
+    events:
+      - http: 
+          path: device-access/MachineOrderStop
+          method: post
+          cors: true
+  
+
+  startOrdersMachine:
+    handler: handlers/deviceAddmachine/deviceAddmachine.startOrdersMachine
+    events:
+      - http:
+          path: device-access/startOrdersMachine
+          method: post
+          cors: true
+  
+  cancelOrderMachine:
+    handler: handlers/deviceAddmachine/deviceAddmachine.cancelOrderMachine
+    events:
+      - http: 
+          path: device-access/cancelOrderMachine
+          method: post
+          cors: true
+
+  dispatchOrderMachine:
+    handler: handlers/deviceAddmachine/deviceAddmachine.dispatchOrderMachine
+    events:
+      - http: 
+          path: device-access/dispatchOrderMachine
+          method: post
+          cors: true
+
+  approveOrderMachine:
+    handler: handlers/deviceAddmachine/deviceAddmachine.approveOrderMachine
+    events:
+      - http:
+         path: device-access/approveOrderMachine
+         method: post
+         cors: true
+  
+  completeOrderMachine:
+    handler: handlers/deviceAddmachine/deviceAddmachine.completeOrderMachine
+    events:
+      - http: 
+         path: device-access/completeOrderMachine
+         method: post
+         cors: true 
+
+  pauseOrderMachine:
+    handler: handlers/deviceAddmachine/deviceAddmachine.pauseOrderMachine
+    events:
+      - http: 
+          path: device-access/pauseOrderMachine
+          method: post
+          cors: true    
+
+  resumeOrderMachine:
+    handler: handlers/deviceAddmachine/deviceAddmachine.resumeOrderMachine
+    events:
+      - http:
+          path: device-access/resumeOrderMachine
+          method: post
+          cors: true 
+  
+  blockStepMachine:
+    handler: handlers/deviceAddmachine/deviceAddmachine.blockStepMachine  
+    events:
+      - http: 
+         path: device-access/blockStepMachine 
+         method: post
+         cors: true 
+  

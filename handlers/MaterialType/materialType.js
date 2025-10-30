@@ -199,7 +199,7 @@ module.exports.getAllMaterialTypesWithMaterials = async (event) => {
     if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
       return respond(403, { message: 'Unauthorized access' });
     }
-
+    
     const filter = user.role === 'manager' ? { branchId: user.branchId } : {};
     const materialTypes = await MaterialType.find(filter);
 
@@ -209,6 +209,8 @@ module.exports.getAllMaterialTypesWithMaterials = async (event) => {
         return {
           ...type.toObject(),
           materials,
+          
+
         };
       })
     );

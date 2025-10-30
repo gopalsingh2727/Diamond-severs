@@ -10,7 +10,13 @@ const productTypeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Branch',
     required: true
-  }
+  },
+   product27InfinityId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product27Infinity',
+      required: true,
+     
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('ProductType', productTypeSchema);

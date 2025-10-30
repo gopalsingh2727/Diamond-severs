@@ -16,7 +16,7 @@ const respond = (statusCode, body) => ({
 });
 
 const checkApiKey = (event) => {
-  // Normalize headers to lowercase keys
+  
   const headers = {};
   for (const key in event.headers) {
     headers[key.toLowerCase()] = event.headers[key];

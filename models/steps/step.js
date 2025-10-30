@@ -16,8 +16,11 @@ const stepSchema = new mongoose.Schema({
       reason: { type: String, default: '' },
       startedAt: Date,
       completedAt: Date,
+      
     },
+    
   ],
+ 
 
   branchId: { type: mongoose.Schema.Types.ObjectId, ref: 'Branch', required: true },
 }, { timestamps: true });

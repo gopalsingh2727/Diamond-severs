@@ -68,8 +68,8 @@ module.exports.createOperator = async (event) => {
       username,
       password: hashedPassword,
       machineId,
-      machineName: machine.machineName,
-      machineType: machine.machineType,
+
+    
       branchId,
       role: 'operator',
     });

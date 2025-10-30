@@ -7,6 +7,7 @@ const managerSchema = new mongoose.Schema({
   role: { type: String, default: 'Manager' },
   branchId: { type: mongoose.Schema.Types.ObjectId, ref: 'Branch', required: true },
   createdAt: { type: Date, default: Date.now },
+ 
 });
 
 

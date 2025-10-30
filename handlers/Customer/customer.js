@@ -37,7 +37,7 @@ module.exports.createCustomer = async (event, context) => {
   }
 
   try {
-    // Connect to database
+   
     await connect();
 
     // API Key validation
@@ -49,8 +49,8 @@ module.exports.createCustomer = async (event, context) => {
         body: JSON.stringify({ message: "Forbidden: Invalid API key" }),
       };
     }
-
-    // User authentication and authorization
+   
+    
     const authHeader = headers.authorization || headers.Authorization;
     const user = await verifyToken(authHeader);
 
@@ -62,7 +62,7 @@ module.exports.createCustomer = async (event, context) => {
       };
     }
 
-    // Parse request data based on content type
+
     let data = {};
     let imageFile = null;
     const contentType = headers["content-type"] || headers["Content-Type"] || "";

@@ -9,7 +9,7 @@
       "runtime": "nodejs20.x",
       "region": "ap-south-1",
       "stage": "dev",
-      "timeout": 30,
+      "timeout": 60,
       "environment": {
         "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
         "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
@@ -383,12 +383,6 @@
               "LogGroupName": "/aws/lambda/this27-dev-sendMarketingToSelected"
             }
           },
-          "CreateOperatorLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
-            "Properties": {
-              "LogGroupName": "/aws/lambda/this27-dev-createOperator"
-            }
-          },
           "OperatorLoginLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
@@ -441,6 +435,30 @@
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
               "LogGroupName": "/aws/lambda/this27-dev-getOrdersByBranchId"
+            }
+          },
+          "CreateOperatorLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/this27-dev-createOperator"
+            }
+          },
+          "GetOperatorsLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/this27-dev-getOperators"
+            }
+          },
+          "UpdateOperatorLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/this27-dev-updateOperator"
+            }
+          },
+          "DeleteOperatorLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/this27-dev-deleteOperator"
             }
           },
           "IamRoleLambdaExecution": {
@@ -528,13 +546,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Admin/admin.createAdmin",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createAdmin",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -560,13 +578,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Admin/admin.loginAdmin",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-loginAdmin",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -592,13 +610,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Branch/Branch.createBranch",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createBranch",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -624,13 +642,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Branch/Branch.getAllBranches",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getAllBranches",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -656,13 +674,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Branch/Branch.updateBranch",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateBranch",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -688,13 +706,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Branch/Branch.deleteBranch",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-deleteBranch",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -720,13 +738,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Branch/Branch.selectBranch",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-selectBranch",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -752,13 +770,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Manager/Manager.createManager",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createManager",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -784,13 +802,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Manager/Manager.managerLogin",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-managerLogin",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -816,13 +834,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Manager/Manager.getAllManagers",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getAllManagers",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -848,13 +866,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Manager/Manager.getMyBranch",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getMyBranch",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -880,13 +898,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Manager/Manager.updateManager",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateManager",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -912,13 +930,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Manager/Manager.deleteManager",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-deleteManager",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -944,13 +962,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Customer/customer.createCustomer",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createCustomer",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -976,13 +994,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Customer/customer.getCustomers",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getCustomers",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1008,13 +1026,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Customer/customer.updateCustomer",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateCustomer",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1040,13 +1058,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Customer/customer.deleteCustomer",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-deleteCustomer",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1072,13 +1090,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineType/MachineType.createMachineType",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createMachineType",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1104,13 +1122,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineType/MachineType.getMachineTypes",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getMachineTypes",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1136,13 +1154,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineType/MachineType.getAllMachineTypesWithMachines",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getAllMachineTypesWithMachines",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1168,13 +1186,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineType/MachineType.updateMachineType",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateMachineType",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1200,13 +1218,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineType/MachineType.deleteMachineType",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-deleteMachineType",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1232,13 +1250,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/machine/machine.createMachine",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createMachine",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1264,13 +1282,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/Machine/machine.getAllMachines",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getAllMachines",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1296,13 +1314,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/machine/machine.updateMachine",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateMachine",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1328,13 +1346,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/machine/machine.deleteMachine",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-deleteMachine",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1360,13 +1378,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/ProductCatalogue/productType.createProductType",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createProductType",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1392,13 +1410,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/ProductCatalogue/productType.getProductTypes",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getProductTypes",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1424,13 +1442,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/ProductCatalogue/productType.getAllProductTypesWithProducts",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getAllProductTypesWithProducts",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1456,13 +1474,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/ProductCatalogue/productType.updateProductType",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateProductType",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1488,13 +1506,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/ProductCatalogue/productType.deleteProductType",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-deleteProductType",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1520,13 +1538,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/product/product.createProduct",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createProduct",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1552,13 +1570,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/product/product.getProducts",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getProducts",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1584,13 +1602,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/product/product.updateProduct",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateProduct",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1616,13 +1634,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/product/product.deleteProduct",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-deleteProduct",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1648,13 +1666,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MaterialType/materialType.createMaterialType",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createMaterialType",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1680,13 +1698,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MaterialType/materialType.getMaterialTypes",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getMaterialTypes",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1712,13 +1730,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MaterialType/materialType.getAllMaterialTypesWithMaterials",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getAllMaterialTypesWithMaterials",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1744,13 +1762,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MaterialType/materialType.updateMaterialType",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateMaterialType",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1776,13 +1794,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MaterialType/materialType.deleteMaterialType",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-deleteMaterialType",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1808,13 +1826,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/material/material.createMaterial",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createMaterial",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1840,13 +1858,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/material/material.getMaterials",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getMaterials",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1872,13 +1890,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/material/material.updateMaterial",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateMaterial",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1904,13 +1922,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/material/material.deleteMaterial",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-deleteMaterial",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1936,13 +1954,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
-              "Handler": "handlers/step/step.createStep",
+              "Handler": "handlers/steps/steps.createStep",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createStep",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -1968,13 +1986,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
-              "Handler": "handlers/step/step.getSteps",
+              "Handler": "handlers/steps/steps.getSteps",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getSteps",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2000,13 +2018,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
-              "Handler": "handlers/step/step.updateStep",
+              "Handler": "handlers/steps/steps.updateStep",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateStep",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2032,13 +2050,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
-              "Handler": "handlers/step/step.deleteStep",
+              "Handler": "handlers/steps/steps.deleteStep",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-deleteStep",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2064,13 +2082,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/email/sendMarketingToSelected.sendMarketingToSelected",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-sendMarketingToSelected",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2089,38 +2107,6 @@
               "SendMarketingToSelectedLogGroup"
             ]
           },
-          "CreateOperatorLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
-              },
-              "Handler": "handlers/MachineOperator/MachineOperator.createOperator",
-              "Runtime": "nodejs20.x",
-              "FunctionName": "this27-dev-createOperator",
-              "MemorySize": 1024,
-              "Timeout": 30,
-              "Environment": {
-                "Variables": {
-                  "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
-                  "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
-                  "JWT_SECRET": "yourSecr33232"
-                }
-              },
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleLambdaExecution",
-                  "Arn"
-                ]
-              }
-            },
-            "DependsOn": [
-              "CreateOperatorLogGroup"
-            ]
-          },
           "OperatorLoginLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
@@ -2128,13 +2114,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineOperator/MachineOperator.operatorLogin",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-operatorLogin",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2160,13 +2146,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineOperator/MachineOperator.getOperatorOrders",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getOperatorOrders",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2192,13 +2178,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineOperator/MachineOperator.updateMachineStatus",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateOrderStepStatus",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2224,13 +2210,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineOperator/MachineOperator.getCompletedOrders",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getCompletedOrders",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2256,13 +2242,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineOperator/MachineOperator.getOneInProgressOrder",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getOneInProgressOrder",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2288,13 +2274,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineOperator/MachineOperator.updateOperatorPassword",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-updateOperatorPassword",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2320,13 +2306,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/MachineOperator/MachineOperator.getOnePendingOrder",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getOnePendingOrder",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2352,13 +2338,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/oders/oders.createOrder",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-createOrder",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2384,13 +2370,13 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z/this27.zip"
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
               },
               "Handler": "handlers/oders/oders.getOrdersByBranchId",
               "Runtime": "nodejs20.x",
               "FunctionName": "this27-dev-getOrdersByBranchId",
               "MemorySize": 1024,
-              "Timeout": 30,
+              "Timeout": 60,
               "Environment": {
                 "Variables": {
                   "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
@@ -2409,594 +2395,752 @@
               "GetOrdersByBranchIdLogGroup"
             ]
           },
-          "CreateAdminLambdaVersionqBIU4IcXxY4fCAwHWHsZseMiUxMQUL4MhZyS0Y9dr44": {
+          "CreateOperatorLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
+              },
+              "Handler": "handlers/MachineOperator/MachineOperator.createOperator",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "this27-dev-createOperator",
+              "MemorySize": 1024,
+              "Timeout": 60,
+              "Environment": {
+                "Variables": {
+                  "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
+                  "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+                  "JWT_SECRET": "yourSecr33232"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "CreateOperatorLogGroup"
+            ]
+          },
+          "GetOperatorsLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
+              },
+              "Handler": "handlers/MachineOperator/MachineOperator.getOperators",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "this27-dev-getOperators",
+              "MemorySize": 1024,
+              "Timeout": 60,
+              "Environment": {
+                "Variables": {
+                  "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
+                  "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+                  "JWT_SECRET": "yourSecr33232"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetOperatorsLogGroup"
+            ]
+          },
+          "UpdateOperatorLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
+              },
+              "Handler": "handlers/MachineOperator/MachineOperator.updateOperator",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "this27-dev-updateOperator",
+              "MemorySize": 1024,
+              "Timeout": 60,
+              "Environment": {
+                "Variables": {
+                  "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
+                  "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+                  "JWT_SECRET": "yourSecr33232"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "UpdateOperatorLogGroup"
+            ]
+          },
+          "DeleteOperatorLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z/this27.zip"
+              },
+              "Handler": "handlers/MachineOperator/MachineOperator.deleteOperator",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "this27-dev-deleteOperator",
+              "MemorySize": 1024,
+              "Timeout": 60,
+              "Environment": {
+                "Variables": {
+                  "MONGO_URI": "mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0,",
+                  "API_KEY": "27infinity.in_5f84c89315f74a2db149c06a93cf4820",
+                  "JWT_SECRET": "yourSecr33232"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "DeleteOperatorLogGroup"
+            ]
+          },
+          "CreateAdminLambdaVersion340RFQTYtCfS7hwT8VtAAT8d3bgwCU90Y6zI1cnC6n8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateAdminLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "LoginAdminLambdaVersion9atwrZKS6OCzqjcv8IzToVpLAYh0Atr8rBPEglCE": {
+          "LoginAdminLambdaVersionFfkvV6MyEk389eVrYbmccwLRLceDSankoMbtccarqo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "LoginAdminLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateBranchLambdaVersiona06SLhcNURk15Wo5JSyv4AlNIl0gYkB9eUfmaTP0": {
+          "CreateBranchLambdaVersionUWzDJVIPU4HNylZ6FYKEP0n1Mxl9TF9n3bSdYj3HY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateBranchLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetAllBranchesLambdaVersionMhoZMwOscxwnRSHWhqOItCNNa18whkpgEP50aCgId4": {
+          "GetAllBranchesLambdaVersionUi4aunO4YWiJCIcQFPqFnEfV52JagVHfHg9Xav9k": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAllBranchesLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateBranchLambdaVersionxAzbeiz0K3kkcm48GAw5XqOZYmsx1bLIZuanurH3o": {
+          "UpdateBranchLambdaVersiontmWohMdYtQQuv1VS6Sjcc8LUb0Xfpw0GdSvRtudCCB0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateBranchLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "DeleteBranchLambdaVersionm8bgDx3MnNMMSaAmnVOaQcnIqqPSVqAvjR8yzhbdqA": {
+          "DeleteBranchLambdaVersionIhcjVied7uHgczIbbe7FEFqcMSb7clFVMaztpa8ts": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteBranchLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "SelectBranchLambdaVersionulkHoWnlN511rY1DrGno48I4X6pkzsvI13l10zO2s": {
+          "SelectBranchLambdaVersionY8z3E3ISH4TSJqS1ArtO3wZ50wmjBlrrwnfhG9sra08": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "SelectBranchLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateManagerLambdaVersionb5qcdzjfmGsLmkMcDyMjIE8lnywRS5wnDnBE7i9pw": {
+          "CreateManagerLambdaVersionEfVgiw8EiY1rjyPWcMGVdy4eGumr8sPQIjeymDbU0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateManagerLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "ManagerLoginLambdaVersionRVDTy8pOzdalLKJt344s1xarD3cFnfKzeOvsCGdSU": {
+          "ManagerLoginLambdaVersionpBOtHPAJl06Nt3I0t1dV0mMXSX5L4D6yc098NCfAz4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ManagerLoginLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetAllManagersLambdaVersionKCzAB6SNY5mqttbKB2ndBbzPqgCjFaWEP13N0v7Qs9k": {
+          "GetAllManagersLambdaVersion9KjicuQH1XaiZjc383ilXyTRUqYLuniwYNf0wXVU3Y": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAllManagersLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetMyBranchLambdaVersionDVpO6feb7uKHq4vb8XOHRIWG8PSolSAmCnjo0ZINS4A": {
+          "GetMyBranchLambdaVersionV3dYv5AcpErWKjWOVUXQ6pxL7GBjwWreDa9NHsPEoo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetMyBranchLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateManagerLambdaVersionIdDizsdLCuY6wMqceqKYcEFDot38pNxDDDeiyojG4E": {
+          "UpdateManagerLambdaVersionWCYelGBDnTW3Ifz9h4q80jAdfuNkBYVIaH6Viav68": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateManagerLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "DeleteManagerLambdaVersionNf3KShiMwWsPpLV2P6fZfdXGDGxI6uE0c3Hr31ro": {
+          "DeleteManagerLambdaVersionyri6aWRxV3ZMwY5oyASxlaJR4NyaOpW6PYNuVcnjsE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteManagerLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateCustomerLambdaVersion5OvHjjBFzQOdkF22lHF8FC2t8TFqsKonWkb1KpLavcs": {
+          "CreateCustomerLambdaVersionDgEyA8rqxsilI9KqdSAOLGMNqqsQZTbEVPEN375I": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateCustomerLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetCustomersLambdaVersionNRcvCUZfMkYTTnwuK66P23JR4Vshzb5txN6JM0S6c": {
+          "GetCustomersLambdaVersionCUduJexEt8oDOBXalQvvFh7Y1NdgQyENF4WJREG43Y": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetCustomersLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateCustomerLambdaVersionPkHm5DiLrdgBY19TfO84EQ02hiIJLN9lCNTl1ZQGCGE": {
+          "UpdateCustomerLambdaVersionGtJbY7Y2tUb2Rf6buAMhI39rT3RennsgBSBIgzWsIE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateCustomerLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "DeleteCustomerLambdaVersionN7dqpkJORtMVT63p89XBOHA14MOaCCyEm2f58Jg": {
+          "DeleteCustomerLambdaVersionpShtd7YobhoWbPkrydXbtojTUKUK9ZFrCi4trXVibk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteCustomerLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateMachineTypeLambdaVersionSyYUWlUeVEJ0eOxMfBzgbqKDTVvMoL7mLhUuHP5hhQ": {
+          "CreateMachineTypeLambdaVersiontNX7t0a4JQxHQScjefv9wXDaF2d2KR2nCNfSI9c0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateMachineTypeLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetMachineTypesLambdaVersionLDUwVx7jTa3zl8mAullUPufGAtrlci0P9WupZxvgKfw": {
+          "GetMachineTypesLambdaVersionPBMqRcnzr4Ea1s2DM6rLJZZgZkSPqrgPUnFK2NHeCqU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetMachineTypesLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetAllMachineTypesWithMachinesLambdaVersion8O2Ek65oSJNnHO7iQxuhqA3kfZXfvKvMuPyAeT8mVM": {
+          "GetAllMachineTypesWithMachinesLambdaVersioncB6WpP8yngVux1Ew5EUu79JXOrvRROqK3cFCsun4y9s": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAllMachineTypesWithMachinesLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateMachineTypeLambdaVersionHTMpBTRk9r60DP7MA0yRO49jucRjujo05h2MsdESk": {
+          "UpdateMachineTypeLambdaVersionDuvKkX5czNkh27pVxcE6fCPd3Q1ioEtbtXBdF2eONoA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateMachineTypeLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "DeleteMachineTypeLambdaVersionf7pnOP5novdIhaQICXj8tCMDqj4cyk9MbjVDp4H9FX8": {
+          "DeleteMachineTypeLambdaVersionBoSS0pWBpwB6lyOg9ZREwZMj2f7fbUwzuAUd10EnU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteMachineTypeLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateMachineLambdaVersionjnUd3w1bx8hfOqWxRHupjPJZrYgX8eYgZfDcggeYiU": {
+          "CreateMachineLambdaVersiontH1AU7tPB6Zgeie4prWF8QCiCsLbKOjvayeisTIzf4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateMachineLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetAllMachinesLambdaVersionP8byA5NNtkeklwLa0RlPlC86a7PJ7tpfdJNmy5li9Y": {
+          "GetAllMachinesLambdaVersionMktMrxYUSOv1Zx5CwiXTuh2lYjppnTbXtHTs5aKGRg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAllMachinesLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateMachineLambdaVersionLSca9RVrVgpzz2e517QfgzCYo2e25xnRH8K5NF0wwfU": {
+          "UpdateMachineLambdaVersionFNUdAJdL8fB0T2T7CQCqcEEaIt3VVWpEwDydGEezT0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateMachineLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "DeleteMachineLambdaVersionjrEna67z3I0dAideh4YYNknp35Oxos1xgpLAMIqeA": {
+          "DeleteMachineLambdaVersionPDc8dB2mrUV4WRHKkSs0kePG4ZFtm792cVlO4iJg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteMachineLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateProductTypeLambdaVersionGVyJDzd44Uoyxce0TVg1EnmQnP2bfIgucVKmBrtXQ": {
+          "CreateProductTypeLambdaVersionjO6c1nreNtmEkwXCzCdbe9BF0q7TWaCv9djOts8fims": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateProductTypeLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetProductTypesLambdaVersionBGKsYmw8HqMUhQz1Cs5oflmfM8Z9hYYycs41NDrn9yc": {
+          "GetProductTypesLambdaVersionOBPpR7mM7y8aBGRPRtX6t1gdTHy23KmRlD4j04XeY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetProductTypesLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetAllProductTypesWithProductsLambdaVersionA2VleSvXxMS1G5Sjd2bbKejho46mJnk78qp2nu7p4": {
+          "GetAllProductTypesWithProductsLambdaVersion64XyylKWGj6rIPIXPQKRW98cCxCXuXyJXOb0bdEEhOY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAllProductTypesWithProductsLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateProductTypeLambdaVersion30LrYI4BTE3rung1oHy1A4mKLmqme59tiN5C49g99w": {
+          "UpdateProductTypeLambdaVersionuzDO5UM8OTDrw9qKYbB7tC0R0IZKoKHicyQByT3aZc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateProductTypeLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "DeleteProductTypeLambdaVersionwFomWFLHHUTBG7W3uhM5yIND7Jl39KhM9Xs3BmPsaas": {
+          "DeleteProductTypeLambdaVersionDooSnPZo7Wu1ptvHtyp65qUyQw0Xydfhp4OqI9nbk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteProductTypeLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateProductLambdaVersionSeD1UXuLEOl73iTFCXmm3zFHr5IqE2IxrskDxEJsE": {
+          "CreateProductLambdaVersionxtGElAFtvWJdyhFzBovTKyITb7KL7ZzUPhJestn0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateProductLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetProductsLambdaVersion9DRizB2YzzGjdhKLbUNBoSl2BUg5FNNuIVXPCPNg8c": {
+          "GetProductsLambdaVersioniwq4vF1ep82ZUUlBL9Fsfh1g55E1jWYLiEfzzxWIEc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetProductsLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateProductLambdaVersion5GoGzLtbi4AcTUEyvXq5FKVehCnG6Cginn1InwgfM": {
+          "UpdateProductLambdaVersionZDTHALKYDzeK7G0dKInwVYgkgLMaLVYI7K2DEiVjnk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateProductLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "DeleteProductLambdaVersionPs3TGFhm65M2Dywxx1s6N3c09yZzKeqArhKTAJzSM": {
+          "DeleteProductLambdaVersion3Mz9mud1Ww644PyBOgcKjeqT21fytcRt4VOMdLgkk0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteProductLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateMaterialTypeLambdaVersionXqdlMjHTsXBUIGvCE8McO35QkJzsWGD1QMUVtqic": {
+          "CreateMaterialTypeLambdaVersionvn7hRFjUmPrklc5uNLSFtr1uC9c5dhpLh1bvCz5FxQo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateMaterialTypeLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetMaterialTypesLambdaVersionRQUYHNgJQUuu5fP5pWCMy2OpirmC2ifFpxBtMX2BnaQ": {
+          "GetMaterialTypesLambdaVersionoowyC6AtsgSC8yq5SpjP0iOv9GfkHffhY0mASDNpOI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetMaterialTypesLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetAllMaterialTypesWithMaterialsLambdaVersion59PJZG558o5UvhHvtut2Bvue6sRh1lxSUVJ2YtYlLw": {
+          "GetAllMaterialTypesWithMaterialsLambdaVersion5hH1ExziBAkWsbpAZFc7L4sAjgxONAMVobizI8lQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAllMaterialTypesWithMaterialsLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateMaterialTypeLambdaVersionhvJJBl1cbvsoRrj64Y3hIAY1wO12DswDTE6ZYxCY": {
+          "UpdateMaterialTypeLambdaVersionlnKxCVh4YaIL5JGON81ifU9T366qabi6PaM7lMccIo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateMaterialTypeLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "DeleteMaterialTypeLambdaVersionw5YR4Woayrq2catafV6Qu7gseCAKX41vdkMWh5Y2AE": {
+          "DeleteMaterialTypeLambdaVersionev7Wpou005bppcK15y3nPtEO1myvjkML99wuLjSHdE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteMaterialTypeLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateMaterialLambdaVersion1REEcNmL7bXjY7woT8PbIEPY5gi6OTH4DL9ftF0IV0": {
+          "CreateMaterialLambdaVersionxLTstAnt89kSaornfCvpHKOQxxdVDO4LD96G4BWVpIs": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateMaterialLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetMaterialsLambdaVersionwWGuf07wVNufFgyUnsfzjalVjW3CAoJMa3Pq1SrY": {
+          "GetMaterialsLambdaVersionHvJ3NbvobZlg5G4Adry7yJXjf4ujiKOVvjl3CCCoRg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetMaterialsLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateMaterialLambdaVersionLZiEA2U5KrHznZ0o7TmnoKijCCw06KPnvIXd7VPEFw": {
+          "UpdateMaterialLambdaVersionEJ4nlFESgGZRq6pbxHFmJtqlm38QARxc5fbOv7OGZd8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateMaterialLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "DeleteMaterialLambdaVersionyhKCtb0QTK6Cfgd7nCHOtzR2TIXbEgoXCTGzx6Ys": {
+          "DeleteMaterialLambdaVersionihpeoybC0Spl5iExtdkGLANmb5PjnORJTirvKs2RxI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteMaterialLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateStepLambdaVersionnuL7aosQg9CE7oAlcL9v0BahwONcbqbFVxDZoPsGag": {
+          "CreateStepLambdaVersionrcM20qepwwKQYPmP1ppGyA9dhwGWIGLfhA2cNpuLhg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateStepLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetStepsLambdaVersionlJtfNkyxLxofXAR13XuupFBlAdZ4fgXHuL1RQKuq8": {
+          "GetStepsLambdaVersionczX5s1UFj5fWoRtUDW3xsZgK3hFjHrGf6g9EBjcETCY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetStepsLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateStepLambdaVersionIEGTxXI7OcQoluXA2lMIGivnBNwe92M8cIoxf6mc": {
+          "UpdateStepLambdaVersionQQBKqtDYiVfaZpSXO7bniwYoqkqmJg5KbMZQLOPQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateStepLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "DeleteStepLambdaVersionJgI5e9EpnxGfGeXNQeyPX7l0KMzumDnB189WO4Dc": {
+          "DeleteStepLambdaVersionWCF2g6TvStaOaFw6ETWUgq3BMTMbxW4vWWhl2uzxQMM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteStepLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "SendMarketingToSelectedLambdaVersionvFjRHeB5B6MTD0JquNnJ8UgLNaKyqs90rcp8WL4M": {
+          "SendMarketingToSelectedLambdaVersionx2qXttruaFCJ49TN1EnMdsbhf8pHSMlUYX24O15k": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "SendMarketingToSelectedLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateOperatorLambdaVersion25cnI2bOtab5XegSmNuXXFJsVgknsp96LHwr0UBTIOs": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "CreateOperatorLambdaFunction"
-              },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
-            }
-          },
-          "OperatorLoginLambdaVersionTKqVWKEVmnSoQ74O7HNn2WQboepbqNcka0xxoUeWIb8": {
+          "OperatorLoginLambdaVersionBe3EG2RVxUKpWFHadV9r6xgEPZVjbrFfsYx3fQr090": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OperatorLoginLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetOperatorOrdersLambdaVersionJZ66iks38HLPzFA5uWmp41ZPqYSjpdzyhPltgPsI": {
+          "GetOperatorOrdersLambdaVersionJVASB7rXPkwGsJMNfeuI9gqsXXhbO9adX7G6ud7H2M": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetOperatorOrdersLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateOrderStepStatusLambdaVersionyT8M62eyoobP1Gz457YdODMZHsp8Eax5R6HaE3KY": {
+          "UpdateOrderStepStatusLambdaVersionuln7YQdh1TQjWP8bc4U1t0HLYm31YRJwdIsDJywGA6s": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateOrderStepStatusLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetCompletedOrdersLambdaVersione8OdH0vdDfOsvnNkGEpU8aQjpW38oWGjN24hHwTr20c": {
+          "GetCompletedOrdersLambdaVersionQJcVbSzxgwgUBz5fqPQ2aDGlljVvaSBmRaNaD2U": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetCompletedOrdersLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetOneInProgressOrderLambdaVersion4lKvj1Ct5yGFNXga8O0BqEYdMwHoG49NXRdNjvqeQI": {
+          "GetOneInProgressOrderLambdaVersionjYerGYE3iiamZI1uGUsyDjnshw6bDNhVZCiwNYHAk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetOneInProgressOrderLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "UpdateOperatorPasswordLambdaVersionQ5JF8rRGsA9zHEV78oqzUVJ5RTe1Uo0XaO0pw4S8": {
+          "UpdateOperatorPasswordLambdaVersion7jhCEy5vjyFOgyNHwSZgXL4uwCW3FWRx8V5kXRP0uw0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateOperatorPasswordLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetOnePendingOrderLambdaVersion4PZ9h4BlCcAgbcSa8sANeXKYVZs7DbPdCcdZ9I9I": {
+          "GetOnePendingOrderLambdaVersionxmsAOLBvHQI1zCUeIEGD8bcJDMDfPT6dTBmZ8qNEg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetOnePendingOrderLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "CreateOrderLambdaVersionayuuSGq87BhRrHp3ynaur3qYl88f2ejhDrDhCYZHoI8": {
+          "CreateOrderLambdaVersion7Z7WV3Uql3hw9RvEdkHi3MhCf8rZM7EW7AOJDhbr68c": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateOrderLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
-          "GetOrdersByBranchIdLambdaVersiongaI1CUwUbwBcTavlSR4Np2sEKdJ3aJm2p2yC4BrCsyE": {
+          "GetOrdersByBranchIdLambdaVersionbfTEtmlz3ztVUGTQSm2GojNHK0rRgN5TNdIcU0Kti5s": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetOrdersByBranchIdLambdaFunction"
               },
-              "CodeSha256": "7NbR+xVZNCDEhYr6zXh3Jg3x3jPkVXFDBdx7ZI3BIgo="
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
+            }
+          },
+          "CreateOperatorLambdaVersionjYAwKIfQirlgYSGTQhDlX5yc9vbFcsua2NskykcGvUA": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "CreateOperatorLambdaFunction"
+              },
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
+            }
+          },
+          "GetOperatorsLambdaVersionP21E3VV7tHwi2StnPkAgqjerjCCsuZ0C2xhEIO01Ic": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetOperatorsLambdaFunction"
+              },
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
+            }
+          },
+          "UpdateOperatorLambdaVersionOSq0t7eGFv8SYG8H3BgAmSr0GCxg6z2dVM59NBh8": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateOperatorLambdaFunction"
+              },
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
+            }
+          },
+          "DeleteOperatorLambdaVersiong3nFIRLoYoby5zG9veZAtyPkdiR8quHhtjUskR7NkQ": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteOperatorLambdaFunction"
+              },
+              "CodeSha256": "12haEqF1KfCtkSVBSNmetNbbCDPp91BxngzqBlFJQyU="
             }
           },
           "ApiGatewayRestApi": {
@@ -3588,6 +3732,33 @@
                 ]
               },
               "PathPart": "orders",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceOperator": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "operator",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceOperatorIdVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceOperator"
+              },
+              "PathPart": "{id}",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -5207,6 +5378,96 @@
               },
               "ResourceId": {
                 "Ref": "ApiGatewayResourceOrders"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodOperatorOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceOperator"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodOperatorIdVarOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,PUT'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceOperatorIdVar"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -7292,7 +7553,9 @@
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "GET",
-              "RequestParameters": {},
+              "RequestParameters": {
+                "method.request.querystring.branchId": false
+              },
               "ResourceId": {
                 "Ref": "ApiGatewayResourceStep"
               },
@@ -7338,7 +7601,9 @@
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "PUT",
-              "RequestParameters": {},
+              "RequestParameters": {
+                "method.request.path.id": true
+              },
               "ResourceId": {
                 "Ref": "ApiGatewayResourceStepIdVar"
               },
@@ -7374,7 +7639,10 @@
                   ]
                 }
               },
-              "MethodResponses": []
+              "MethodResponses": [],
+              "RequestValidatorId": {
+                "Ref": "ApiGatewayThis27RequestValidator"
+              }
             },
             "DependsOn": [
               "UpdateStepLambdaPermissionApiGateway"
@@ -7384,7 +7652,9 @@
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "DELETE",
-              "RequestParameters": {},
+              "RequestParameters": {
+                "method.request.path.id": true
+              },
               "ResourceId": {
                 "Ref": "ApiGatewayResourceStepIdVar"
               },
@@ -7420,7 +7690,10 @@
                   ]
                 }
               },
-              "MethodResponses": []
+              "MethodResponses": [],
+              "RequestValidatorId": {
+                "Ref": "ApiGatewayThis27RequestValidator"
+              }
             },
             "DependsOn": [
               "DeleteStepLambdaPermissionApiGateway"
@@ -7656,6 +7929,156 @@
               "GetOrdersByBranchIdLambdaPermissionApiGateway"
             ]
           },
+          "ApiGatewayMethodOperatorGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {
+                "method.request.querystring.branchId": false
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceOperator"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "GetOperatorsLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "GetOperatorsLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodOperatorIdVarPut": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "PUT",
+              "RequestParameters": {
+                "method.request.path.id": true
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceOperatorIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "UpdateOperatorLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": [],
+              "RequestValidatorId": {
+                "Ref": "ApiGatewayThis27RequestValidator"
+              }
+            },
+            "DependsOn": [
+              "UpdateOperatorLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodOperatorIdVarDelete": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "DELETE",
+              "RequestParameters": {
+                "method.request.path.id": true
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceOperatorIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "DeleteOperatorLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": [],
+              "RequestValidatorId": {
+                "Ref": "ApiGatewayThis27RequestValidator"
+              }
+            },
+            "DependsOn": [
+              "DeleteOperatorLambdaPermissionApiGateway"
+            ]
+          },
           "ApiGatewayThis27RequestValidator": {
             "Type": "AWS::ApiGateway::RequestValidator",
             "Properties": {
@@ -7667,7 +8090,7 @@
               "Name": "this27-dev | Validate request body and querystring parameters"
             }
           },
-          "ApiGatewayDeployment1750171927125": {
+          "ApiGatewayDeployment1750969783023": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -7712,6 +8135,8 @@
               "ApiGatewayMethodOperatorsOrdersCompletedOptions",
               "ApiGatewayMethodOperatorsOrdersPendingOptions",
               "ApiGatewayMethodOrdersOptions",
+              "ApiGatewayMethodOperatorOptions",
+              "ApiGatewayMethodOperatorIdVarOptions",
               "ApiGatewayMethodAdminCreatePost",
               "ApiGatewayMethodAdminLoginPost",
               "ApiGatewayMethodBranchCreatePost",
@@ -7764,7 +8189,10 @@
               "ApiGatewayMethodOperatorsOrdersCompletedGet",
               "ApiGatewayMethodOperatorsOrdersPendingGet",
               "ApiGatewayMethodOrdersPost",
-              "ApiGatewayMethodOrdersGet"
+              "ApiGatewayMethodOrdersGet",
+              "ApiGatewayMethodOperatorGet",
+              "ApiGatewayMethodOperatorIdVarPut",
+              "ApiGatewayMethodOperatorIdVarDelete"
             ]
           },
           "CreateAdminLambdaPermissionApiGateway": {
@@ -9728,32 +10156,12 @@
               }
             }
           },
-          "HttpApi": {
-            "Type": "AWS::ApiGatewayV2::Api",
-            "Properties": {
-              "Name": "dev-this27",
-              "ProtocolType": "HTTP"
-            }
-          },
-          "HttpApiStage": {
-            "Type": "AWS::ApiGatewayV2::Stage",
-            "Properties": {
-              "ApiId": {
-                "Ref": "HttpApi"
-              },
-              "StageName": "$default",
-              "AutoDeploy": true,
-              "DefaultRouteSettings": {
-                "DetailedMetricsEnabled": false
-              }
-            }
-          },
-          "CreateOperatorLambdaPermissionHttpApi": {
+          "GetOperatorsLambdaPermissionApiGateway": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "CreateOperatorLambdaFunction",
+                  "GetOperatorsLambdaFunction",
                   "Arn"
                 ]
               },
@@ -9777,48 +10185,107 @@
                     },
                     ":",
                     {
-                      "Ref": "HttpApi"
+                      "Ref": "ApiGatewayRestApi"
                     },
-                    "/*"
+                    "/*/*"
                   ]
                 ]
               }
             }
           },
-          "HttpApiIntegrationCreateOperator": {
-            "Type": "AWS::ApiGatewayV2::Integration",
+          "UpdateOperatorLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
             "Properties": {
-              "ApiId": {
-                "Ref": "HttpApi"
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateOperatorLambdaFunction",
+                  "Arn"
+                ]
               },
-              "IntegrationType": "AWS_PROXY",
-              "IntegrationUri": {
-                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"CreateOperatorLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
-              },
-              "PayloadFormatVersion": "2.0",
-              "TimeoutInMillis": 30000
-            }
-          },
-          "HttpApiRoutePostOperators": {
-            "Type": "AWS::ApiGatewayV2::Route",
-            "Properties": {
-              "ApiId": {
-                "Ref": "HttpApi"
-              },
-              "RouteKey": "POST /operators",
-              "Target": {
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
                 "Fn::Join": [
-                  "/",
+                  "",
                   [
-                    "integrations",
+                    "arn:",
                     {
-                      "Ref": "HttpApiIntegrationCreateOperator"
-                    }
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
                   ]
                 ]
               }
-            },
-            "DependsOn": "HttpApiIntegrationCreateOperator"
+            }
+          },
+          "DeleteOperatorLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DeleteOperatorLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApi": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+              "Name": "dev-this27",
+              "ProtocolType": "HTTP"
+            }
+          },
+          "HttpApiStage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "StageName": "$default",
+              "AutoDeploy": true,
+              "DefaultRouteSettings": {
+                "DetailedMetricsEnabled": false
+              }
+            }
           },
           "OperatorLoginLambdaPermissionHttpApi": {
             "Type": "AWS::Lambda::Permission",
@@ -10179,6 +10646,78 @@
               }
             },
             "DependsOn": "HttpApiIntegrationUpdateOperatorPassword"
+          },
+          "CreateOperatorLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "CreateOperatorLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationCreateOperator": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"CreateOperatorLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePostOperators": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "POST /operators",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationCreateOperator"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationCreateOperator"
           }
         },
         "Outputs": {
@@ -10193,7 +10732,7 @@
           "CreateAdminLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateAdminLambdaVersionqBIU4IcXxY4fCAwHWHsZseMiUxMQUL4MhZyS0Y9dr44"
+              "Ref": "CreateAdminLambdaVersion340RFQTYtCfS7hwT8VtAAT8d3bgwCU90Y6zI1cnC6n8"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateAdminLambdaFunctionQualifiedArn"
@@ -10202,7 +10741,7 @@
           "LoginAdminLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "LoginAdminLambdaVersion9atwrZKS6OCzqjcv8IzToVpLAYh0Atr8rBPEglCE"
+              "Ref": "LoginAdminLambdaVersionFfkvV6MyEk389eVrYbmccwLRLceDSankoMbtccarqo"
             },
             "Export": {
               "Name": "sls-this27-dev-LoginAdminLambdaFunctionQualifiedArn"
@@ -10211,7 +10750,7 @@
           "CreateBranchLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateBranchLambdaVersiona06SLhcNURk15Wo5JSyv4AlNIl0gYkB9eUfmaTP0"
+              "Ref": "CreateBranchLambdaVersionUWzDJVIPU4HNylZ6FYKEP0n1Mxl9TF9n3bSdYj3HY"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateBranchLambdaFunctionQualifiedArn"
@@ -10220,7 +10759,7 @@
           "GetAllBranchesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAllBranchesLambdaVersionMhoZMwOscxwnRSHWhqOItCNNa18whkpgEP50aCgId4"
+              "Ref": "GetAllBranchesLambdaVersionUi4aunO4YWiJCIcQFPqFnEfV52JagVHfHg9Xav9k"
             },
             "Export": {
               "Name": "sls-this27-dev-GetAllBranchesLambdaFunctionQualifiedArn"
@@ -10229,7 +10768,7 @@
           "UpdateBranchLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateBranchLambdaVersionxAzbeiz0K3kkcm48GAw5XqOZYmsx1bLIZuanurH3o"
+              "Ref": "UpdateBranchLambdaVersiontmWohMdYtQQuv1VS6Sjcc8LUb0Xfpw0GdSvRtudCCB0"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateBranchLambdaFunctionQualifiedArn"
@@ -10238,7 +10777,7 @@
           "DeleteBranchLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteBranchLambdaVersionm8bgDx3MnNMMSaAmnVOaQcnIqqPSVqAvjR8yzhbdqA"
+              "Ref": "DeleteBranchLambdaVersionIhcjVied7uHgczIbbe7FEFqcMSb7clFVMaztpa8ts"
             },
             "Export": {
               "Name": "sls-this27-dev-DeleteBranchLambdaFunctionQualifiedArn"
@@ -10247,7 +10786,7 @@
           "SelectBranchLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "SelectBranchLambdaVersionulkHoWnlN511rY1DrGno48I4X6pkzsvI13l10zO2s"
+              "Ref": "SelectBranchLambdaVersionY8z3E3ISH4TSJqS1ArtO3wZ50wmjBlrrwnfhG9sra08"
             },
             "Export": {
               "Name": "sls-this27-dev-SelectBranchLambdaFunctionQualifiedArn"
@@ -10256,7 +10795,7 @@
           "CreateManagerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateManagerLambdaVersionb5qcdzjfmGsLmkMcDyMjIE8lnywRS5wnDnBE7i9pw"
+              "Ref": "CreateManagerLambdaVersionEfVgiw8EiY1rjyPWcMGVdy4eGumr8sPQIjeymDbU0"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateManagerLambdaFunctionQualifiedArn"
@@ -10265,7 +10804,7 @@
           "ManagerLoginLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ManagerLoginLambdaVersionRVDTy8pOzdalLKJt344s1xarD3cFnfKzeOvsCGdSU"
+              "Ref": "ManagerLoginLambdaVersionpBOtHPAJl06Nt3I0t1dV0mMXSX5L4D6yc098NCfAz4"
             },
             "Export": {
               "Name": "sls-this27-dev-ManagerLoginLambdaFunctionQualifiedArn"
@@ -10274,7 +10813,7 @@
           "GetAllManagersLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAllManagersLambdaVersionKCzAB6SNY5mqttbKB2ndBbzPqgCjFaWEP13N0v7Qs9k"
+              "Ref": "GetAllManagersLambdaVersion9KjicuQH1XaiZjc383ilXyTRUqYLuniwYNf0wXVU3Y"
             },
             "Export": {
               "Name": "sls-this27-dev-GetAllManagersLambdaFunctionQualifiedArn"
@@ -10283,7 +10822,7 @@
           "GetMyBranchLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetMyBranchLambdaVersionDVpO6feb7uKHq4vb8XOHRIWG8PSolSAmCnjo0ZINS4A"
+              "Ref": "GetMyBranchLambdaVersionV3dYv5AcpErWKjWOVUXQ6pxL7GBjwWreDa9NHsPEoo"
             },
             "Export": {
               "Name": "sls-this27-dev-GetMyBranchLambdaFunctionQualifiedArn"
@@ -10292,7 +10831,7 @@
           "UpdateManagerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateManagerLambdaVersionIdDizsdLCuY6wMqceqKYcEFDot38pNxDDDeiyojG4E"
+              "Ref": "UpdateManagerLambdaVersionWCYelGBDnTW3Ifz9h4q80jAdfuNkBYVIaH6Viav68"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateManagerLambdaFunctionQualifiedArn"
@@ -10301,7 +10840,7 @@
           "DeleteManagerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteManagerLambdaVersionNf3KShiMwWsPpLV2P6fZfdXGDGxI6uE0c3Hr31ro"
+              "Ref": "DeleteManagerLambdaVersionyri6aWRxV3ZMwY5oyASxlaJR4NyaOpW6PYNuVcnjsE"
             },
             "Export": {
               "Name": "sls-this27-dev-DeleteManagerLambdaFunctionQualifiedArn"
@@ -10310,7 +10849,7 @@
           "CreateCustomerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateCustomerLambdaVersion5OvHjjBFzQOdkF22lHF8FC2t8TFqsKonWkb1KpLavcs"
+              "Ref": "CreateCustomerLambdaVersionDgEyA8rqxsilI9KqdSAOLGMNqqsQZTbEVPEN375I"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateCustomerLambdaFunctionQualifiedArn"
@@ -10319,7 +10858,7 @@
           "GetCustomersLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetCustomersLambdaVersionNRcvCUZfMkYTTnwuK66P23JR4Vshzb5txN6JM0S6c"
+              "Ref": "GetCustomersLambdaVersionCUduJexEt8oDOBXalQvvFh7Y1NdgQyENF4WJREG43Y"
             },
             "Export": {
               "Name": "sls-this27-dev-GetCustomersLambdaFunctionQualifiedArn"
@@ -10328,7 +10867,7 @@
           "UpdateCustomerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateCustomerLambdaVersionPkHm5DiLrdgBY19TfO84EQ02hiIJLN9lCNTl1ZQGCGE"
+              "Ref": "UpdateCustomerLambdaVersionGtJbY7Y2tUb2Rf6buAMhI39rT3RennsgBSBIgzWsIE"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateCustomerLambdaFunctionQualifiedArn"
@@ -10337,7 +10876,7 @@
           "DeleteCustomerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteCustomerLambdaVersionN7dqpkJORtMVT63p89XBOHA14MOaCCyEm2f58Jg"
+              "Ref": "DeleteCustomerLambdaVersionpShtd7YobhoWbPkrydXbtojTUKUK9ZFrCi4trXVibk"
             },
             "Export": {
               "Name": "sls-this27-dev-DeleteCustomerLambdaFunctionQualifiedArn"
@@ -10346,7 +10885,7 @@
           "CreateMachineTypeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateMachineTypeLambdaVersionSyYUWlUeVEJ0eOxMfBzgbqKDTVvMoL7mLhUuHP5hhQ"
+              "Ref": "CreateMachineTypeLambdaVersiontNX7t0a4JQxHQScjefv9wXDaF2d2KR2nCNfSI9c0"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateMachineTypeLambdaFunctionQualifiedArn"
@@ -10355,7 +10894,7 @@
           "GetMachineTypesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetMachineTypesLambdaVersionLDUwVx7jTa3zl8mAullUPufGAtrlci0P9WupZxvgKfw"
+              "Ref": "GetMachineTypesLambdaVersionPBMqRcnzr4Ea1s2DM6rLJZZgZkSPqrgPUnFK2NHeCqU"
             },
             "Export": {
               "Name": "sls-this27-dev-GetMachineTypesLambdaFunctionQualifiedArn"
@@ -10364,7 +10903,7 @@
           "GetAllMachineTypesWithMachinesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAllMachineTypesWithMachinesLambdaVersion8O2Ek65oSJNnHO7iQxuhqA3kfZXfvKvMuPyAeT8mVM"
+              "Ref": "GetAllMachineTypesWithMachinesLambdaVersioncB6WpP8yngVux1Ew5EUu79JXOrvRROqK3cFCsun4y9s"
             },
             "Export": {
               "Name": "sls-this27-dev-GetAllMachineTypesWithMachinesLambdaFunctionQualifiedArn"
@@ -10373,7 +10912,7 @@
           "UpdateMachineTypeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateMachineTypeLambdaVersionHTMpBTRk9r60DP7MA0yRO49jucRjujo05h2MsdESk"
+              "Ref": "UpdateMachineTypeLambdaVersionDuvKkX5czNkh27pVxcE6fCPd3Q1ioEtbtXBdF2eONoA"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateMachineTypeLambdaFunctionQualifiedArn"
@@ -10382,7 +10921,7 @@
           "DeleteMachineTypeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteMachineTypeLambdaVersionf7pnOP5novdIhaQICXj8tCMDqj4cyk9MbjVDp4H9FX8"
+              "Ref": "DeleteMachineTypeLambdaVersionBoSS0pWBpwB6lyOg9ZREwZMj2f7fbUwzuAUd10EnU"
             },
             "Export": {
               "Name": "sls-this27-dev-DeleteMachineTypeLambdaFunctionQualifiedArn"
@@ -10391,7 +10930,7 @@
           "CreateMachineLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateMachineLambdaVersionjnUd3w1bx8hfOqWxRHupjPJZrYgX8eYgZfDcggeYiU"
+              "Ref": "CreateMachineLambdaVersiontH1AU7tPB6Zgeie4prWF8QCiCsLbKOjvayeisTIzf4"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateMachineLambdaFunctionQualifiedArn"
@@ -10400,7 +10939,7 @@
           "GetAllMachinesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAllMachinesLambdaVersionP8byA5NNtkeklwLa0RlPlC86a7PJ7tpfdJNmy5li9Y"
+              "Ref": "GetAllMachinesLambdaVersionMktMrxYUSOv1Zx5CwiXTuh2lYjppnTbXtHTs5aKGRg"
             },
             "Export": {
               "Name": "sls-this27-dev-GetAllMachinesLambdaFunctionQualifiedArn"
@@ -10409,7 +10948,7 @@
           "UpdateMachineLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateMachineLambdaVersionLSca9RVrVgpzz2e517QfgzCYo2e25xnRH8K5NF0wwfU"
+              "Ref": "UpdateMachineLambdaVersionFNUdAJdL8fB0T2T7CQCqcEEaIt3VVWpEwDydGEezT0"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateMachineLambdaFunctionQualifiedArn"
@@ -10418,7 +10957,7 @@
           "DeleteMachineLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteMachineLambdaVersionjrEna67z3I0dAideh4YYNknp35Oxos1xgpLAMIqeA"
+              "Ref": "DeleteMachineLambdaVersionPDc8dB2mrUV4WRHKkSs0kePG4ZFtm792cVlO4iJg"
             },
             "Export": {
               "Name": "sls-this27-dev-DeleteMachineLambdaFunctionQualifiedArn"
@@ -10427,7 +10966,7 @@
           "CreateProductTypeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateProductTypeLambdaVersionGVyJDzd44Uoyxce0TVg1EnmQnP2bfIgucVKmBrtXQ"
+              "Ref": "CreateProductTypeLambdaVersionjO6c1nreNtmEkwXCzCdbe9BF0q7TWaCv9djOts8fims"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateProductTypeLambdaFunctionQualifiedArn"
@@ -10436,7 +10975,7 @@
           "GetProductTypesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetProductTypesLambdaVersionBGKsYmw8HqMUhQz1Cs5oflmfM8Z9hYYycs41NDrn9yc"
+              "Ref": "GetProductTypesLambdaVersionOBPpR7mM7y8aBGRPRtX6t1gdTHy23KmRlD4j04XeY"
             },
             "Export": {
               "Name": "sls-this27-dev-GetProductTypesLambdaFunctionQualifiedArn"
@@ -10445,7 +10984,7 @@
           "GetAllProductTypesWithProductsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAllProductTypesWithProductsLambdaVersionA2VleSvXxMS1G5Sjd2bbKejho46mJnk78qp2nu7p4"
+              "Ref": "GetAllProductTypesWithProductsLambdaVersion64XyylKWGj6rIPIXPQKRW98cCxCXuXyJXOb0bdEEhOY"
             },
             "Export": {
               "Name": "sls-this27-dev-GetAllProductTypesWithProductsLambdaFunctionQualifiedArn"
@@ -10454,7 +10993,7 @@
           "UpdateProductTypeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateProductTypeLambdaVersion30LrYI4BTE3rung1oHy1A4mKLmqme59tiN5C49g99w"
+              "Ref": "UpdateProductTypeLambdaVersionuzDO5UM8OTDrw9qKYbB7tC0R0IZKoKHicyQByT3aZc"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateProductTypeLambdaFunctionQualifiedArn"
@@ -10463,7 +11002,7 @@
           "DeleteProductTypeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteProductTypeLambdaVersionwFomWFLHHUTBG7W3uhM5yIND7Jl39KhM9Xs3BmPsaas"
+              "Ref": "DeleteProductTypeLambdaVersionDooSnPZo7Wu1ptvHtyp65qUyQw0Xydfhp4OqI9nbk"
             },
             "Export": {
               "Name": "sls-this27-dev-DeleteProductTypeLambdaFunctionQualifiedArn"
@@ -10472,7 +11011,7 @@
           "CreateProductLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateProductLambdaVersionSeD1UXuLEOl73iTFCXmm3zFHr5IqE2IxrskDxEJsE"
+              "Ref": "CreateProductLambdaVersionxtGElAFtvWJdyhFzBovTKyITb7KL7ZzUPhJestn0"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateProductLambdaFunctionQualifiedArn"
@@ -10481,7 +11020,7 @@
           "GetProductsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetProductsLambdaVersion9DRizB2YzzGjdhKLbUNBoSl2BUg5FNNuIVXPCPNg8c"
+              "Ref": "GetProductsLambdaVersioniwq4vF1ep82ZUUlBL9Fsfh1g55E1jWYLiEfzzxWIEc"
             },
             "Export": {
               "Name": "sls-this27-dev-GetProductsLambdaFunctionQualifiedArn"
@@ -10490,7 +11029,7 @@
           "UpdateProductLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateProductLambdaVersion5GoGzLtbi4AcTUEyvXq5FKVehCnG6Cginn1InwgfM"
+              "Ref": "UpdateProductLambdaVersionZDTHALKYDzeK7G0dKInwVYgkgLMaLVYI7K2DEiVjnk"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateProductLambdaFunctionQualifiedArn"
@@ -10499,7 +11038,7 @@
           "DeleteProductLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteProductLambdaVersionPs3TGFhm65M2Dywxx1s6N3c09yZzKeqArhKTAJzSM"
+              "Ref": "DeleteProductLambdaVersion3Mz9mud1Ww644PyBOgcKjeqT21fytcRt4VOMdLgkk0"
             },
             "Export": {
               "Name": "sls-this27-dev-DeleteProductLambdaFunctionQualifiedArn"
@@ -10508,7 +11047,7 @@
           "CreateMaterialTypeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateMaterialTypeLambdaVersionXqdlMjHTsXBUIGvCE8McO35QkJzsWGD1QMUVtqic"
+              "Ref": "CreateMaterialTypeLambdaVersionvn7hRFjUmPrklc5uNLSFtr1uC9c5dhpLh1bvCz5FxQo"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateMaterialTypeLambdaFunctionQualifiedArn"
@@ -10517,7 +11056,7 @@
           "GetMaterialTypesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetMaterialTypesLambdaVersionRQUYHNgJQUuu5fP5pWCMy2OpirmC2ifFpxBtMX2BnaQ"
+              "Ref": "GetMaterialTypesLambdaVersionoowyC6AtsgSC8yq5SpjP0iOv9GfkHffhY0mASDNpOI"
             },
             "Export": {
               "Name": "sls-this27-dev-GetMaterialTypesLambdaFunctionQualifiedArn"
@@ -10526,7 +11065,7 @@
           "GetAllMaterialTypesWithMaterialsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAllMaterialTypesWithMaterialsLambdaVersion59PJZG558o5UvhHvtut2Bvue6sRh1lxSUVJ2YtYlLw"
+              "Ref": "GetAllMaterialTypesWithMaterialsLambdaVersion5hH1ExziBAkWsbpAZFc7L4sAjgxONAMVobizI8lQ"
             },
             "Export": {
               "Name": "sls-this27-dev-GetAllMaterialTypesWithMaterialsLambdaFunctionQualifiedArn"
@@ -10535,7 +11074,7 @@
           "UpdateMaterialTypeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateMaterialTypeLambdaVersionhvJJBl1cbvsoRrj64Y3hIAY1wO12DswDTE6ZYxCY"
+              "Ref": "UpdateMaterialTypeLambdaVersionlnKxCVh4YaIL5JGON81ifU9T366qabi6PaM7lMccIo"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateMaterialTypeLambdaFunctionQualifiedArn"
@@ -10544,7 +11083,7 @@
           "DeleteMaterialTypeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteMaterialTypeLambdaVersionw5YR4Woayrq2catafV6Qu7gseCAKX41vdkMWh5Y2AE"
+              "Ref": "DeleteMaterialTypeLambdaVersionev7Wpou005bppcK15y3nPtEO1myvjkML99wuLjSHdE"
             },
             "Export": {
               "Name": "sls-this27-dev-DeleteMaterialTypeLambdaFunctionQualifiedArn"
@@ -10553,7 +11092,7 @@
           "CreateMaterialLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateMaterialLambdaVersion1REEcNmL7bXjY7woT8PbIEPY5gi6OTH4DL9ftF0IV0"
+              "Ref": "CreateMaterialLambdaVersionxLTstAnt89kSaornfCvpHKOQxxdVDO4LD96G4BWVpIs"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateMaterialLambdaFunctionQualifiedArn"
@@ -10562,7 +11101,7 @@
           "GetMaterialsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetMaterialsLambdaVersionwWGuf07wVNufFgyUnsfzjalVjW3CAoJMa3Pq1SrY"
+              "Ref": "GetMaterialsLambdaVersionHvJ3NbvobZlg5G4Adry7yJXjf4ujiKOVvjl3CCCoRg"
             },
             "Export": {
               "Name": "sls-this27-dev-GetMaterialsLambdaFunctionQualifiedArn"
@@ -10571,7 +11110,7 @@
           "UpdateMaterialLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateMaterialLambdaVersionLZiEA2U5KrHznZ0o7TmnoKijCCw06KPnvIXd7VPEFw"
+              "Ref": "UpdateMaterialLambdaVersionEJ4nlFESgGZRq6pbxHFmJtqlm38QARxc5fbOv7OGZd8"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateMaterialLambdaFunctionQualifiedArn"
@@ -10580,7 +11119,7 @@
           "DeleteMaterialLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteMaterialLambdaVersionyhKCtb0QTK6Cfgd7nCHOtzR2TIXbEgoXCTGzx6Ys"
+              "Ref": "DeleteMaterialLambdaVersionihpeoybC0Spl5iExtdkGLANmb5PjnORJTirvKs2RxI"
             },
             "Export": {
               "Name": "sls-this27-dev-DeleteMaterialLambdaFunctionQualifiedArn"
@@ -10589,7 +11128,7 @@
           "CreateStepLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateStepLambdaVersionnuL7aosQg9CE7oAlcL9v0BahwONcbqbFVxDZoPsGag"
+              "Ref": "CreateStepLambdaVersionrcM20qepwwKQYPmP1ppGyA9dhwGWIGLfhA2cNpuLhg"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateStepLambdaFunctionQualifiedArn"
@@ -10598,7 +11137,7 @@
           "GetStepsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetStepsLambdaVersionlJtfNkyxLxofXAR13XuupFBlAdZ4fgXHuL1RQKuq8"
+              "Ref": "GetStepsLambdaVersionczX5s1UFj5fWoRtUDW3xsZgK3hFjHrGf6g9EBjcETCY"
             },
             "Export": {
               "Name": "sls-this27-dev-GetStepsLambdaFunctionQualifiedArn"
@@ -10607,7 +11146,7 @@
           "UpdateStepLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateStepLambdaVersionIEGTxXI7OcQoluXA2lMIGivnBNwe92M8cIoxf6mc"
+              "Ref": "UpdateStepLambdaVersionQQBKqtDYiVfaZpSXO7bniwYoqkqmJg5KbMZQLOPQ"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateStepLambdaFunctionQualifiedArn"
@@ -10616,7 +11155,7 @@
           "DeleteStepLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteStepLambdaVersionJgI5e9EpnxGfGeXNQeyPX7l0KMzumDnB189WO4Dc"
+              "Ref": "DeleteStepLambdaVersionWCF2g6TvStaOaFw6ETWUgq3BMTMbxW4vWWhl2uzxQMM"
             },
             "Export": {
               "Name": "sls-this27-dev-DeleteStepLambdaFunctionQualifiedArn"
@@ -10625,25 +11164,16 @@
           "SendMarketingToSelectedLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "SendMarketingToSelectedLambdaVersionvFjRHeB5B6MTD0JquNnJ8UgLNaKyqs90rcp8WL4M"
+              "Ref": "SendMarketingToSelectedLambdaVersionx2qXttruaFCJ49TN1EnMdsbhf8pHSMlUYX24O15k"
             },
             "Export": {
               "Name": "sls-this27-dev-SendMarketingToSelectedLambdaFunctionQualifiedArn"
             }
           },
-          "CreateOperatorLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "CreateOperatorLambdaVersion25cnI2bOtab5XegSmNuXXFJsVgknsp96LHwr0UBTIOs"
-            },
-            "Export": {
-              "Name": "sls-this27-dev-CreateOperatorLambdaFunctionQualifiedArn"
-            }
-          },
           "OperatorLoginLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OperatorLoginLambdaVersionTKqVWKEVmnSoQ74O7HNn2WQboepbqNcka0xxoUeWIb8"
+              "Ref": "OperatorLoginLambdaVersionBe3EG2RVxUKpWFHadV9r6xgEPZVjbrFfsYx3fQr090"
             },
             "Export": {
               "Name": "sls-this27-dev-OperatorLoginLambdaFunctionQualifiedArn"
@@ -10652,7 +11182,7 @@
           "GetOperatorOrdersLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetOperatorOrdersLambdaVersionJZ66iks38HLPzFA5uWmp41ZPqYSjpdzyhPltgPsI"
+              "Ref": "GetOperatorOrdersLambdaVersionJVASB7rXPkwGsJMNfeuI9gqsXXhbO9adX7G6ud7H2M"
             },
             "Export": {
               "Name": "sls-this27-dev-GetOperatorOrdersLambdaFunctionQualifiedArn"
@@ -10661,7 +11191,7 @@
           "UpdateOrderStepStatusLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateOrderStepStatusLambdaVersionyT8M62eyoobP1Gz457YdODMZHsp8Eax5R6HaE3KY"
+              "Ref": "UpdateOrderStepStatusLambdaVersionuln7YQdh1TQjWP8bc4U1t0HLYm31YRJwdIsDJywGA6s"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateOrderStepStatusLambdaFunctionQualifiedArn"
@@ -10670,7 +11200,7 @@
           "GetCompletedOrdersLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetCompletedOrdersLambdaVersione8OdH0vdDfOsvnNkGEpU8aQjpW38oWGjN24hHwTr20c"
+              "Ref": "GetCompletedOrdersLambdaVersionQJcVbSzxgwgUBz5fqPQ2aDGlljVvaSBmRaNaD2U"
             },
             "Export": {
               "Name": "sls-this27-dev-GetCompletedOrdersLambdaFunctionQualifiedArn"
@@ -10679,7 +11209,7 @@
           "GetOneInProgressOrderLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetOneInProgressOrderLambdaVersion4lKvj1Ct5yGFNXga8O0BqEYdMwHoG49NXRdNjvqeQI"
+              "Ref": "GetOneInProgressOrderLambdaVersionjYerGYE3iiamZI1uGUsyDjnshw6bDNhVZCiwNYHAk"
             },
             "Export": {
               "Name": "sls-this27-dev-GetOneInProgressOrderLambdaFunctionQualifiedArn"
@@ -10688,7 +11218,7 @@
           "UpdateOperatorPasswordLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateOperatorPasswordLambdaVersionQ5JF8rRGsA9zHEV78oqzUVJ5RTe1Uo0XaO0pw4S8"
+              "Ref": "UpdateOperatorPasswordLambdaVersion7jhCEy5vjyFOgyNHwSZgXL4uwCW3FWRx8V5kXRP0uw0"
             },
             "Export": {
               "Name": "sls-this27-dev-UpdateOperatorPasswordLambdaFunctionQualifiedArn"
@@ -10697,7 +11227,7 @@
           "GetOnePendingOrderLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetOnePendingOrderLambdaVersion4PZ9h4BlCcAgbcSa8sANeXKYVZs7DbPdCcdZ9I9I"
+              "Ref": "GetOnePendingOrderLambdaVersionxmsAOLBvHQI1zCUeIEGD8bcJDMDfPT6dTBmZ8qNEg"
             },
             "Export": {
               "Name": "sls-this27-dev-GetOnePendingOrderLambdaFunctionQualifiedArn"
@@ -10706,7 +11236,7 @@
           "CreateOrderLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateOrderLambdaVersionayuuSGq87BhRrHp3ynaur3qYl88f2ejhDrDhCYZHoI8"
+              "Ref": "CreateOrderLambdaVersion7Z7WV3Uql3hw9RvEdkHi3MhCf8rZM7EW7AOJDhbr68c"
             },
             "Export": {
               "Name": "sls-this27-dev-CreateOrderLambdaFunctionQualifiedArn"
@@ -10715,10 +11245,46 @@
           "GetOrdersByBranchIdLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetOrdersByBranchIdLambdaVersiongaI1CUwUbwBcTavlSR4Np2sEKdJ3aJm2p2yC4BrCsyE"
+              "Ref": "GetOrdersByBranchIdLambdaVersionbfTEtmlz3ztVUGTQSm2GojNHK0rRgN5TNdIcU0Kti5s"
             },
             "Export": {
               "Name": "sls-this27-dev-GetOrdersByBranchIdLambdaFunctionQualifiedArn"
+            }
+          },
+          "CreateOperatorLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "CreateOperatorLambdaVersionjYAwKIfQirlgYSGTQhDlX5yc9vbFcsua2NskykcGvUA"
+            },
+            "Export": {
+              "Name": "sls-this27-dev-CreateOperatorLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetOperatorsLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetOperatorsLambdaVersionP21E3VV7tHwi2StnPkAgqjerjCCsuZ0C2xhEIO01Ic"
+            },
+            "Export": {
+              "Name": "sls-this27-dev-GetOperatorsLambdaFunctionQualifiedArn"
+            }
+          },
+          "UpdateOperatorLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateOperatorLambdaVersionOSq0t7eGFv8SYG8H3BgAmSr0GCxg6z2dVM59NBh8"
+            },
+            "Export": {
+              "Name": "sls-this27-dev-UpdateOperatorLambdaFunctionQualifiedArn"
+            }
+          },
+          "DeleteOperatorLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteOperatorLambdaVersiong3nFIRLoYoby5zG9veZAtyPkdiR8quHhtjUskR7NkQ"
+            },
+            "Export": {
+              "Name": "sls-this27-dev-DeleteOperatorLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -10903,10 +11469,10 @@
         "name": "this27-dev-createAdmin",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateAdminLambdaVersionqBIU4IcXxY4fCAwHWHsZseMiUxMQUL4MhZyS0Y9dr44"
+        "versionLogicalId": "CreateAdminLambdaVersion340RFQTYtCfS7hwT8VtAAT8d3bgwCU90Y6zI1cnC6n8"
       },
       "loginAdmin": {
         "handler": "handlers/Admin/admin.loginAdmin",
@@ -10939,10 +11505,10 @@
         "name": "this27-dev-loginAdmin",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "LoginAdminLambdaVersion9atwrZKS6OCzqjcv8IzToVpLAYh0Atr8rBPEglCE"
+        "versionLogicalId": "LoginAdminLambdaVersionFfkvV6MyEk389eVrYbmccwLRLceDSankoMbtccarqo"
       },
       "createBranch": {
         "handler": "handlers/Branch/Branch.createBranch",
@@ -10975,10 +11541,10 @@
         "name": "this27-dev-createBranch",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateBranchLambdaVersiona06SLhcNURk15Wo5JSyv4AlNIl0gYkB9eUfmaTP0"
+        "versionLogicalId": "CreateBranchLambdaVersionUWzDJVIPU4HNylZ6FYKEP0n1Mxl9TF9n3bSdYj3HY"
       },
       "getAllBranches": {
         "handler": "handlers/Branch/Branch.getAllBranches",
@@ -11011,10 +11577,10 @@
         "name": "this27-dev-getAllBranches",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetAllBranchesLambdaVersionMhoZMwOscxwnRSHWhqOItCNNa18whkpgEP50aCgId4"
+        "versionLogicalId": "GetAllBranchesLambdaVersionUi4aunO4YWiJCIcQFPqFnEfV52JagVHfHg9Xav9k"
       },
       "updateBranch": {
         "handler": "handlers/Branch/Branch.updateBranch",
@@ -11047,10 +11613,10 @@
         "name": "this27-dev-updateBranch",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateBranchLambdaVersionxAzbeiz0K3kkcm48GAw5XqOZYmsx1bLIZuanurH3o"
+        "versionLogicalId": "UpdateBranchLambdaVersiontmWohMdYtQQuv1VS6Sjcc8LUb0Xfpw0GdSvRtudCCB0"
       },
       "deleteBranch": {
         "handler": "handlers/Branch/Branch.deleteBranch",
@@ -11083,10 +11649,10 @@
         "name": "this27-dev-deleteBranch",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteBranchLambdaVersionm8bgDx3MnNMMSaAmnVOaQcnIqqPSVqAvjR8yzhbdqA"
+        "versionLogicalId": "DeleteBranchLambdaVersionIhcjVied7uHgczIbbe7FEFqcMSb7clFVMaztpa8ts"
       },
       "selectBranch": {
         "handler": "handlers/Branch/Branch.selectBranch",
@@ -11119,10 +11685,10 @@
         "name": "this27-dev-selectBranch",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "SelectBranchLambdaVersionulkHoWnlN511rY1DrGno48I4X6pkzsvI13l10zO2s"
+        "versionLogicalId": "SelectBranchLambdaVersionY8z3E3ISH4TSJqS1ArtO3wZ50wmjBlrrwnfhG9sra08"
       },
       "createManager": {
         "handler": "handlers/Manager/Manager.createManager",
@@ -11155,10 +11721,10 @@
         "name": "this27-dev-createManager",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateManagerLambdaVersionb5qcdzjfmGsLmkMcDyMjIE8lnywRS5wnDnBE7i9pw"
+        "versionLogicalId": "CreateManagerLambdaVersionEfVgiw8EiY1rjyPWcMGVdy4eGumr8sPQIjeymDbU0"
       },
       "managerLogin": {
         "handler": "handlers/Manager/Manager.managerLogin",
@@ -11191,10 +11757,10 @@
         "name": "this27-dev-managerLogin",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "ManagerLoginLambdaVersionRVDTy8pOzdalLKJt344s1xarD3cFnfKzeOvsCGdSU"
+        "versionLogicalId": "ManagerLoginLambdaVersionpBOtHPAJl06Nt3I0t1dV0mMXSX5L4D6yc098NCfAz4"
       },
       "getAllManagers": {
         "handler": "handlers/Manager/Manager.getAllManagers",
@@ -11227,10 +11793,10 @@
         "name": "this27-dev-getAllManagers",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetAllManagersLambdaVersionKCzAB6SNY5mqttbKB2ndBbzPqgCjFaWEP13N0v7Qs9k"
+        "versionLogicalId": "GetAllManagersLambdaVersion9KjicuQH1XaiZjc383ilXyTRUqYLuniwYNf0wXVU3Y"
       },
       "getMyBranch": {
         "handler": "handlers/Manager/Manager.getMyBranch",
@@ -11263,10 +11829,10 @@
         "name": "this27-dev-getMyBranch",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetMyBranchLambdaVersionDVpO6feb7uKHq4vb8XOHRIWG8PSolSAmCnjo0ZINS4A"
+        "versionLogicalId": "GetMyBranchLambdaVersionV3dYv5AcpErWKjWOVUXQ6pxL7GBjwWreDa9NHsPEoo"
       },
       "updateManager": {
         "handler": "handlers/Manager/Manager.updateManager",
@@ -11299,10 +11865,10 @@
         "name": "this27-dev-updateManager",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateManagerLambdaVersionIdDizsdLCuY6wMqceqKYcEFDot38pNxDDDeiyojG4E"
+        "versionLogicalId": "UpdateManagerLambdaVersionWCYelGBDnTW3Ifz9h4q80jAdfuNkBYVIaH6Viav68"
       },
       "deleteManager": {
         "handler": "handlers/Manager/Manager.deleteManager",
@@ -11335,10 +11901,10 @@
         "name": "this27-dev-deleteManager",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteManagerLambdaVersionNf3KShiMwWsPpLV2P6fZfdXGDGxI6uE0c3Hr31ro"
+        "versionLogicalId": "DeleteManagerLambdaVersionyri6aWRxV3ZMwY5oyASxlaJR4NyaOpW6PYNuVcnjsE"
       },
       "createCustomer": {
         "handler": "handlers/Customer/customer.createCustomer",
@@ -11371,10 +11937,10 @@
         "name": "this27-dev-createCustomer",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateCustomerLambdaVersion5OvHjjBFzQOdkF22lHF8FC2t8TFqsKonWkb1KpLavcs"
+        "versionLogicalId": "CreateCustomerLambdaVersionDgEyA8rqxsilI9KqdSAOLGMNqqsQZTbEVPEN375I"
       },
       "getCustomers": {
         "handler": "handlers/Customer/customer.getCustomers",
@@ -11407,10 +11973,10 @@
         "name": "this27-dev-getCustomers",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetCustomersLambdaVersionNRcvCUZfMkYTTnwuK66P23JR4Vshzb5txN6JM0S6c"
+        "versionLogicalId": "GetCustomersLambdaVersionCUduJexEt8oDOBXalQvvFh7Y1NdgQyENF4WJREG43Y"
       },
       "updateCustomer": {
         "handler": "handlers/Customer/customer.updateCustomer",
@@ -11443,10 +12009,10 @@
         "name": "this27-dev-updateCustomer",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateCustomerLambdaVersionPkHm5DiLrdgBY19TfO84EQ02hiIJLN9lCNTl1ZQGCGE"
+        "versionLogicalId": "UpdateCustomerLambdaVersionGtJbY7Y2tUb2Rf6buAMhI39rT3RennsgBSBIgzWsIE"
       },
       "deleteCustomer": {
         "handler": "handlers/Customer/customer.deleteCustomer",
@@ -11479,10 +12045,10 @@
         "name": "this27-dev-deleteCustomer",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteCustomerLambdaVersionN7dqpkJORtMVT63p89XBOHA14MOaCCyEm2f58Jg"
+        "versionLogicalId": "DeleteCustomerLambdaVersionpShtd7YobhoWbPkrydXbtojTUKUK9ZFrCi4trXVibk"
       },
       "createMachineType": {
         "handler": "handlers/MachineType/MachineType.createMachineType",
@@ -11515,10 +12081,10 @@
         "name": "this27-dev-createMachineType",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateMachineTypeLambdaVersionSyYUWlUeVEJ0eOxMfBzgbqKDTVvMoL7mLhUuHP5hhQ"
+        "versionLogicalId": "CreateMachineTypeLambdaVersiontNX7t0a4JQxHQScjefv9wXDaF2d2KR2nCNfSI9c0"
       },
       "getMachineTypes": {
         "handler": "handlers/MachineType/MachineType.getMachineTypes",
@@ -11556,10 +12122,10 @@
         "name": "this27-dev-getMachineTypes",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetMachineTypesLambdaVersionLDUwVx7jTa3zl8mAullUPufGAtrlci0P9WupZxvgKfw"
+        "versionLogicalId": "GetMachineTypesLambdaVersionPBMqRcnzr4Ea1s2DM6rLJZZgZkSPqrgPUnFK2NHeCqU"
       },
       "getAllMachineTypesWithMachines": {
         "handler": "handlers/MachineType/MachineType.getAllMachineTypesWithMachines",
@@ -11593,10 +12159,10 @@
         "name": "this27-dev-getAllMachineTypesWithMachines",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetAllMachineTypesWithMachinesLambdaVersion8O2Ek65oSJNnHO7iQxuhqA3kfZXfvKvMuPyAeT8mVM"
+        "versionLogicalId": "GetAllMachineTypesWithMachinesLambdaVersioncB6WpP8yngVux1Ew5EUu79JXOrvRROqK3cFCsun4y9s"
       },
       "updateMachineType": {
         "handler": "handlers/MachineType/MachineType.updateMachineType",
@@ -11629,10 +12195,10 @@
         "name": "this27-dev-updateMachineType",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateMachineTypeLambdaVersionHTMpBTRk9r60DP7MA0yRO49jucRjujo05h2MsdESk"
+        "versionLogicalId": "UpdateMachineTypeLambdaVersionDuvKkX5czNkh27pVxcE6fCPd3Q1ioEtbtXBdF2eONoA"
       },
       "deleteMachineType": {
         "handler": "handlers/MachineType/MachineType.deleteMachineType",
@@ -11665,10 +12231,10 @@
         "name": "this27-dev-deleteMachineType",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteMachineTypeLambdaVersionf7pnOP5novdIhaQICXj8tCMDqj4cyk9MbjVDp4H9FX8"
+        "versionLogicalId": "DeleteMachineTypeLambdaVersionBoSS0pWBpwB6lyOg9ZREwZMj2f7fbUwzuAUd10EnU"
       },
       "createMachine": {
         "handler": "handlers/machine/machine.createMachine",
@@ -11701,10 +12267,10 @@
         "name": "this27-dev-createMachine",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateMachineLambdaVersionjnUd3w1bx8hfOqWxRHupjPJZrYgX8eYgZfDcggeYiU"
+        "versionLogicalId": "CreateMachineLambdaVersiontH1AU7tPB6Zgeie4prWF8QCiCsLbKOjvayeisTIzf4"
       },
       "getAllMachines": {
         "handler": "handlers/Machine/machine.getAllMachines",
@@ -11737,10 +12303,10 @@
         "name": "this27-dev-getAllMachines",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetAllMachinesLambdaVersionP8byA5NNtkeklwLa0RlPlC86a7PJ7tpfdJNmy5li9Y"
+        "versionLogicalId": "GetAllMachinesLambdaVersionMktMrxYUSOv1Zx5CwiXTuh2lYjppnTbXtHTs5aKGRg"
       },
       "updateMachine": {
         "handler": "handlers/machine/machine.updateMachine",
@@ -11773,10 +12339,10 @@
         "name": "this27-dev-updateMachine",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateMachineLambdaVersionLSca9RVrVgpzz2e517QfgzCYo2e25xnRH8K5NF0wwfU"
+        "versionLogicalId": "UpdateMachineLambdaVersionFNUdAJdL8fB0T2T7CQCqcEEaIt3VVWpEwDydGEezT0"
       },
       "deleteMachine": {
         "handler": "handlers/machine/machine.deleteMachine",
@@ -11809,10 +12375,10 @@
         "name": "this27-dev-deleteMachine",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteMachineLambdaVersionjrEna67z3I0dAideh4YYNknp35Oxos1xgpLAMIqeA"
+        "versionLogicalId": "DeleteMachineLambdaVersionPDc8dB2mrUV4WRHKkSs0kePG4ZFtm792cVlO4iJg"
       },
       "createProductType": {
         "handler": "handlers/ProductCatalogue/productType.createProductType",
@@ -11845,10 +12411,10 @@
         "name": "this27-dev-createProductType",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateProductTypeLambdaVersionGVyJDzd44Uoyxce0TVg1EnmQnP2bfIgucVKmBrtXQ"
+        "versionLogicalId": "CreateProductTypeLambdaVersionjO6c1nreNtmEkwXCzCdbe9BF0q7TWaCv9djOts8fims"
       },
       "getProductTypes": {
         "handler": "handlers/ProductCatalogue/productType.getProductTypes",
@@ -11881,10 +12447,10 @@
         "name": "this27-dev-getProductTypes",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetProductTypesLambdaVersionBGKsYmw8HqMUhQz1Cs5oflmfM8Z9hYYycs41NDrn9yc"
+        "versionLogicalId": "GetProductTypesLambdaVersionOBPpR7mM7y8aBGRPRtX6t1gdTHy23KmRlD4j04XeY"
       },
       "getAllProductTypesWithProducts": {
         "handler": "handlers/ProductCatalogue/productType.getAllProductTypesWithProducts",
@@ -11917,10 +12483,10 @@
         "name": "this27-dev-getAllProductTypesWithProducts",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetAllProductTypesWithProductsLambdaVersionA2VleSvXxMS1G5Sjd2bbKejho46mJnk78qp2nu7p4"
+        "versionLogicalId": "GetAllProductTypesWithProductsLambdaVersion64XyylKWGj6rIPIXPQKRW98cCxCXuXyJXOb0bdEEhOY"
       },
       "updateProductType": {
         "handler": "handlers/ProductCatalogue/productType.updateProductType",
@@ -11953,10 +12519,10 @@
         "name": "this27-dev-updateProductType",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateProductTypeLambdaVersion30LrYI4BTE3rung1oHy1A4mKLmqme59tiN5C49g99w"
+        "versionLogicalId": "UpdateProductTypeLambdaVersionuzDO5UM8OTDrw9qKYbB7tC0R0IZKoKHicyQByT3aZc"
       },
       "deleteProductType": {
         "handler": "handlers/ProductCatalogue/productType.deleteProductType",
@@ -11989,10 +12555,10 @@
         "name": "this27-dev-deleteProductType",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteProductTypeLambdaVersionwFomWFLHHUTBG7W3uhM5yIND7Jl39KhM9Xs3BmPsaas"
+        "versionLogicalId": "DeleteProductTypeLambdaVersionDooSnPZo7Wu1ptvHtyp65qUyQw0Xydfhp4OqI9nbk"
       },
       "createProduct": {
         "handler": "handlers/product/product.createProduct",
@@ -12025,10 +12591,10 @@
         "name": "this27-dev-createProduct",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateProductLambdaVersionSeD1UXuLEOl73iTFCXmm3zFHr5IqE2IxrskDxEJsE"
+        "versionLogicalId": "CreateProductLambdaVersionxtGElAFtvWJdyhFzBovTKyITb7KL7ZzUPhJestn0"
       },
       "getProducts": {
         "handler": "handlers/product/product.getProducts",
@@ -12061,10 +12627,10 @@
         "name": "this27-dev-getProducts",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetProductsLambdaVersion9DRizB2YzzGjdhKLbUNBoSl2BUg5FNNuIVXPCPNg8c"
+        "versionLogicalId": "GetProductsLambdaVersioniwq4vF1ep82ZUUlBL9Fsfh1g55E1jWYLiEfzzxWIEc"
       },
       "updateProduct": {
         "handler": "handlers/product/product.updateProduct",
@@ -12097,10 +12663,10 @@
         "name": "this27-dev-updateProduct",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateProductLambdaVersion5GoGzLtbi4AcTUEyvXq5FKVehCnG6Cginn1InwgfM"
+        "versionLogicalId": "UpdateProductLambdaVersionZDTHALKYDzeK7G0dKInwVYgkgLMaLVYI7K2DEiVjnk"
       },
       "deleteProduct": {
         "handler": "handlers/product/product.deleteProduct",
@@ -12133,10 +12699,10 @@
         "name": "this27-dev-deleteProduct",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteProductLambdaVersionPs3TGFhm65M2Dywxx1s6N3c09yZzKeqArhKTAJzSM"
+        "versionLogicalId": "DeleteProductLambdaVersion3Mz9mud1Ww644PyBOgcKjeqT21fytcRt4VOMdLgkk0"
       },
       "createMaterialType": {
         "handler": "handlers/MaterialType/materialType.createMaterialType",
@@ -12169,10 +12735,10 @@
         "name": "this27-dev-createMaterialType",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateMaterialTypeLambdaVersionXqdlMjHTsXBUIGvCE8McO35QkJzsWGD1QMUVtqic"
+        "versionLogicalId": "CreateMaterialTypeLambdaVersionvn7hRFjUmPrklc5uNLSFtr1uC9c5dhpLh1bvCz5FxQo"
       },
       "getMaterialTypes": {
         "handler": "handlers/MaterialType/materialType.getMaterialTypes",
@@ -12205,10 +12771,10 @@
         "name": "this27-dev-getMaterialTypes",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetMaterialTypesLambdaVersionRQUYHNgJQUuu5fP5pWCMy2OpirmC2ifFpxBtMX2BnaQ"
+        "versionLogicalId": "GetMaterialTypesLambdaVersionoowyC6AtsgSC8yq5SpjP0iOv9GfkHffhY0mASDNpOI"
       },
       "getAllMaterialTypesWithMaterials": {
         "handler": "handlers/MaterialType/materialType.getAllMaterialTypesWithMaterials",
@@ -12241,10 +12807,10 @@
         "name": "this27-dev-getAllMaterialTypesWithMaterials",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetAllMaterialTypesWithMaterialsLambdaVersion59PJZG558o5UvhHvtut2Bvue6sRh1lxSUVJ2YtYlLw"
+        "versionLogicalId": "GetAllMaterialTypesWithMaterialsLambdaVersion5hH1ExziBAkWsbpAZFc7L4sAjgxONAMVobizI8lQ"
       },
       "updateMaterialType": {
         "handler": "handlers/MaterialType/materialType.updateMaterialType",
@@ -12277,10 +12843,10 @@
         "name": "this27-dev-updateMaterialType",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateMaterialTypeLambdaVersionhvJJBl1cbvsoRrj64Y3hIAY1wO12DswDTE6ZYxCY"
+        "versionLogicalId": "UpdateMaterialTypeLambdaVersionlnKxCVh4YaIL5JGON81ifU9T366qabi6PaM7lMccIo"
       },
       "deleteMaterialType": {
         "handler": "handlers/MaterialType/materialType.deleteMaterialType",
@@ -12313,10 +12879,10 @@
         "name": "this27-dev-deleteMaterialType",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteMaterialTypeLambdaVersionw5YR4Woayrq2catafV6Qu7gseCAKX41vdkMWh5Y2AE"
+        "versionLogicalId": "DeleteMaterialTypeLambdaVersionev7Wpou005bppcK15y3nPtEO1myvjkML99wuLjSHdE"
       },
       "createMaterial": {
         "handler": "handlers/material/material.createMaterial",
@@ -12349,10 +12915,10 @@
         "name": "this27-dev-createMaterial",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateMaterialLambdaVersion1REEcNmL7bXjY7woT8PbIEPY5gi6OTH4DL9ftF0IV0"
+        "versionLogicalId": "CreateMaterialLambdaVersionxLTstAnt89kSaornfCvpHKOQxxdVDO4LD96G4BWVpIs"
       },
       "getMaterials": {
         "handler": "handlers/material/material.getMaterials",
@@ -12385,10 +12951,10 @@
         "name": "this27-dev-getMaterials",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetMaterialsLambdaVersionwWGuf07wVNufFgyUnsfzjalVjW3CAoJMa3Pq1SrY"
+        "versionLogicalId": "GetMaterialsLambdaVersionHvJ3NbvobZlg5G4Adry7yJXjf4ujiKOVvjl3CCCoRg"
       },
       "updateMaterial": {
         "handler": "handlers/material/material.updateMaterial",
@@ -12421,10 +12987,10 @@
         "name": "this27-dev-updateMaterial",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateMaterialLambdaVersionLZiEA2U5KrHznZ0o7TmnoKijCCw06KPnvIXd7VPEFw"
+        "versionLogicalId": "UpdateMaterialLambdaVersionEJ4nlFESgGZRq6pbxHFmJtqlm38QARxc5fbOv7OGZd8"
       },
       "deleteMaterial": {
         "handler": "handlers/material/material.deleteMaterial",
@@ -12457,13 +13023,13 @@
         "name": "this27-dev-deleteMaterial",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteMaterialLambdaVersionyhKCtb0QTK6Cfgd7nCHOtzR2TIXbEgoXCTGzx6Ys"
+        "versionLogicalId": "DeleteMaterialLambdaVersionihpeoybC0Spl5iExtdkGLANmb5PjnORJTirvKs2RxI"
       },
       "createStep": {
-        "handler": "handlers/step/step.createStep",
+        "handler": "handlers/steps/steps.createStep",
         "events": [
           {
             "http": {
@@ -12493,13 +13059,13 @@
         "name": "this27-dev-createStep",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateStepLambdaVersionnuL7aosQg9CE7oAlcL9v0BahwONcbqbFVxDZoPsGag"
+        "versionLogicalId": "CreateStepLambdaVersionrcM20qepwwKQYPmP1ppGyA9dhwGWIGLfhA2cNpuLhg"
       },
       "getSteps": {
-        "handler": "handlers/step/step.getSteps",
+        "handler": "handlers/steps/steps.getSteps",
         "events": [
           {
             "http": {
@@ -12522,6 +13088,11 @@
                 ],
                 "allowCredentials": false
               },
+              "request": {
+                "parameters": {
+                  "method.request.querystring.branchId": false
+                }
+              },
               "integration": "AWS_PROXY"
             }
           }
@@ -12529,13 +13100,13 @@
         "name": "this27-dev-getSteps",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetStepsLambdaVersionlJtfNkyxLxofXAR13XuupFBlAdZ4fgXHuL1RQKuq8"
+        "versionLogicalId": "GetStepsLambdaVersionczX5s1UFj5fWoRtUDW3xsZgK3hFjHrGf6g9EBjcETCY"
       },
       "updateStep": {
-        "handler": "handlers/step/step.updateStep",
+        "handler": "handlers/steps/steps.updateStep",
         "events": [
           {
             "http": {
@@ -12558,6 +13129,11 @@
                 ],
                 "allowCredentials": false
               },
+              "request": {
+                "parameters": {
+                  "method.request.path.id": true
+                }
+              },
               "integration": "AWS_PROXY"
             }
           }
@@ -12565,13 +13141,13 @@
         "name": "this27-dev-updateStep",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateStepLambdaVersionIEGTxXI7OcQoluXA2lMIGivnBNwe92M8cIoxf6mc"
+        "versionLogicalId": "UpdateStepLambdaVersionQQBKqtDYiVfaZpSXO7bniwYoqkqmJg5KbMZQLOPQ"
       },
       "deleteStep": {
-        "handler": "handlers/step/step.deleteStep",
+        "handler": "handlers/steps/steps.deleteStep",
         "events": [
           {
             "http": {
@@ -12594,6 +13170,11 @@
                 ],
                 "allowCredentials": false
               },
+              "request": {
+                "parameters": {
+                  "method.request.path.id": true
+                }
+              },
               "integration": "AWS_PROXY"
             }
           }
@@ -12601,10 +13182,10 @@
         "name": "this27-dev-deleteStep",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DeleteStepLambdaVersionJgI5e9EpnxGfGeXNQeyPX7l0KMzumDnB189WO4Dc"
+        "versionLogicalId": "DeleteStepLambdaVersionWCF2g6TvStaOaFw6ETWUgq3BMTMbxW4vWWhl2uzxQMM"
       },
       "sendMarketingToSelected": {
         "handler": "handlers/email/sendMarketingToSelected.sendMarketingToSelected",
@@ -12637,30 +13218,10 @@
         "name": "this27-dev-sendMarketingToSelected",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "SendMarketingToSelectedLambdaVersionvFjRHeB5B6MTD0JquNnJ8UgLNaKyqs90rcp8WL4M"
-      },
-      "createOperator": {
-        "handler": "handlers/MachineOperator/MachineOperator.createOperator",
-        "events": [
-          {
-            "httpApi": {
-              "path": "/operators",
-              "method": "post"
-            },
-            "resolvedMethod": "POST",
-            "resolvedPath": "/operators"
-          }
-        ],
-        "name": "this27-dev-createOperator",
-        "package": {},
-        "memory": 1024,
-        "timeout": 30,
-        "runtime": "nodejs20.x",
-        "vpc": {},
-        "versionLogicalId": "CreateOperatorLambdaVersion25cnI2bOtab5XegSmNuXXFJsVgknsp96LHwr0UBTIOs"
+        "versionLogicalId": "SendMarketingToSelectedLambdaVersionx2qXttruaFCJ49TN1EnMdsbhf8pHSMlUYX24O15k"
       },
       "operatorLogin": {
         "handler": "handlers/MachineOperator/MachineOperator.operatorLogin",
@@ -12677,10 +13238,10 @@
         "name": "this27-dev-operatorLogin",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "OperatorLoginLambdaVersionTKqVWKEVmnSoQ74O7HNn2WQboepbqNcka0xxoUeWIb8"
+        "versionLogicalId": "OperatorLoginLambdaVersionBe3EG2RVxUKpWFHadV9r6xgEPZVjbrFfsYx3fQr090"
       },
       "getOperatorOrders": {
         "handler": "handlers/MachineOperator/MachineOperator.getOperatorOrders",
@@ -12697,10 +13258,10 @@
         "name": "this27-dev-getOperatorOrders",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetOperatorOrdersLambdaVersionJZ66iks38HLPzFA5uWmp41ZPqYSjpdzyhPltgPsI"
+        "versionLogicalId": "GetOperatorOrdersLambdaVersionJVASB7rXPkwGsJMNfeuI9gqsXXhbO9adX7G6ud7H2M"
       },
       "updateOrderStepStatus": {
         "handler": "handlers/MachineOperator/MachineOperator.updateMachineStatus",
@@ -12717,10 +13278,10 @@
         "name": "this27-dev-updateOrderStepStatus",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateOrderStepStatusLambdaVersionyT8M62eyoobP1Gz457YdODMZHsp8Eax5R6HaE3KY"
+        "versionLogicalId": "UpdateOrderStepStatusLambdaVersionuln7YQdh1TQjWP8bc4U1t0HLYm31YRJwdIsDJywGA6s"
       },
       "getCompletedOrders": {
         "handler": "handlers/MachineOperator/MachineOperator.getCompletedOrders",
@@ -12753,10 +13314,10 @@
         "name": "this27-dev-getCompletedOrders",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetCompletedOrdersLambdaVersione8OdH0vdDfOsvnNkGEpU8aQjpW38oWGjN24hHwTr20c"
+        "versionLogicalId": "GetCompletedOrdersLambdaVersionQJcVbSzxgwgUBz5fqPQ2aDGlljVvaSBmRaNaD2U"
       },
       "getOneInProgressOrder": {
         "handler": "handlers/MachineOperator/MachineOperator.getOneInProgressOrder",
@@ -12773,10 +13334,10 @@
         "name": "this27-dev-getOneInProgressOrder",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetOneInProgressOrderLambdaVersion4lKvj1Ct5yGFNXga8O0BqEYdMwHoG49NXRdNjvqeQI"
+        "versionLogicalId": "GetOneInProgressOrderLambdaVersionjYerGYE3iiamZI1uGUsyDjnshw6bDNhVZCiwNYHAk"
       },
       "updateOperatorPassword": {
         "handler": "handlers/MachineOperator/MachineOperator.updateOperatorPassword",
@@ -12793,10 +13354,10 @@
         "name": "this27-dev-updateOperatorPassword",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UpdateOperatorPasswordLambdaVersionQ5JF8rRGsA9zHEV78oqzUVJ5RTe1Uo0XaO0pw4S8"
+        "versionLogicalId": "UpdateOperatorPasswordLambdaVersion7jhCEy5vjyFOgyNHwSZgXL4uwCW3FWRx8V5kXRP0uw0"
       },
       "getOnePendingOrder": {
         "handler": "handlers/MachineOperator/MachineOperator.getOnePendingOrder",
@@ -12829,10 +13390,10 @@
         "name": "this27-dev-getOnePendingOrder",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetOnePendingOrderLambdaVersion4PZ9h4BlCcAgbcSa8sANeXKYVZs7DbPdCcdZ9I9I"
+        "versionLogicalId": "GetOnePendingOrderLambdaVersionxmsAOLBvHQI1zCUeIEGD8bcJDMDfPT6dTBmZ8qNEg"
       },
       "createOrder": {
         "handler": "handlers/oders/oders.createOrder",
@@ -12865,10 +13426,10 @@
         "name": "this27-dev-createOrder",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "CreateOrderLambdaVersionayuuSGq87BhRrHp3ynaur3qYl88f2ejhDrDhCYZHoI8"
+        "versionLogicalId": "CreateOrderLambdaVersion7Z7WV3Uql3hw9RvEdkHi3MhCf8rZM7EW7AOJDhbr68c"
       },
       "getOrdersByBranchId": {
         "handler": "handlers/oders/oders.getOrdersByBranchId",
@@ -12901,10 +13462,153 @@
         "name": "this27-dev-getOrdersByBranchId",
         "package": {},
         "memory": 1024,
-        "timeout": 30,
+        "timeout": 60,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetOrdersByBranchIdLambdaVersiongaI1CUwUbwBcTavlSR4Np2sEKdJ3aJm2p2yC4BrCsyE"
+        "versionLogicalId": "GetOrdersByBranchIdLambdaVersionbfTEtmlz3ztVUGTQSm2GojNHK0rRgN5TNdIcU0Kti5s"
+      },
+      "createOperator": {
+        "handler": "handlers/MachineOperator/MachineOperator.createOperator",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/operators",
+              "method": "post"
+            },
+            "resolvedMethod": "POST",
+            "resolvedPath": "/operators"
+          }
+        ],
+        "name": "this27-dev-createOperator",
+        "package": {},
+        "memory": 1024,
+        "timeout": 60,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "CreateOperatorLambdaVersionjYAwKIfQirlgYSGTQhDlX5yc9vbFcsua2NskykcGvUA"
+      },
+      "getOperators": {
+        "handler": "handlers/MachineOperator/MachineOperator.getOperators",
+        "events": [
+          {
+            "http": {
+              "path": "operator",
+              "method": "get",
+              "cors": {
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "GET"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent",
+                  "X-Amzn-Trace-Id"
+                ],
+                "allowCredentials": false
+              },
+              "request": {
+                "parameters": {
+                  "method.request.querystring.branchId": false
+                }
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "this27-dev-getOperators",
+        "package": {},
+        "memory": 1024,
+        "timeout": 60,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "GetOperatorsLambdaVersionP21E3VV7tHwi2StnPkAgqjerjCCsuZ0C2xhEIO01Ic"
+      },
+      "updateOperator": {
+        "handler": "handlers/MachineOperator/MachineOperator.updateOperator",
+        "events": [
+          {
+            "http": {
+              "path": "operator/{id}",
+              "method": "put",
+              "cors": {
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "PUT"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent",
+                  "X-Amzn-Trace-Id"
+                ],
+                "allowCredentials": false
+              },
+              "request": {
+                "parameters": {
+                  "method.request.path.id": true
+                }
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "this27-dev-updateOperator",
+        "package": {},
+        "memory": 1024,
+        "timeout": 60,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "UpdateOperatorLambdaVersionOSq0t7eGFv8SYG8H3BgAmSr0GCxg6z2dVM59NBh8"
+      },
+      "deleteOperator": {
+        "handler": "handlers/MachineOperator/MachineOperator.deleteOperator",
+        "events": [
+          {
+            "http": {
+              "path": "operator/{id}",
+              "method": "delete",
+              "cors": {
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "DELETE"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent",
+                  "X-Amzn-Trace-Id"
+                ],
+                "allowCredentials": false
+              },
+              "request": {
+                "parameters": {
+                  "method.request.path.id": true
+                }
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "this27-dev-deleteOperator",
+        "package": {},
+        "memory": 1024,
+        "timeout": 60,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "DeleteOperatorLambdaVersiong3nFIRLoYoby5zG9veZAtyPkdiR8quHhtjUskR7NkQ"
       }
     },
     "configValidationMode": "error",
@@ -12928,7 +13632,7 @@
         ],
         "artifactsS3KeyDirname": "serverless/this27/dev/code-artifacts",
         "artifact": "/Users/gopalsingh/Desktop/DipanBhai/awsClou/dipanbhaiAwsCode/.serverless/this27.zip",
-        "artifactDirectoryName": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z"
+        "artifactDirectoryName": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z"
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
@@ -12939,7 +13643,7 @@
     "artifact": "/Users/gopalsingh/Desktop/DipanBhai/awsClou/dipanbhaiAwsCode/.serverless/this27.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/this27/dev/1750171934388-2025-06-17T14:52:14.388Z",
+    "artifactDirectoryName": "serverless/this27/dev/1750969790410-2025-06-26T20:29:50.410Z",
     "artifact": "this27.zip"
   }
 }

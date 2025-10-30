@@ -7,7 +7,13 @@ const productSchema = new mongoose.Schema({
   sizeX: { type: Number, required: true },
   sizeY: { type: Number, required: true },
   sizeZ: { type: Number, required: true },
-  branchId: { type: mongoose.Schema.Types.ObjectId, ref: 'Branch', required: true }
+  branchId: { type: mongoose.Schema.Types.ObjectId, ref: 'Branch', required: true },
+  product27InfinityId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product27Infinity',
+      required: true,
+     
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);
