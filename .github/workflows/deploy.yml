@@ -21,18 +21,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Increase file limit
-        run: sudo sysctl -w fs.file-max=200000
-
-      - name: Increase ulimit
-        run: ulimit -n 200000
-
+       
       - name: Install Serverless v3
         run: npm install -g serverless@3
 
+
       - name: Deploy to AWS
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          NODE_OPTIONS: "--max-old-space-size=8192"
-        run: sls deploy --stage dev
+           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+           NODE_OPTIONS: "--max-old-space-size=8192"
+        run: |
+            ulimit -n 200000
+            sls deploy --stage dev
