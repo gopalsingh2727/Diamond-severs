@@ -86,6 +86,13 @@ package:
     - '!.gitignore'
     - '!README.md'
     - '!.DS_Store'
+    - "!coverage/**"
+    - "!logs/**"
+    - "!*.log"
+    - "!.git/**"
+    - "!tmp/**"
+    - "!**/*.ts"
+    - "dist/**"
     - '!.env*'
     - '!node_modules/aws-sdk/**'
     - '!node_modules/@aws-sdk/**'
