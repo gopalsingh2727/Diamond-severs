@@ -21,9 +21,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build TypeScript
-        run: npm run build
-
       - name: Prune dev dependencies (reduce package size)
         run: npm prune --production
 
