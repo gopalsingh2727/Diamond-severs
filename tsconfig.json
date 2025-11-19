@@ -17,6 +17,16 @@
     "noImplicitAny": false,
     "strictNullChecks": false
   },
-  "include": ["src/**/*", "*.ts"],
+   "include": [
+    "**/*.ts",
+    "handlers/**/*",
+    "models/**/*",
+    "services/**/*",
+    "utils/**/*",
+    "utiles/**/*",
+    "config/**/*",
+    "middleware/**/*",
+    "*.ts"
+  ],
   "exclude": ["node_modules", "dist", "**/*.spec.ts"]
 }
