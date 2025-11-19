@@ -1,6 +1,7 @@
 const connect = require("../../config/mongodb/db");
 const DeviceAccess = require("../../models/deviceAccess/deviceAccess");
-const verifyToken = require('../../utiles/verifyToken'); 
+const verifyToken = require('../../utiles/verifyToken');
+const Branch = require("../../models/branch/branch");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -66,8 +67,8 @@ module.exports.createDeviceAccess = async (event, context) => {
     }
 
     const authHeader = headers.authorization || headers.Authorization;
-    
     let user;
+    
     try {
       user = await verifyToken(authHeader);
     } catch (tokenError) {
@@ -78,7 +79,7 @@ module.exports.createDeviceAccess = async (event, context) => {
         body: JSON.stringify({ message: "Invalid or expired token" }),
       };
     }
-    
+
     if (!user || (user.role !== "admin" && user.role !== "manager")) {
       return {
         statusCode: 403,
@@ -114,17 +115,30 @@ module.exports.createDeviceAccess = async (event, context) => {
       };
     }
 
-    if (!body.pin || typeof body.pin !== "string") {
+    // Determine branch ID
+    const branchId = user.role === "admin" ? body.branchId : user.branchId;
+    
+    if (!branchId) {
       return {
         statusCode: 400,
         headers: corsHeaders,
-        body: JSON.stringify({ message: "PIN is required and must be a string" }),
+        body: JSON.stringify({ message: "Branch ID is required" }),
       };
     }
 
-    // Check for uniqueness
-    const exists = await DeviceAccess.findOne({ deviceName: body.deviceName });
-    if (exists) {
+    // Verify branch exists
+    const branch = await Branch.findById(branchId);
+    if (!branch) {
+      return {
+        statusCode: 400,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: "Branch not found" }),
+      };
+    }
+
+    // Check for device name uniqueness
+    const existingDevice = await DeviceAccess.findOne({ deviceName: body.deviceName.trim() });
+    if (existingDevice) {
       return {
         statusCode: 400,
         headers: corsHeaders,
@@ -132,27 +146,45 @@ module.exports.createDeviceAccess = async (event, context) => {
       };
     }
 
+    // Generate unique device ID
+    let deviceId;
+    try {
+      deviceId = await DeviceAccess.generateDeviceId(branchId);
+    } catch (error) {
+      console.error('Device ID generation failed:', error);
+      return {
+        statusCode: 500,
+        headers: corsHeaders,
+        body: JSON.stringify({ message: "Failed to generate device ID: " + error.message }),
+      };
+    }
+
+    // Create device access
     const deviceAccess = new DeviceAccess({
+      deviceId: deviceId,
       deviceName: body.deviceName.trim(),
       location: body.location.trim(),
       password: body.password,
-      pin: body.pin,
-      branchId: user.role === "admin" ? body.branchId : user.branchId,
+      branchId: branchId,
     });
 
     await deviceAccess.save();
 
+    // Return response without password
+    const responseData = deviceAccess.toObject();
+    delete responseData.password;
+    console.log( 'Device access created successfully:', responseData );
     return {
       statusCode: 201,
       headers: corsHeaders,
-      body: JSON.stringify(deviceAccess),
+      body: JSON.stringify(responseData),
     };
-
   } catch (err) {
+    console.error('Error in createDeviceAccess:', err);
     return {
       statusCode: 500,
       headers: corsHeaders,
-      body: JSON.stringify({ message: err.message }),
+      body: JSON.stringify({ message: err.message || "Internal server error" }),
     };
   }
 };
@@ -160,6 +192,8 @@ module.exports.createDeviceAccess = async (event, context) => {
 
 
 
+
+// Update your getDeviceAccessList function in backend
 
 module.exports.getDeviceAccessList = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
@@ -218,7 +252,11 @@ module.exports.getDeviceAccessList = async (event, context) => {
 
     // Filter devices based on user role
     const filter = user.role === "manager" ? { branchId: user.branchId } : {};
-    const devices = await DeviceAccess.find(filter);
+    
+    // Populate branchId with branch details (branchName)
+    const devices = await DeviceAccess.find(filter)
+      .populate('branchId', 'branchName')
+      .lean();
 
     return {
       statusCode: 200,

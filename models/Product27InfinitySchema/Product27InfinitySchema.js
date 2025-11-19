@@ -1,5 +1,73 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { z } = require('zod');
+
+// ============================================================================
+// ZOD VALIDATION SCHEMAS
+// ============================================================================
+
+// Zod schema for pricing
+const pricingSchema = z.object({
+  model: z.enum(['free', 'one_time', 'subscription', 'freemium', 'usage_based']).optional(),
+  amount: z.number().min(0).optional(),
+  currency: z.string().optional(),
+  billingCycle: z.enum(['monthly', 'yearly', 'one_time', 'usage']).optional()
+});
+
+// Zod schema for features
+const featureSchema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  enabled: z.boolean().optional()
+});
+
+// Zod schema for creating Product27Infinity
+const createProduct27InfinitySchema = z.object({
+  Product27InfinityId: z.string().min(1, 'Product27InfinityId is required'),
+  name: z.string().min(1).max(100).trim(),
+  description: z.string().max(500).optional(),
+  type: z.enum(['software', 'service', 'saas', 'mobile_app', 'web_app', 'api', 'other']).optional(),
+  category: z.enum(['productivity', 'business', 'education', 'entertainment', 'utility', 'other']).optional(),
+  status: z.enum(['active', 'inactive', 'development', 'deprecated']).optional(),
+  version: z.string().optional(),
+  pricing: pricingSchema.optional(),
+  features: z.array(featureSchema).optional(),
+  isActive: z.boolean().optional()
+});
+
+// Zod schema for updating Product27Infinity
+const updateProduct27InfinitySchema = z.object({
+  name: z.string().min(1).max(100).trim().optional(),
+  description: z.string().max(500).optional(),
+  type: z.enum(['software', 'service', 'saas', 'mobile_app', 'web_app', 'api', 'other']).optional(),
+  category: z.enum(['productivity', 'business', 'education', 'entertainment', 'utility', 'other']).optional(),
+  status: z.enum(['active', 'inactive', 'development', 'deprecated']).optional(),
+  version: z.string().optional(),
+  pricing: pricingSchema.optional(),
+  features: z.array(featureSchema).optional(),
+  isActive: z.boolean().optional()
+});
+
+// Zod schema for Tracking
+const createTrackingSchema = z.object({
+  trackingId: z.string().min(1),
+  Product27InfinityId: z.string().min(1),
+  userId: z.string().min(1),
+  status: z.enum(['active', 'inactive']).optional(),
+  reason: z.enum(['user_request', 'admin_action', 'performance_issue', 'maintenance', 'other']).optional(),
+  description: z.string().max(500).optional()
+});
+
+// Zod schema for updating Tracking
+const updateTrackingSchema = z.object({
+  status: z.enum(['active', 'inactive']).optional(),
+  reason: z.enum(['user_request', 'admin_action', 'performance_issue', 'maintenance', 'other']).optional(),
+  description: z.string().max(500).optional()
+});
+
+// ============================================================================
+// MONGOOSE SCHEMAS
+// ============================================================================
 
 // ============= PRODUCT27INFINITY SCHEMA (Tracking System) =============
 const Product27InfinitySchema = new mongoose.Schema({
@@ -169,7 +237,17 @@ TrackingSchema.index({ status: 1 });
 TrackingSchema.index({ trackedAt: -1 });
 
 // ============= EXPORTS =============
+const Product27Infinity = mongoose.models.Product27Infinity || mongoose.model('Product27Infinity', Product27InfinitySchema);
+const Tracking = mongoose.models.Tracking || mongoose.model('Tracking', TrackingSchema);
+
 module.exports = {
-  Product27Infinity: mongoose.models.Product27Infinity || mongoose.model('Product27Infinity', Product27InfinitySchema),
-  Tracking: mongoose.models.Tracking || mongoose.model('Tracking', TrackingSchema)
+  Product27Infinity,
+  Tracking,
+  // Zod schemas
+  createProduct27InfinitySchema,
+  updateProduct27InfinitySchema,
+  createTrackingSchema,
+  updateTrackingSchema,
+  pricingSchema,
+  featureSchema
 };

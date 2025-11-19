@@ -1,0 +1,305 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                   PRISMA + TYPESCRIPT BACKEND SETUP                          ║
+║                         Product 27 - Main Backend                            ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+PREREQUISITES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Node.js v18+ installed
+✓ MongoDB Atlas account or local MongoDB instance
+✓ AWS account (for Lambda deployment)
+✓ Serverless Framework CLI installed globally
+
+
+STEP 1: INSTALL DEPENDENCIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+cd main27Backend
+
+# Install from package.prisma.json
+npm install @prisma/client prisma bcryptjs jsonwebtoken uuid zod
+npm install -D typescript @types/node @types/bcryptjs @types/jsonwebtoken @types/uuid
+npm install -D serverless-plugin-typescript serverless-offline serverless-prune-plugin
+
+
+STEP 2: CONFIGURE ENVIRONMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Create .env file in main27Backend directory:
+
+DATABASE_URL="mongodb+srv://username:password@cluster.mongodb.net/product27?retryWrites=true&w=majority"
+JWT_SECRET="your-super-secret-jwt-key-change-this-in-production"
+DEFAULT_PRODUCT27_INFINITY_ID="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+⚠️  IMPORTANT: Generate a secure 32-character UUID for DEFAULT_PRODUCT27_INFINITY_ID
+   You can use: node -e "console.log(require('crypto').randomUUID())"
+
+
+STEP 3: SETUP PRISMA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Copy the complete schema
+cp prisma/schema.complete.prisma prisma/schema.prisma
+
+# Generate Prisma Client
+npx prisma generate
+
+# Push schema to database (creates collections)
+npx prisma db push
+
+# Seed initial data
+npx ts-node prisma/seed.ts
+
+
+STEP 4: TEST LOCALLY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Start serverless offline
+npx serverless offline --config serverless.prisma.yml
+
+# Test admin login endpoint
+curl -X POST http://localhost:4000/admin/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@product27.com","password":"admin123"}'
+
+# Test manager login endpoint
+curl -X POST http://localhost:4000/managers/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"manager@product27.com","password":"manager123","branchId":"<branch-id>"}'
+
+# Test operator PIN login
+curl -X POST http://localhost:4000/operators/login \
+  -H "Content-Type: application/json" \
+  -d '{"pin":"1234","branchId":"<branch-id>"}'
+
+
+STEP 5: DEPLOY TO AWS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Configure AWS credentials first
+aws configure
+
+# Deploy to dev stage
+npx serverless deploy --config serverless.prisma.yml --stage dev
+
+# Deploy to production
+npx serverless deploy --config serverless.prisma.yml --stage prod
+
+After deployment, you'll get API Gateway endpoints like:
+https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev
+
+
+API ENDPOINTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Authentication:
+  POST   /admin/login                    - Admin login (email + password)
+  POST   /managers/login                 - Manager login (email + password)
+  POST   /operators/login                - Operator login (PIN + branchId)
+  POST   /admin/logout                   - Logout
+
+Branches:
+  GET    /admin/branches                 - Get all branches
+  POST   /admin/branches                 - Create branch
+  GET    /admin/branches/{id}            - Get branch by ID
+  PUT    /admin/branches/{id}            - Update branch
+
+Managers:
+  POST   /managers                       - Create manager
+  GET    /managers                       - Get all managers
+  GET    /managers/{id}                  - Get manager by ID
+  PUT    /managers/{id}                  - Update manager
+  DELETE /managers/{id}                  - Deactivate manager
+
+Machines:
+  POST   /machines                       - Create machine
+  GET    /machines                       - Get all machines (filter by branchId, status)
+  GET    /machines/{id}                  - Get machine by ID
+  PUT    /machines/{id}                  - Update machine
+  PATCH  /machines/{id}/status           - Update machine status (real-time)
+  DELETE /machines/{id}                  - Deactivate machine
+
+Machine Types:
+  POST   /machine-types                  - Create machine type
+  GET    /machine-types                  - Get all machine types
+  GET    /machine-types/{id}             - Get machine type by ID
+  PUT    /machine-types/{id}             - Update machine type
+  DELETE /machine-types/{id}             - Deactivate machine type
+
+Operators:
+  POST   /operators                      - Create operator
+  GET    /operators                      - Get all operators
+  GET    /operators/{id}                 - Get operator by ID
+  PUT    /operators/{id}                 - Update operator
+  DELETE /operators/{id}                 - Deactivate operator
+
+Customers:
+  POST   /customers                      - Create customer
+  GET    /customers                      - Get all customers
+  GET    /customers/{id}                 - Get customer by ID
+  PUT    /customers/{id}                 - Update customer
+  DELETE /customers/{id}                 - Deactivate customer
+
+Products:
+  POST   /products                       - Create product
+  GET    /products                       - Get all products
+  GET    /products/{id}                  - Get product by ID
+  PUT    /products/{id}                  - Update product
+  DELETE /products/{id}                  - Deactivate product
+
+Product Types:
+  POST   /product-types                  - Create product type
+  GET    /product-types                  - Get all product types
+  GET    /product-types/{id}             - Get product type by ID
+  PUT    /product-types/{id}             - Update product type
+  DELETE /product-types/{id}             - Deactivate product type
+
+Product Specs:
+  POST   /product-specs                  - Create product spec
+  GET    /product-specs                  - Get all product specs
+  GET    /product-specs/{id}             - Get product spec by ID
+  PUT    /product-specs/{id}             - Update product spec
+  DELETE /product-specs/{id}             - Deactivate product spec
+
+Materials:
+  POST   /materials                      - Create material
+  GET    /materials                      - Get all materials
+  GET    /materials/{id}                 - Get material by ID
+  PUT    /materials/{id}                 - Update material
+  DELETE /materials/{id}                 - Deactivate material
+
+Material Types:
+  POST   /material-types                 - Create material type
+  GET    /material-types                 - Get all material types
+  GET    /material-types/{id}            - Get material type by ID
+  PUT    /material-types/{id}            - Update material type
+  DELETE /material-types/{id}            - Deactivate material type
+
+Orders:
+  POST   /orders                         - Create order
+  GET    /orders                         - Get all orders (filter by branchId, customer, status)
+  GET    /orders/{id}                    - Get order by ID (includes machine steps)
+  PUT    /orders/{id}                    - Update order
+  PATCH  /orders/{id}/status             - Update order status
+  DELETE /orders/{id}                    - Cancel order
+
+Order Form Data:
+  GET    /order/form-data                - Get all form data for order creation (ONE CALL)
+  GET    /order/product-type-data/{id}   - Get products & specs for product type
+  GET    /order/material-type-data/{id}  - Get materials for material type
+
+Machine Steps (Production Tracking):
+  POST   /machine-steps                  - Create machine step
+  GET    /machine-steps                  - Get all machine steps (filter by order, machine, operator)
+  GET    /machine-steps/{id}             - Get machine step by ID
+  PUT    /machine-steps/{id}             - Update machine step
+  PATCH  /machine-steps/{id}/status      - Update step status (starts/completes production)
+  DELETE /machine-steps/{id}             - Cancel machine step
+
+Steps:
+  POST   /steps                          - Create step
+  GET    /steps                          - Get all steps
+  GET    /steps/{id}                     - Get step by ID
+  PUT    /steps/{id}                     - Update step
+  DELETE /steps/{id}                     - Deactivate step
+
+Machine Table Data:
+  POST   /machine-table-data             - Create table row
+  GET    /machine-table-data             - Get rows for machine
+  GET    /machine-table-data/{id}        - Get row by ID
+  PUT    /machine-table-data/{id}        - Update row
+  DELETE /machine-table-data/{id}        - Delete row
+  POST   /machine-table-data/bulk        - Bulk create rows
+
+
+SECURITY FEATURES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ JWT Token Authentication (7-day expiration)
+✓ Software License Key Verification (product27InfinityId)
+✓ Branch-Based Access Control
+✓ Role-Based Permissions (Admin, Manager, Operator)
+✓ Password Hashing (bcrypt with 12 rounds)
+✓ Session Management with cleanup
+✓ Request validation with Zod schemas
+✓ Soft delete pattern (isActive flag on all models)
+✓ Token verification on EVERY request
+
+
+KEY FEATURES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Real-time machine status tracking
+✓ Dynamic table configuration for machines
+✓ Formula calculations in table data
+✓ Production tracking with machine steps
+✓ Order workflow management
+✓ Multi-branch support
+✓ Active/Inactive status on all entities
+✓ Manager login with email (not username)
+✓ Operator login with 4-digit PIN
+✓ Optimized order form data (single API call)
+
+
+DEFAULT CREDENTIALS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Admin:
+  Email:    admin@product27.com
+  Password: admin123
+
+Manager:
+  Email:    manager@product27.com
+  Password: manager123
+
+Operator:
+  PIN:      1234
+
+⚠️  IMPORTANT: Change these credentials in production!
+
+
+TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Issue: "Prisma Client is not generated"
+Solution: Run `npx prisma generate`
+
+Issue: "Cannot connect to database"
+Solution: Check DATABASE_URL in .env file
+
+Issue: "Token invalid or expired"
+Solution: Re-login to get new token
+
+Issue: "Software license key invalid"
+Solution: Check DEFAULT_PRODUCT27_INFINITY_ID matches admin's key
+
+Issue: Lambda cold start timeout
+Solution: Increase Lambda timeout in serverless.yml (currently 30s)
+
+Issue: Package too large for Lambda
+Solution: Use Lambda layers for node_modules or optimize package
+
+
+PRISMA COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npx prisma generate         - Generate Prisma Client
+npx prisma db push          - Push schema to database
+npx prisma db pull          - Pull schema from database
+npx prisma studio           - Open Prisma Studio (GUI)
+npx prisma validate         - Validate schema file
+npx prisma format           - Format schema file
+
+
+NEXT STEPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Update frontend API calls to use new endpoints
+2. Update authentication flow to use JWT tokens
+3. Implement branch selection in frontend
+4. Update machine status real-time updates
+5. Test all CRUD operations
+6. Set up production MongoDB cluster
+7. Configure AWS Lambda + API Gateway properly
+8. Add monitoring and logging (CloudWatch)
+9. Set up CI/CD pipeline
+
+
+SUPPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+For issues or questions, check:
+- Prisma Documentation: https://www.prisma.io/docs
+- Serverless Framework: https://www.serverless.com/framework/docs
+- Project repository issues
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         🎉 SETUP COMPLETE! 🎉                                ║
+╚══════════════════════════════════════════════════════════════════════════════╝

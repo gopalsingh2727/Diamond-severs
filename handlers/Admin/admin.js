@@ -1,17 +1,37 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const connectDB = require('../../config/mongodb/db');
 const Admin = require('../../models/Admin/Admin');
 
-// ✅ FIX: Use the correct model path - check your project structure
-// Option 1: If you have a schemas file with Product27Infinity
-// const { Product27Infinity } = require('../../models/schemas');
-
-// Option 2: If Product27Infinity is in a separate file, find the correct path
-// const Product27Infinity = require('../../models/Product27Infinity');
-
-// For now, I'll use Option 1 based on your other handlers
 const { Product27Infinity } = require('../../models/Product27InfinitySchema/Product27InfinitySchema');
+
+// Helper functions
+const respond = (statusCode, body) => ({
+  statusCode,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(body)
+});
+
+const checkApiKey = (event) => {
+  const headers = event.headers || {};
+  const apiKey = headers['x-api-key'] || headers['X-API-Key'];
+  return apiKey && apiKey === process.env.API_KEY;
+};
+
+// Send password reset email (placeholder - implement with your email service)
+const sendPasswordResetEmail = async (email, token, username) => {
+  // TODO: Implement with your email service (SendGrid, AWS SES, etc.)
+  console.log(`Password reset email would be sent to: ${email}`);
+  console.log(`Reset token: ${token}`);
+  console.log(`Reset link: ${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${token}`);
+  // For now, just log the token. In production, send actual email.
+};
 
 module.exports.loginAdmin = async (event) => {
   const corsHeaders = {
@@ -46,17 +66,17 @@ module.exports.loginAdmin = async (event) => {
       };
     }
 
-    const { username, password } = JSON.parse(event.body);
-    if (!username || !password) {
+    const { email, password } = JSON.parse(event.body);
+    if (!email || !password) {
       return {
         statusCode: 400,
         headers: corsHeaders,
-        body: JSON.stringify({ message: 'Username and password are required' })
+        body: JSON.stringify({ message: 'Email and password are required' })
       };
     }
 
-    // ✅ FIX: Changed from User to Admin
-    const admin = await Admin.findOne({ username })
+    // Find admin by email
+    const admin = await Admin.findOne({ email })
       .populate('product27InfinityId');
 
     if (!admin) {
@@ -92,20 +112,28 @@ module.exports.loginAdmin = async (event) => {
 
     // ✅ Allow master_admin login without product check
 
+    // Generate unique session token for single-device login
+    const sessionToken = crypto.randomBytes(32).toString('hex');
+
     const token = jwt.sign(
-      { 
-        id: admin._id, 
+      {
+        id: admin._id,
         userId: admin._id.toString(), // ✅ Add userId for consistency with other handlers
-        role: admin.role 
+        role: admin.role,
+        sessionToken: sessionToken // Include session token in JWT
       },
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
 
+    // Store session token in database (invalidates previous sessions)
+    admin.activeSessionToken = sessionToken;
+    await admin.save();
+
     return {
       statusCode: 200,
       headers: corsHeaders,
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         token,
         admin: {
           id: admin._id,
@@ -127,5 +155,112 @@ module.exports.loginAdmin = async (event) => {
       headers: corsHeaders,
       body: JSON.stringify({ message: 'Internal server error', error: error.message })
     };
+  }
+};
+
+// Request Password Reset
+module.exports.requestPasswordReset = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return respond(200, {});
+  }
+
+  if (!checkApiKey(event)) {
+    return respond(403, { message: 'Invalid API key' });
+  }
+
+  try {
+    await connectDB();
+
+    const { email } = JSON.parse(event.body || '{}');
+
+    if (!email) {
+      return respond(400, { message: 'Email is required' });
+    }
+
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      // Don't reveal if email exists or not for security
+      return respond(200, {
+        message: 'If the email exists, a password reset link has been sent.',
+      });
+    }
+
+    // Generate password reset token
+    const resetToken = admin.generatePasswordResetToken();
+    await admin.save();
+
+    // Send password reset email
+    try {
+      await sendPasswordResetEmail(email, resetToken, admin.username);
+      console.log(`Password reset email sent to: ${email}`);
+    } catch (emailError) {
+      console.error('Error sending password reset email:', emailError);
+    }
+
+    return respond(200, {
+      message: 'Password reset link sent. Please check your inbox.',
+      // In development, return token for testing
+      ...(process.env.NODE_ENV === 'development' && { resetToken })
+    });
+  } catch (error) {
+    console.error('Request Password Reset Error:', error);
+    return respond(500, { message: 'Internal server error' });
+  }
+};
+
+// Reset Password with Token
+module.exports.resetPassword = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return respond(200, {});
+  }
+
+  if (!checkApiKey(event)) {
+    return respond(403, { message: 'Invalid API key' });
+  }
+
+  try {
+    await connectDB();
+
+    const { token, newPassword } = JSON.parse(event.body || '{}');
+
+    if (!token || !newPassword) {
+      return respond(400, {
+        message: 'Token and new password are required',
+      });
+    }
+
+    if (newPassword.length < 8) {
+      return respond(400, {
+        message: 'Password must be at least 8 characters long',
+      });
+    }
+
+    const admin = await Admin.findOne({
+      passwordResetToken: token,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
+    if (!admin) {
+      return respond(400, {
+        message: 'Invalid or expired password reset token',
+        expired: true,
+      });
+    }
+
+    // Reset password
+    admin.password = newPassword;
+    admin.passwordResetToken = undefined;
+    admin.passwordResetExpires = undefined;
+
+    await admin.save();
+
+    console.log(`Password reset successfully for admin: ${admin.email}`);
+
+    return respond(200, {
+      message: 'Password reset successfully! You can now log in with your new password.',
+    });
+  } catch (error) {
+    console.error('Reset Password Error:', error);
+    return respond(500, { message: 'Internal server error' });
   }
 };

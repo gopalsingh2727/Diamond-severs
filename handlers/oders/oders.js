@@ -4,13 +4,16 @@ const Branch = require('../../models/branch/branch');
 const Step = require('../../models/steps/step');
 const Machine = require('../../models/Machine/machine');
 const verifyToken = require('../../utiles/verifyToken');
-const mongoConnect = require('../../config/mongodb/db'); // Renamed to avoid conflict
+const mongoConnect = require('../../config/mongodb/db');
 const Customer = require('../../models/Customer/customer');
 const Material = require('../../models/Material/material');
 const MaterialType = require('../../models/MaterialType/materialType');
-const MachineType = require('../../models/MachineType/machineType'); 
-const operator = require('../../models/MachineOperator/MachineOperator')
-
+const MachineType = require('../../models/MachineType/machineType');
+const operator = require('../../models/MachineOperator/MachineOperator');
+// NEW: Order Type system imports
+const OrderType = require('../../models/OrderType/orderType');
+const ProductSpec = require('../../models/productSpecSchema/productSpecSchema');
+const MaterialSpec = require('../../models/materialSpecSchema/materialSpecSchema');
 
 const jwt = require('jsonwebtoken'); // Added missing import
 
@@ -29,91 +32,307 @@ module.exports.createOrder = async (event) => {
     const data = JSON.parse(event.body);
     console.log("Received data:", data);
 
-  
+    // =========================================================================
+    // NEW: ORDER TYPE SYSTEM - Load and validate order type
+    // =========================================================================
+    let orderType = null;
+
+    // Get or use default order type
+    if (data.orderTypeId) {
+      // Validate and load specified order type
+      if (!mongoose.Types.ObjectId.isValid(data.orderTypeId)) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: 'Invalid orderTypeId' })
+        };
+      }
+
+      orderType = await OrderType.findById(data.orderTypeId);
+      if (!orderType) {
+        return {
+          statusCode: 404,
+          body: JSON.stringify({ message: 'Order type not found' })
+        };
+      }
+
+      if (!orderType.isActive) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: 'Order type is inactive' })
+        };
+      }
+    } else {
+      // Get default order type for the branch (or global default)
+      orderType = await OrderType.findDefault(data.branchId);
+
+      if (!orderType) {
+        // Fallback: find any active global order type
+        orderType = await OrderType.findOne({ isGlobal: true, isActive: true });
+      }
+
+      if (orderType) {
+        console.log(`Using default order type: ${orderType.typeName} (${orderType.typeCode})`);
+        data.orderTypeId = orderType._id; // Set for later use
+      } else {
+        console.warn('No order type found - proceeding without order type (legacy mode)');
+      }
+    }
+
+    // Validate Product Spec if provided
+    if (data.productSpecId) {
+      if (!mongoose.Types.ObjectId.isValid(data.productSpecId)) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: 'Invalid productSpecId' })
+        };
+      }
+
+      const productSpec = await ProductSpec.findById(data.productSpecId);
+      if (!productSpec) {
+        return {
+          statusCode: 404,
+          body: JSON.stringify({ message: 'Product specification not found' })
+        };
+      }
+
+      if (!productSpec.isActive) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: 'Product specification is inactive' })
+        };
+      }
+
+      // Validate against order type requirements
+      if (orderType) {
+        const validation = orderType.validateProductSpec(true);
+        if (!validation.valid) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({ message: validation.error })
+          };
+        }
+      }
+    } else {
+      // Check if product spec is required
+      if (orderType && orderType.requiresProductSpec) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            message: `Order type '${orderType.typeName}' requires a product specification`
+          })
+        };
+      }
+    }
+
+    // Validate Material Spec if provided
+    if (data.materialSpecId) {
+      if (!mongoose.Types.ObjectId.isValid(data.materialSpecId)) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: 'Invalid materialSpecId' })
+        };
+      }
+
+      const materialSpec = await MaterialSpec.findById(data.materialSpecId);
+      if (!materialSpec) {
+        return {
+          statusCode: 404,
+          body: JSON.stringify({ message: 'Material specification not found' })
+        };
+      }
+
+      if (!materialSpec.isActive) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: 'Material specification is inactive' })
+        };
+      }
+
+      // Validate against order type requirements
+      if (orderType) {
+        const validation = orderType.validateMaterialSpec(true);
+        if (!validation.valid) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({ message: validation.error })
+          };
+        }
+      }
+    } else {
+      // Check if material spec is required
+      if (orderType && orderType.requiresMaterialSpec) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            message: `Order type '${orderType.typeName}' requires a material specification`
+          })
+        };
+      }
+    }
+
+    // Validate quantity against order type rules
+    if (orderType && data.quantity) {
+      const quantityValidation = orderType.validateQuantity(Number(data.quantity));
+      if (!quantityValidation.valid) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: quantityValidation.error })
+        };
+      }
+    }
+
+    // Apply order type defaults if not provided
+    if (orderType) {
+      // Apply default priority if not specified
+      if (!data.priority) {
+        data.priority = ['low', 'normal', 'high', 'urgent'][orderType.defaultPriority - 1] || 'normal';
+      }
+
+      // Apply default printing setting if not specified
+      if (data.Printing === undefined && orderType.enablePrinting) {
+        data.Printing = true;
+      }
+
+      // Auto-populate steps from order type default steps if none provided
+      if ((!data.steps || data.steps.length === 0) && orderType.defaultSteps && orderType.defaultSteps.length > 0) {
+        data.steps = orderType.defaultSteps.map(stepId => ({
+          stepId: stepId,
+          machines: []
+        }));
+        console.log(`Applied ${orderType.defaultSteps.length} default steps from order type`);
+      }
+    }
+
+    // =========================================================================
+    // END: ORDER TYPE SYSTEM
+    // =========================================================================
+
+    // =========================================================================
+    // SECTION-AWARE VALIDATION
+    // =========================================================================
+
+    // Helper function to check if a section is enabled in the order type
+    const isSectionEnabled = (sectionId) => {
+      if (!orderType || !orderType.sections || orderType.sections.length === 0) {
+        return true; // Backward compatibility - all sections enabled by default
+      }
+      const section = orderType.sections.find(s => s.id === sectionId);
+      return section ? section.enabled !== false : false;
+    };
+
+    // Check which sections are enabled
+    const isMaterialEnabled = isSectionEnabled('material');
+    const isStepsEnabled = isSectionEnabled('steps');
+    const isProductEnabled = isSectionEnabled('product');
+    const isPrintingEnabled = isSectionEnabled('printing');
+
+    console.log('Section configuration:', {
+      material: isMaterialEnabled,
+      steps: isStepsEnabled,
+      product: isProductEnabled,
+      printing: isPrintingEnabled
+    });
+
+    // Build required fields dynamically based on enabled sections
     const requiredFields = [
-      'customerId', 
-      'materialId', 
-      'materialTypeId',
-      'materialWeight', 
-      'Width',
-      'Height', 
-      'Thickness',
-      'steps', 
+      'customerId',
       'branchId',
       'product27InfinityId'
     ];
 
+    // Add material fields only if material section is enabled
+    if (isMaterialEnabled) {
+      requiredFields.push('materialId', 'materialTypeId', 'materialWeight', 'Width', 'Height', 'Thickness');
+    }
+
+    // Add steps only if steps section is enabled
+    if (isStepsEnabled) {
+      requiredFields.push('steps');
+    }
+
     // Validate required fields
     for (const field of requiredFields) {
       if (!data[field] && data[field] !== 0) { // Allow 0 as valid value
-        return { 
-          statusCode: 400, 
-          body: JSON.stringify({ message: `${field} is required` }) 
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: `${field} is required` })
         };
       }
     }
 
-    // Validate ObjectIds for required fields
-    const objectIdFields = ['customerId', 'materialId', 'materialTypeId', 'branchId'];
+    // Build objectIdFields dynamically based on enabled sections
+    const objectIdFields = ['customerId', 'branchId'];
+    if (isMaterialEnabled) {
+      objectIdFields.push('materialId', 'materialTypeId');
+    }
+
     for (const idField of objectIdFields) {
-      if (!mongoose.Types.ObjectId.isValid(data[idField])) {
-        return { 
-          statusCode: 400, 
-          body: JSON.stringify({ message: `Invalid ${idField}` }) 
+      if (data[idField] && !mongoose.Types.ObjectId.isValid(data[idField])) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: `Invalid ${idField}` })
         };
       }
     }
 
-    // Validate steps array
-    if (!Array.isArray(data.steps) || data.steps.length === 0) {
-      return { 
-        statusCode: 400, 
-        body: JSON.stringify({ message: 'Steps must be a non-empty array' }) 
-      };
+    // Validate steps array only if steps section is enabled
+    if (isStepsEnabled) {
+      if (!Array.isArray(data.steps) || data.steps.length === 0) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: 'Steps must be a non-empty array' })
+        };
+      }
     }
 
     // Validate branch exists
     const branch = await Branch.findById(data.branchId);
     if (!branch || !branch.code) {
-      return { 
-        statusCode: 400, 
-        body: JSON.stringify({ message: 'Branch not found or missing code' }) 
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Branch not found or missing code' })
       };
     }
 
     // Validate customer exists
     const customer = await Customer.findById(data.customerId);
     if (!customer) {
-      return { 
-        statusCode: 400, 
-        body: JSON.stringify({ message: 'Customer not found' }) 
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Customer not found' })
       };
     }
 
-    // Validate material exists
-    const material = await Material.findById(data.materialId);
-    if (!material) {
-      return { 
-        statusCode: 400, 
-        body: JSON.stringify({ message: 'Material not found' }) 
-      };
+    // Validate material and material type only if material section is enabled
+    let material = null;
+    let materialType = null;
+
+    if (isMaterialEnabled) {
+      // Validate material exists
+      material = await Material.findById(data.materialId);
+      if (!material) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: 'Material not found' })
+        };
+      }
+
+      // Validate material type exists
+      materialType = await MaterialType.findById(data.materialTypeId);
+      if (!materialType) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: 'Material type not found' })
+        };
+      }
     }
 
-    // Validate material type exists
-    const materialType = await MaterialType.findById(data.materialTypeId);
-    if (!materialType) {
-      return { 
-        statusCode: 400, 
-        body: JSON.stringify({ message: 'Material type not found' }) 
-      };
-    }
-
-    // Process and validate mixing materials if provided
+    // Process and validate mixing materials only if material section is enabled
     let validatedMixMaterials = [];
-    if (data.mixMaterial && Array.isArray(data.mixMaterial) && data.mixMaterial.length > 0) {
+    if (isMaterialEnabled && data.mixMaterial && Array.isArray(data.mixMaterial) && data.mixMaterial.length > 0) {
       for (let i = 0; i < data.mixMaterial.length; i++) {
         const mixMat = data.mixMaterial[i];
-        
+
         if (!mixMat.materialId || !mongoose.Types.ObjectId.isValid(mixMat.materialId)) {
           return {
             statusCode: 400,
@@ -140,19 +359,20 @@ module.exports.createOrder = async (event) => {
       }
     }
 
-    // Process and validate steps with machines
+    // Process and validate steps with machines (only if steps section is enabled)
     const processedSteps = [];
-    for (let stepIndex = 0; stepIndex < data.steps.length; stepIndex++) {
-      const stepEntry = data.steps[stepIndex];
-      
-      if (!stepEntry.stepId || !mongoose.Types.ObjectId.isValid(stepEntry.stepId)) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ 
-            message: `Invalid or missing stepId at step index ${stepIndex}` 
-          }),
-        };
-      }
+    if (isStepsEnabled && data.steps && Array.isArray(data.steps) && data.steps.length > 0) {
+      for (let stepIndex = 0; stepIndex < data.steps.length; stepIndex++) {
+        const stepEntry = data.steps[stepIndex];
+
+        if (!stepEntry.stepId || !mongoose.Types.ObjectId.isValid(stepEntry.stepId)) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              message: `Invalid or missing stepId at step index ${stepIndex}`
+            }),
+          };
+        }
 
       // Validate step exists
       const stepDoc = await Step.findById(stepEntry.stepId).lean();
@@ -251,49 +471,78 @@ module.exports.createOrder = async (event) => {
         }
       }
 
-      processedSteps.push({
-        stepId: stepEntry.stepId,
-        machines: processedMachines
-      });
-    }
+        processedSteps.push({
+          stepId: stepEntry.stepId,
+          machines: processedMachines
+        });
+      }
+    } // End of isStepsEnabled check
 
     // Create the order with the correct data structure
-    const newOrder = new Order({
+    // Build order data conditionally based on enabled sections
+    const orderData = {
       customerId: data.customerId,
-      
-      // Material information
-      materialId: data.materialId,
-      materialTypeId: data.materialTypeId,
-      materialWeight: Number(data.materialWeight) || 0,
-      
-      // Additional product specifications
-      Width: Number(data.Width) || 0,
-      Height: Number(data.Height) || 0,
-      Thickness: Number(data.Thickness) || 0,
-      SealingType: data.SealingType || '',
-      BottomGusset: data.BottomGusset || '',
-      AirHole: data.AirHole || '',
-      Flap: data.Flap || '',
-      Printing: Boolean(data.Printing),
-      
-      // Mix materials
-      mixMaterial: validatedMixMaterials,
-      
+
+      // NEW: Order Type System fields
+      orderTypeId: data.orderTypeId || null,
+      productSpecId: data.productSpecId || null,
+      materialSpecId: data.materialSpecId || null,
+
+      // System fields
+      branchId: data.branchId,
+      createdBy: user.id,
+      createdByRole: user.role,
+
+      // Status and priority (with order type defaults applied above)
+      overallStatus: data.overallStatus || 'Wait for Approval',
+      priority: data.priority || 'normal',
+
+      // Additional fields
+      Notes: data.Notes || '',
+      quantity: Number(data.quantity) || 1,
+
       // Manufacturing steps
       steps: processedSteps,
-      
-      // System fields - use actual user data from token
-      branchId: data.branchId,
-      createdBy: user.id, // Use actual user ID from token
-      createdByRole: user.role, // Use actual user role from token
-      
-      // Additional fields
-      // product27InfinityId: data.product27InfinityId,
-      Notes: data.Notes || '',
-      
-      // Optional quantity field
-      quantity: Number(data.quantity) || 1,
+
+      // Mix materials (only if material section enabled)
+      mixMaterial: isMaterialEnabled ? validatedMixMaterials : [],
+    };
+
+    // Add material fields only if material section is enabled
+    if (isMaterialEnabled) {
+      // Only add ObjectId fields if they have valid values (not empty strings)
+      if (data.materialId && data.materialId.trim() !== '') {
+        orderData.materialId = data.materialId;
+      }
+      if (data.materialTypeId && data.materialTypeId.trim() !== '') {
+        orderData.materialTypeId = data.materialTypeId;
+      }
+      orderData.materialWeight = Number(data.materialWeight) || 0;
+      orderData.Width = Number(data.Width) || 0;
+      orderData.Height = Number(data.Height) || 0;
+      orderData.Thickness = Number(data.Thickness) || 0;
+      orderData.SealingType = data.SealingType || '';
+      orderData.BottomGusset = data.BottomGusset || '';
+      orderData.AirHole = data.AirHole || '';
+      orderData.Flap = data.Flap || '';
+    }
+
+    // Add printing field based on printing or material section
+    if (isPrintingEnabled || isMaterialEnabled) {
+      orderData.Printing = Boolean(data.Printing);
+    }
+
+    // Debug: Log orderData before creating Order
+    console.log('Creating order with data:', {
+      hasMaterialId: !!orderData.materialId,
+      materialIdValue: orderData.materialId,
+      hasMaterialTypeId: !!orderData.materialTypeId,
+      hasSteps: orderData.steps?.length || 0,
+      isMaterialEnabled,
+      isStepsEnabled
     });
+
+    const newOrder = new Order(orderData);
 
     // FIXED: Initialize step machines with proper status before saving
     newOrder.initializeStepMachines();
@@ -303,11 +552,15 @@ module.exports.createOrder = async (event) => {
 
     console.log("Order created successfully:", {
       orderId: newOrder.orderId,
+      orderType: orderType ? `${orderType.typeName} (${orderType.typeCode})` : 'None (Legacy)',
       customerId: newOrder.customerId,
+      productSpecId: newOrder.productSpecId,
+      materialSpecId: newOrder.materialSpecId,
       stepsCount: processedSteps.length,
       totalMachines: processedSteps.reduce((total, step) => total + step.machines.length, 0),
       createdBy: user.id,
       createdByRole: user.role,
+      priority: newOrder.priority,
       machineStatuses: newOrder.steps.map((step, idx) => ({
         step: idx,
         machines: step.machines.map((m, mIdx) => ({ index: mIdx, status: m.status }))
@@ -316,22 +569,30 @@ module.exports.createOrder = async (event) => {
 
     return {
       statusCode: 201,
-      body: JSON.stringify({ 
-        message: 'Order created successfully', 
+      body: JSON.stringify({
+        message: 'Order created successfully',
         orderId: newOrder.orderId,
         _id: newOrder._id,
+        orderType: orderType ? {
+          id: orderType._id,
+          name: orderType.typeName,
+          code: orderType.typeCode
+        } : null,
         customerId: newOrder.customerId,
+        productSpecId: newOrder.productSpecId,
+        materialSpecId: newOrder.materialSpecId,
+        priority: newOrder.priority,
         stepsCount: processedSteps.length,
         totalMachines: processedSteps.reduce((total, step) => total + step.machines.length, 0),
-        machinesWithIds: processedSteps.reduce((total, step) => 
+        machinesWithIds: processedSteps.reduce((total, step) =>
           total + step.machines.filter(m => m.machineId).length, 0
         ),
         machineStatuses: newOrder.steps.map((step, idx) => ({
           step: idx,
-          machines: step.machines.map((m, mIdx) => ({ 
-            index: mIdx, 
+          machines: step.machines.map((m, mIdx) => ({
+            index: mIdx,
             status: m.status,
-            machineId: m.machineId 
+            machineId: m.machineId
           }))
         })),
         createdBy: user.username,
@@ -836,7 +1097,20 @@ module.exports.getAllOrders = async (event) => {
           ]
         }
       },
-      
+
+      // Lookup order type details
+      {
+        $lookup: {
+          from: 'ordertypes',
+          localField: 'orderTypeId',
+          foreignField: '_id',
+          as: 'orderType',
+          pipeline: [
+            { $project: { typeName: 1, typeCode: 1, description: 1, color: 1, icon: 1 } }
+          ]
+        }
+      },
+
       // Process and enrich the data
       {
         $addFields: {
@@ -845,6 +1119,7 @@ module.exports.getAllOrders = async (event) => {
           branch: { $arrayElemAt: ['$branch', 0] },
           material: { $arrayElemAt: ['$material', 0] },
           creator: { $arrayElemAt: ['$creator', 0] },
+          orderType: { $arrayElemAt: ['$orderType', 0] },
           
           // Process mix materials with weights - FIXED
           mixMaterialsWithDetails: {
@@ -1881,3 +2156,804 @@ if (!customerObjectId) {
   }
 };
 
+
+
+// ============================================================================
+// GET MACHINE TABLE DATA FROM ORDER
+// ============================================================================
+module.exports.getMachineTableData = async (event) => {
+  console.log("=== getMachineTableData Function Started ===");
+  console.log("Event path parameters:", JSON.stringify(event.pathParameters, null, 2));
+
+  await mongoConnect();
+
+  try {
+    // Verify authentication
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.log("❌ Authorization header missing or invalid");
+      return {
+        statusCode: 401,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Missing or invalid authorization header'
+        })
+      };
+    }
+
+    const user = verifyToken(authHeader);
+
+    if (!user || !user.id) {
+      console.log("❌ Invalid or expired token");
+      return {
+        statusCode: 401,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Invalid or expired token'
+        })
+      };
+    }
+
+    // Extract path parameters
+    const { orderId, machineId } = event.pathParameters || {};
+
+    if (!orderId || !machineId) {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Order ID and Machine ID are required'
+        })
+      };
+    }
+
+    // Validate ObjectIds
+    if (!mongoose.Types.ObjectId.isValid(orderId)) {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Invalid order ID'
+        })
+      };
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(machineId)) {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Invalid machine ID'
+        })
+      };
+    }
+
+    console.log("🔍 Fetching data for:", { orderId, machineId });
+
+    // Find the order
+    const order = await Order.findById(orderId)
+      .populate('customerId', 'customerId customerName email phone')
+      .populate('materialId', 'materialName materialType')
+      .populate('branchId', 'branchName code');
+
+    if (!order) {
+      return {
+        statusCode: 404,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Order not found'
+        })
+      };
+    }
+
+    // Find the machine in the order steps
+    let foundMachine = null;
+    let foundStep = null;
+
+    for (const step of order.steps) {
+      for (const machine of step.machines) {
+        if (machine.machineId.toString() === machineId) {
+          foundMachine = machine;
+          foundStep = step;
+          break;
+        }
+      }
+      if (foundMachine) break;
+    }
+
+    if (!foundMachine) {
+      return {
+        statusCode: 404,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Machine not found in this order'
+        })
+      };
+    }
+
+    // Get the machine configuration with table structure
+    const machineDoc = await Machine.findById(machineId);
+
+    if (!machineDoc) {
+      return {
+        statusCode: 404,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Machine configuration not found'
+        })
+      };
+    }
+
+    // Get or initialize machine table data
+    const MachineTableData = require('../../models/Table/table');
+    let tableData = await MachineTableData.findOne({
+      orderId: orderId,
+      machineId: machineId
+    });
+
+    // If no table data exists, initialize it
+    if (!tableData) {
+      console.log("📝 No table data found, initializing...");
+      tableData = await MachineTableData.initializeForOrder(
+        machineId,
+        orderId,
+        user.name || 'system'
+      );
+    }
+
+    // Prepare response data
+    const responseData = {
+      order: {
+        orderId: order.orderId,
+        customer: order.customerId?.customerName || 'N/A',
+        status: order.status,
+        materialWeight: order.materialWeight,
+        dimensions: {
+          width: order.Width,
+          height: order.Height,
+          thickness: order.Thickness
+        }
+      },
+      machine: {
+        machineId: foundMachine.machineId,
+        machineName: foundMachine.machineName,
+        machineType: foundMachine.machineTypeName,
+        status: foundMachine.status,
+        operatorName: foundMachine.operatorName,
+        sizeX: foundMachine.sizeX,
+        sizeY: foundMachine.sizeY,
+        sizeZ: foundMachine.sizeZ,
+        startedAt: foundMachine.startedAt,
+        completedAt: foundMachine.completedAt
+      },
+      tableStructure: {
+        columns: machineDoc.tableConfig?.columns || [],
+        formulas: machineDoc.tableConfig?.formulas || {},
+        settings: machineDoc.tableConfig?.settings || {}
+      },
+      tableData: tableData ? {
+        rowData: tableData.rowData.map(row => ({
+          rowId: row.rowId,
+          ...Object.fromEntries(row.data),
+          ...Object.fromEntries(row.calculatedValues)
+        })),
+        totalCalculations: tableData.totalCalculations,
+        status: tableData.status,
+        lastCalculated: tableData.lastCalculatedAt
+      } : null,
+      calculatedOutput: foundMachine.calculatedOutput || null
+    };
+
+    console.log("✅ Machine table data fetched successfully");
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'GET,OPTIONS'
+      },
+      body: JSON.stringify({
+        success: true,
+        data: responseData
+      })
+    };
+
+  } catch (err) {
+    console.error("❌ Error in getMachineTableData:", err);
+
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'GET,OPTIONS'
+      },
+      body: JSON.stringify({
+        success: false,
+        message: 'Failed to fetch machine table data',
+        error: process.env.NODE_ENV === 'development' ? err.message : undefined,
+        timestamp: new Date().toISOString()
+      })
+    };
+  }
+};
+
+// ==============================================
+// UPDATE ORDER STATUS
+// ==============================================
+module.exports.updateOrderStatus = async (event) => {
+  await mongoConnect();
+
+  try {
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+    const user = verifyToken(authHeader);
+
+    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
+      return {
+        statusCode: 403,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+        },
+        body: JSON.stringify({ success: false, message: 'Unauthorized' })
+      };
+    }
+
+    const { orderId } = event.pathParameters;
+    const data = JSON.parse(event.body);
+    const { status, note, noteType = 'general' } = data;
+
+    console.log("📝 Updating order status:", { orderId, status, user: user.name });
+
+    // Validate status
+    const validStatuses = ['pending', 'in_progress', 'dispatched', 'cancelled', 'Wait for Approval', 'completed', 'approved'];
+    if (!validStatuses.includes(status)) {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: `Invalid status. Must be one of: ${validStatuses.join(', ')}`
+        })
+      };
+    }
+
+    // Find and update order
+    const order = await Order.findOne({ orderId });
+    if (!order) {
+      return {
+        statusCode: 404,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Order not found'
+        })
+      };
+    }
+
+    const oldStatus = order.overallStatus;
+    order.overallStatus = status;
+
+    // Update dates based on status
+    if (status === 'in_progress' && !order.actualStartDate) {
+      order.actualStartDate = new Date();
+    }
+    if (status === 'completed' && !order.actualEndDate) {
+      order.actualEndDate = new Date();
+    }
+    if (status === 'dispatched' && !order.actualEndDate) {
+      order.actualEndDate = new Date();
+    }
+
+    // Add note about status change
+    if (note || oldStatus !== status) {
+      order.notes.push({
+        message: note || `Status changed from ${oldStatus} to ${status}`,
+        createdBy: user.name || user.email,
+        createdAt: new Date(),
+        noteType: noteType
+      });
+    }
+
+    await order.save();
+
+    console.log("✅ Order status updated successfully");
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+      },
+      body: JSON.stringify({
+        success: true,
+        message: 'Order status updated successfully',
+        data: {
+          orderId: order.orderId,
+          oldStatus,
+          newStatus: order.overallStatus,
+          actualStartDate: order.actualStartDate,
+          actualEndDate: order.actualEndDate
+        }
+      })
+    };
+
+  } catch (err) {
+    console.error("❌ Error updating order status:", err);
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+      },
+      body: JSON.stringify({
+        success: false,
+        message: 'Failed to update order status',
+        error: process.env.NODE_ENV === 'development' ? err.message : undefined
+      })
+    };
+  }
+};
+
+// ==============================================
+// UPDATE ORDER PRIORITY
+// ==============================================
+module.exports.updateOrderPriority = async (event) => {
+  await mongoConnect();
+
+  try {
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+    const user = verifyToken(authHeader);
+
+    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
+      return {
+        statusCode: 403,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+        },
+        body: JSON.stringify({ success: false, message: 'Unauthorized' })
+      };
+    }
+
+    const { orderId } = event.pathParameters;
+    const data = JSON.parse(event.body);
+    const { priority, note } = data;
+
+    console.log("🎯 Updating order priority:", { orderId, priority, user: user.name });
+
+    // Validate priority
+    const validPriorities = ['low', 'normal', 'high', 'urgent'];
+    if (!validPriorities.includes(priority)) {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: `Invalid priority. Must be one of: ${validPriorities.join(', ')}`
+        })
+      };
+    }
+
+    // Find and update order
+    const order = await Order.findOne({ orderId });
+    if (!order) {
+      return {
+        statusCode: 404,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Order not found'
+        })
+      };
+    }
+
+    const oldPriority = order.priority;
+    order.priority = priority;
+
+    // Add note about priority change
+    if (note || oldPriority !== priority) {
+      order.notes.push({
+        message: note || `Priority changed from ${oldPriority} to ${priority}`,
+        createdBy: user.name || user.email,
+        createdAt: new Date(),
+        noteType: 'general'
+      });
+    }
+
+    await order.save();
+
+    console.log("✅ Order priority updated successfully");
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+      },
+      body: JSON.stringify({
+        success: true,
+        message: 'Order priority updated successfully',
+        data: {
+          orderId: order.orderId,
+          oldPriority,
+          newPriority: order.priority
+        }
+      })
+    };
+
+  } catch (err) {
+    console.error("❌ Error updating order priority:", err);
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+      },
+      body: JSON.stringify({
+        success: false,
+        message: 'Failed to update order priority',
+        error: process.env.NODE_ENV === 'development' ? err.message : undefined
+      })
+    };
+  }
+};
+
+// ==============================================
+// ADD ORDER NOTE
+// ==============================================
+module.exports.addOrderNote = async (event) => {
+  await mongoConnect();
+
+  try {
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+    const user = verifyToken(authHeader);
+
+    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
+      return {
+        statusCode: 403,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'POST,OPTIONS'
+        },
+        body: JSON.stringify({ success: false, message: 'Unauthorized' })
+      };
+    }
+
+    const { orderId } = event.pathParameters;
+    const data = JSON.parse(event.body);
+    const { message, noteType = 'general' } = data;
+
+    if (!message || message.trim() === '') {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'POST,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Note message is required'
+        })
+      };
+    }
+
+    console.log("📝 Adding note to order:", { orderId, user: user.name });
+
+    // Validate noteType
+    const validNoteTypes = ['general', 'production', 'quality', 'delivery', 'customer'];
+    if (!validNoteTypes.includes(noteType)) {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'POST,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: `Invalid noteType. Must be one of: ${validNoteTypes.join(', ')}`
+        })
+      };
+    }
+
+    // Find and update order
+    const order = await Order.findOne({ orderId });
+    if (!order) {
+      return {
+        statusCode: 404,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'POST,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Order not found'
+        })
+      };
+    }
+
+    // Add note
+    const newNote = {
+      message: message.trim(),
+      createdBy: user.name || user.email,
+      createdAt: new Date(),
+      noteType
+    };
+
+    order.notes.push(newNote);
+    await order.save();
+
+    console.log("✅ Note added successfully");
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'POST,OPTIONS'
+      },
+      body: JSON.stringify({
+        success: true,
+        message: 'Note added successfully',
+        data: {
+          orderId: order.orderId,
+          note: newNote,
+          totalNotes: order.notes.length
+        }
+      })
+    };
+
+  } catch (err) {
+    console.error("❌ Error adding order note:", err);
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'POST,OPTIONS'
+      },
+      body: JSON.stringify({
+        success: false,
+        message: 'Failed to add note',
+        error: process.env.NODE_ENV === 'development' ? err.message : undefined
+      })
+    };
+  }
+};
+
+// ==============================================
+// UPDATE ORDER (General update for other fields)
+// ==============================================
+module.exports.updateOrder = async (event) => {
+  await mongoConnect();
+
+  try {
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+    const user = verifyToken(authHeader);
+
+    if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
+      return {
+        statusCode: 403,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+        },
+        body: JSON.stringify({ success: false, message: 'Unauthorized' })
+      };
+    }
+
+    const { orderId } = event.pathParameters;
+    const updateData = JSON.parse(event.body);
+
+    console.log("📝 Updating order:", { orderId, user: user.name });
+
+    // Fields that can be updated
+    const allowedFields = [
+      'overallStatus',
+      'priority',
+      'scheduledStartDate',
+      'scheduledEndDate',
+      'specialInstructions',
+      'designNotes',
+      'colors',
+      'Printing',
+      'SealingType',
+      'BottomGusset',
+      'Flap',
+      'AirHole',
+      'Notes'
+    ];
+
+    // Filter update data to only allowed fields
+    const filteredUpdate = {};
+    Object.keys(updateData).forEach(key => {
+      if (allowedFields.includes(key)) {
+        filteredUpdate[key] = updateData[key];
+      }
+    });
+
+    if (Object.keys(filteredUpdate).length === 0) {
+      return {
+        statusCode: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'No valid fields to update',
+          allowedFields
+        })
+      };
+    }
+
+    // Find and update order
+    const order = await Order.findOneAndUpdate(
+      { orderId },
+      { $set: filteredUpdate },
+      { new: true, runValidators: true }
+    );
+
+    if (!order) {
+      return {
+        statusCode: 404,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+        },
+        body: JSON.stringify({
+          success: false,
+          message: 'Order not found'
+        })
+      };
+    }
+
+    // Add note about the update
+    if (updateData.note) {
+      order.notes.push({
+        message: updateData.note,
+        createdBy: user.name || user.email,
+        createdAt: new Date(),
+        noteType: 'general'
+      });
+      await order.save();
+    }
+
+    console.log("✅ Order updated successfully");
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+      },
+      body: JSON.stringify({
+        success: true,
+        message: 'Order updated successfully',
+        data: {
+          orderId: order.orderId,
+          updatedFields: Object.keys(filteredUpdate)
+        }
+      })
+    };
+
+  } catch (err) {
+    console.error("❌ Error updating order:", err);
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'Access-Control-Allow-Methods': 'PUT,OPTIONS'
+      },
+      body: JSON.stringify({
+        success: false,
+        message: 'Failed to update order',
+        error: process.env.NODE_ENV === 'development' ? err.message : undefined
+      })
+    };
+  }
+};

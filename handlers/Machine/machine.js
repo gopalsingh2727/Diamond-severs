@@ -4,7 +4,7 @@ const connect = require('../../config/mongodb/db');
 const MachineType = require('../../models/machineType/machineType'); 
 const Branch = require('../../models/Branch/Branch');
 const mongoose = require("mongoose");
-// ✅ CREATE MACHINE
+
 module.exports.createMachine = async (event) => {
   await connect();
 
@@ -38,7 +38,8 @@ module.exports.createMachine = async (event) => {
     const authHeader = event.headers.authorization || event.headers.Authorization;
     const user = verifyToken(authHeader);
     const body = JSON.parse(event.body);
-
+    
+    console.log('Full tableConfig:', JSON.stringify(body.tableConfig, null, 2));
     // ✅ Authorization check
     if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
       return {
@@ -80,7 +81,7 @@ module.exports.createMachine = async (event) => {
       };
     }
 
-    // ✅ Machine type exists
+    // ✅ Machine type validation
     const machineTypeExists = await MachineType.findById(body.machineType);
     if (!machineTypeExists) {
       return {
@@ -90,7 +91,7 @@ module.exports.createMachine = async (event) => {
       };
     }
 
-    // ✅ Create machine
+    // ✅ Create machine WITH tableConfig support
     const machine = new Machine({
       machineName: normalizedName,
       machineType: body.machineType,
@@ -98,9 +99,12 @@ module.exports.createMachine = async (event) => {
       sizeY: body.sizeY,
       sizeZ: body.sizeZ,
       branchId: body.branchId,
+      ...(body.tableConfig && { tableConfig: body.tableConfig }), // ✅ FIXED: Now includes tableConfig
     });
 
     await machine.save();
+
+    console.log('Machine created successfully with ID:', machine._id);
 
     return {
       statusCode: 201,
@@ -115,7 +119,10 @@ module.exports.createMachine = async (event) => {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ message: err.message || 'Server error' }),
+      body: JSON.stringify({ 
+        message: err.message || 'Server error',
+        error: process.env.NODE_ENV === 'development' ? err.stack : undefined 
+      }),
     };
   }
 };

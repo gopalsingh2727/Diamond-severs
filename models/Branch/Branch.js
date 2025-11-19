@@ -1,5 +1,81 @@
 const mongoose = require('mongoose');
+const { z } = require('zod');
 
+
+const createBranchSchema = z.object({
+  name: z.string()
+    .min(1, 'Branch name is required')
+    .max(100, 'Branch name must be less than 100 characters')
+    .trim(),
+  location: z.string()
+    .min(1, 'Location is required')
+    .max(200, 'Location must be less than 200 characters')
+    .trim(),
+  code: z.string()
+    .min(1, 'Branch code is required')
+    .max(20, 'Branch code must be less than 20 characters')
+    .toUpperCase()
+    .trim(),
+  product27InfinityId: z.string()
+    .regex(/^[0-9a-fA-F]{24}$/, 'Invalid product27InfinityId format'),
+  phone: z.string()
+    .max(20, 'Phone number must be less than 20 characters')
+    .trim()
+    .optional()
+    .default(''),
+  email: z.string()
+    .email('Invalid email format')
+    .toLowerCase()
+    .trim()
+    .optional()
+    .default(''),
+  userId: z.string()
+    .min(1, 'userId is required'),
+  isActive: z.boolean()
+    .optional()
+    .default(true)
+});
+
+// Zod schema for updating a branch
+const updateBranchSchema = z.object({
+  name: z.string()
+    .min(1, 'Branch name is required')
+    .max(100, 'Branch name must be less than 100 characters')
+    .trim()
+    .optional(),
+  location: z.string()
+    .min(1, 'Location is required')
+    .max(200, 'Location must be less than 200 characters')
+    .trim()
+    .optional(),
+  code: z.string()
+    .min(1, 'Branch code is required')
+    .max(20, 'Branch code must be less than 20 characters')
+    .toUpperCase()
+    .trim()
+    .optional(),
+  phone: z.string()
+    .max(20, 'Phone number must be less than 20 characters')
+    .trim()
+    .optional(),
+  email: z.string()
+    .email('Invalid email format')
+    .toLowerCase()
+    .trim()
+    .optional(),
+  isActive: z.boolean()
+    .optional()
+});
+
+// Zod schema for branch ID parameter
+const branchIdSchema = z.object({
+  id: z.string()
+    .regex(/^[0-9a-fA-F]{24}$/, 'Invalid branch ID format')
+});
+
+// ============================================================================
+// MONGOOSE SCHEMA
+// ============================================================================
 
 const BranchSchema = new mongoose.Schema({
   name: {
@@ -98,4 +174,13 @@ BranchSchema.virtual('product', {
 BranchSchema.set('toJSON', { virtuals: true });
 BranchSchema.set('toObject', { virtuals: true });
 
-module.exports = mongoose.models.Branch || mongoose.model('Branch', BranchSchema);
+// ============================================================================
+// EXPORTS
+// ============================================================================
+
+const Branch = mongoose.models.Branch || mongoose.model('Branch', BranchSchema);
+
+module.exports = Branch;
+module.exports.createBranchSchema = createBranchSchema;
+module.exports.updateBranchSchema = updateBranchSchema;
+module.exports.branchIdSchema = branchIdSchema;

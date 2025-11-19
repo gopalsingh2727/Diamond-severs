@@ -5,27 +5,45 @@
   "scripts": {
     "build": "tsc",
     "offline": "serverless offline start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "serverless offline start --stage dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-apigatewaymanagementapi": "^3.932.0",
+    "@prisma/client": "^6.19.0",
+    "@prisma/extension-accelerate": "^2.0.2",
     "aws-sdk": "^2.1692.0",
     "bcrypt": "^6.0.0",
-    "bcryptjs": "^3.0.2",
+    "bcryptjs": "^3.0.3",
     "dotenv": "^16.5.0",
+    "expr-eval": "^2.0.2",
     "firebase-admin": "^13.4.0",
+    "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
     "lambda-multipart-parser": "^1.0.1",
     "mongoose": "^8.15.1",
-    "uuid": "^11.1.0"
+    "tsconfig-paths": "^4.2.0",
+    "uuid": "^11.1.0",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.158",
+    "@types/node": "^24.10.1",
+    "esbuild": "^0.25.12",
+    "prisma": "^6.19.0",
     "serverless": "^3.40.0",
     "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-esbuild": "^1.56.0",
     "serverless-offline": "^13.9.0",
-    "serverless-plugin-include-dependencies": "^6.1.1"
+    "serverless-plugin-include-dependencies": "^6.1.1",
+    "serverless-plugin-split-stacks": "^1.14.0",
+    "serverless-plugin-typescript": "^2.1.5",
+    "serverless-prune-plugin": "^2.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

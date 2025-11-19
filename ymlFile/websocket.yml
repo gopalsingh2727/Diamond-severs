@@ -1,0 +1,37 @@
+# WebSocket Lambda Functions Configuration
+# Handles real-time WebSocket connections for the 27 Manufacturing System
+
+websocketConnect:
+  handler: handlers/websocket/connect.handler
+  description: Handles WebSocket $connect route - authenticates and establishes connections
+  timeout: 29
+  memorySize: 512
+  events:
+    - websocket:
+        route: $connect
+
+websocketDisconnect:
+  handler: handlers/websocket/disconnect.handler
+  description: Handles WebSocket $disconnect route - cleans up connections
+  timeout: 29
+  memorySize: 512
+  events:
+    - websocket:
+        route: $disconnect
+
+websocketDefault:
+  handler: handlers/websocket/default.handler
+  description: Handles WebSocket $default route - processes incoming messages
+  timeout: 29
+  memorySize: 512
+  events:
+    - websocket:
+        route: $default
+
+# Future routes can be added here for specific message types
+# Example:
+# websocketSubscribe:
+#   handler: handlers/websocket/subscribe.handler
+#   events:
+#     - websocket:
+#         route: subscribe

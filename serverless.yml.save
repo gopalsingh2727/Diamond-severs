@@ -1,0 +1,130 @@
+
+
+
+service: this27
+configValidationMode: error
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ap-south-1
+  stage: dev
+  timeout: 29
+  memorySize: 512
+  apiGateway:
+    minimumCompressionSize: 1024
+  logRetentionInDays: 14
+  environment:
+    MONGO_URI: ${env:MONGO_URI, 'mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'}
+    API_KEY: 27infinity.in_5f84c89315f74a2db149c06a93cf4820
+    JWT_SECRET: yourSecr33232
+    NODE_ENV: production
+    REDIS_HOST: ${env:REDIS_HOST, ''}
+    REDIS_PORT: ${env:REDIS_PORT, '6379'}
+    REDIS_PASSWORD: ${env:REDIS_PASSWORD, ''}
+    REDIS_DB: ${env:REDIS_DB, '0'}
+    REDIS_CLUSTER_ENDPOINTS: ${env:REDIS_CLUSTER_ENDPOINTS, ''}
+    VERSION: ${env:VERSION, '1.0.0'}
+    WEBSOCKET_API_ID: ${env:WEBSOCKET_API_ID, ''}
+    STAGE: ${self:provider.stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - execute-api:ManageConnections
+            - execute-api:Invoke
+          Resource:
+            - arn:aws:execute-api:${self:provider.region}:*:*/*/*/*
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+  - serverless-plugin-split-stacks
+
+custom:
+  esbuild:
+    bundle: true
+    minify: true
+  splitStacks:
+    perType: true
+    perFunction: true
+    perGroup: true
+    nestedStackCount: 20
+    perTypeOverrides:
+      'AWS::Lambda::Function': true
+      'AWS::Lambda::Permission': true
+      'AWS::Lambda::Version': true
+      'AWS::ApiGateway::Method': true
+      'AWS::ApiGateway::Resource': true
+      'AWS::Logs::LogGroup': true
+      'AWS::IAM::Role': true
+      'AWS::IAM::Policy': true
+    maxResourcesPerStack: 100
+    stackGroups:
+      apiGroup:
+        - AWS::ApiGateway::RestApi
+        - AWS::ApiGateway::Resource
+        - AWS::ApiGateway::Method
+      lambdaGroup:
+        - AWS::Lambda::Function
+        - AWS::Lambda::Permission
+        - AWS::Lambda::Version
+      iamGroup:
+        - AWS::IAM::Role
+        - AWS::IAM::Policy
+
+  serverless-offline:
+    httpPort: 4000
+    lambdaPort: 4002
+
+  prune:
+    automatic: true
+    number: 3
+
+package:
+  individually: true
+  patterns:
+    # Include only necessary files
+    - '!.git/**'
+    - '!.gitignore'
+    - '!README.md'
+    - '!.DS_Store'
+    - '!.env*'
+    - '!node_modules/aws-sdk/**'
+    - '!node_modules/@aws-sdk/**'
+    - '!node_modules/mongodb/**'
+    - '!node_modules/mongoose/**'
+    - '!ymlFile/**'
+    - '!test/**'
+    - '!tests/**'
+    - '!**/*.test.js'
+    - '!**/*.test.ts'
+    - '!**/*.spec.js'
+    - '!**/*.spec.ts'
+    - '!coverage/**'
+    - '!.vscode/**'
+    - '!.idea/**'
+    - '!*.md'
+    - '!.eslintrc*'
+    - '!.prettierrc*'
+    - '!jest.config.js'
+    - '!*.log'
+    - '!.serverless/**'
+    - '!.build/**'
+    - '!dist/**'
+    - '!docs/**'
+    - '!examples/**'
+    - '!*.map'
+
+layers:
+  dependencies:
+    path: layers/dependencies
+    name: ${self:service}-dependencies-${self:provider.stage}
+    description: MongoDB and Mongoose dependencies
+    compatibleRuntimes:
+      - nodejs20.x
+    retain: false
+
+functions:
+  ${file(./ymlFile/index.yml)}

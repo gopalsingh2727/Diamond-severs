@@ -1,0 +1,16 @@
+Running "serverless" from node_modules
+Environment: darwin, node 20.19.5, framework 3.40.0 (local) 3.40.0v (global), plugin 7.2.3, SDK 4.5.1
+Docs:        docs.serverless.com
+Support:     forum.serverless.com
+Bugs:        github.com/serverless/serverless/issues
+
+Error:
+Cannot parse "serverless.yml": bad indentation of a mapping entry in "/Users/gopalsingh/Desktop/27/27mainAll/main27Backend/serverless.yml" (78:3)
+
+ 75 |   ${file(./ymlFile/index.yml)}
+ 76 | 
+ 77 |   # WebSocket Functions
+ 78 |   ${file(./ymlFile/websocket.yml)}
+--------^
+ 79 | 
+ 80 | # ✅ OPTIMIZATION NOTES:

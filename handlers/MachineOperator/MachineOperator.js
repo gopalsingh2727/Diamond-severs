@@ -4,14 +4,8 @@ const Order = require('../../models/oders/oders');
 const verifyToken = require('../../utiles/verifyToken');
 const connect = require('../../config/mongodb/db');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const Machine = require('../../models/machine/machine');
-const oders = require('../../models/oders/oders');
-const Material = require('../../models/Material/material');
-const Product = require('../../models/product/product');
-const Step = require('../../models/steps/step');
-const Customer = require('../../models/Customer/customer');
 
+const Machine = require('../../models/machine/machine');
 
 
 
@@ -50,34 +44,79 @@ module.exports.createOperator = async (event) => {
       return respond(403, { message: 'Only admin or manager can create operators' });
     }
 
-    const { username, password, machineId, branchId } = JSON.parse(event.body);
+    const { username, pin, machineId, branchId } = JSON.parse(event.body);
 
-    if (!username || !password || !machineId || !branchId) {
-      return respond(400, { message: 'All fields required' });
+    // Validation
+    if (!username || !pin || !machineId || !branchId) {
+      return respond(400, { message: 'All fields (username, pin, machineId, branchId) are required' });
     }
 
-    const exists = await Operator.findOne({ username });
-    if (exists) return respond(400, { message: 'Operator already exists' });
+    // Validate PIN format (must be 4 digits)
+    if (!/^\d{4}$/.test(pin)) {
+      return respond(400, { message: 'PIN must be exactly 4 digits' });
+    }
 
+    // Check if username already exists
+    const existingOperator = await Operator.findOne({ username });
+    if (existingOperator) {
+      return respond(400, { message: 'Username already exists' });
+    }
+
+    // Check if PIN already exists in the same branch
+    const existingPinInBranch = await Operator.findOne({ 
+      pin: pin,  // For plain text comparison
+      branchId: branchId 
+    });
+
+    if (existingPinInBranch) {
+      return respond(400, { 
+        message: 'This PIN is already used by another operator in this branch. Please choose a different PIN.' 
+      });
+    }
+
+    // Verify machine exists
     const machine = await Machine.findById(machineId);
-    if (!machine) return respond(404, { message: 'Machine not found' });
+    if (!machine) {
+      return respond(404, { message: 'Machine not found' });
+    }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Optional: Verify branch exists if you have a Branch model
+    // const branch = await Branch.findById(branchId);
+    // if (!branch) {
+    //   return respond(404, { message: 'Branch not found' });
+    // }
 
+    // Hash the PIN for security (recommended)
+    const hashedPin = await bcrypt.hash(pin, 10);
+
+    // Create new operator
     const operator = new Operator({
       username,
-      password: hashedPassword,
+      pin: hashedPin,  // Store hashed PIN
       machineId,
-
-    
       branchId,
       role: 'operator',
     });
 
     await operator.save();
-    return respond(201, { message: 'Operator created successfully' });
+
+    return respond(201, { 
+      message: 'Operator created successfully',
+      operator: {
+        id: operator._id,
+        username: operator.username,
+        machineId: operator.machineId,
+        branchId: operator.branchId,
+        role: operator.role
+      }
+    });
+
   } catch (err) {
-    return respond(500, { message: err.message });
+    console.error('Error creating operator:', err);
+    return respond(500, { 
+      message: 'Internal server error',
+      error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
   }
 };
 module.exports.getOperators = async (event) => {

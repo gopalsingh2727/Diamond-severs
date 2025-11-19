@@ -1,0 +1,119 @@
+service: this27-websocket
+configValidationMode: error
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ap-south-1
+  stage: dev
+  timeout: 29
+  memorySize: 512
+
+  environment:
+    MONGO_URI: ${env:MONGO_URI, 'mongodb+srv://27shopgopal:S3kYB9MgKHPpaBjJ@cluster0.uvelucm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'}
+    API_KEY: 27infinity.in_5f84c89315f74a2db149c06a93cf4820
+    JWT_SECRET: yourSecr33232
+    NODE_ENV: production
+    VERSION: ${env:VERSION, '1.0.0'}
+    STAGE: ${self:provider.stage}
+
+  # IAM Role Statements - Permissions for WebSocket functions
+  iamRoleStatements:
+    # WebSocket API Gateway Management permissions
+    - Effect: Allow
+      Action:
+        - execute-api:ManageConnections
+        - execute-api:Invoke
+      Resource:
+        - arn:aws:execute-api:${self:provider.region}:*:*/*/*/*
+
+plugins:
+  - serverless-offline
+
+package:
+  # Package each function separately to reduce size
+  individually: true
+  patterns:
+    # Exclude development dependencies and large files
+    - '!node_modules/aws-sdk/**'
+    - '!node_modules/@types/**'
+    - '!node_modules/typescript/**'
+    - '!node_modules/@typescript-eslint/**'
+    - '!node_modules/eslint/**'
+    - '!node_modules/prettier/**'
+    - '!node_modules/jest/**'
+    - '!node_modules/@jest/**'
+    - '!node_modules/serverless/**'
+    - '!node_modules/serverless-offline/**'
+    - '!**/*.test.js'
+    - '!**/*.spec.js'
+    - '!**/*.md'
+    - '!**/README*'
+    - '!**/LICENSE*'
+    - '!**/.git/**'
+    - '!**/.github/**'
+    - '!**/docs/**'
+    - '!**/examples/**'
+    - '!**/test/**'
+    - '!**/tests/**'
+    - '!**/__tests__/**'
+    # Exclude handlers that aren't needed for WebSocket
+    - '!handlers/Admin/**'
+    - '!handlers/Analytics/**'
+    - '!handlers/Branch/**'
+    - '!handlers/calculation/**'
+    - '!handlers/Customer/**'
+    - '!handlers/devicesForControlPanelMachineCreate/**'
+    - '!handlers/formula/**'
+    - '!handlers/Machine/**'
+    - '!handlers/MachineOperator/**'
+    - '!handlers/MachineType/**'
+    - '!handlers/Manager/**'
+    - '!handlers/MasterAdmin/**'
+    - '!handlers/Material/**'
+    - '!handlers/MaterialFormula/**'
+    - '!handlers/MaterialType/**'
+    - '!handlers/mobile/**'
+    - '!handlers/monitoring/**'
+    - '!handlers/oders/**'
+    - '!handlers/order/**'
+    - '!handlers/product/**'
+    - '!handlers/ProductCatalogue/**'
+    - '!handlers/productSpec/**'
+    - '!handlers/reports/**'
+
+functions:
+  # ==========================================
+  # 🔌 WEBSOCKET ENDPOINTS
+  # ==========================================
+
+  # WebSocket Connection Handler
+  websocketConnect:
+    handler: handlers/websocket/connect.handler
+    description: Handles WebSocket $connect route - authenticates and establishes connections
+    timeout: 29
+    memorySize: 512
+    events:
+      - websocket:
+          route: $connect
+
+  # WebSocket Disconnection Handler
+  websocketDisconnect:
+    handler: handlers/websocket/disconnect.handler
+    description: Handles WebSocket $disconnect route - cleans up connections
+    timeout: 10
+    memorySize: 256
+    events:
+      - websocket:
+          route: $disconnect
+
+  # WebSocket Default Handler (all messages)
+  websocketDefault:
+    handler: handlers/websocket/default.handler
+    description: Handles WebSocket $default route - processes incoming messages
+    timeout: 29
+    memorySize: 512
+    events:
+      - websocket:
+          route: $default
+

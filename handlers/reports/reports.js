@@ -1,0 +1,864 @@
+// reports.js - Comprehensive Reports Handler
+const jwt = require('jsonwebtoken');
+const connect = require('../../config/mongodb/db');
+
+// Import all required models
+const Order = require('../../models/Oders/oders');
+const Machine = require('../../models/Machine/machine');
+const Customer = require('../../models/Customer/customer');
+const Material = require('../../models/Material/material');
+const MaterialType = require('../../models/MaterialType/materialType');
+const Branch = require('../../models/Branch/branch');
+const MachineTableData = require('../../models/Table/table');
+
+// Helper function to verify JWT token
+const verifyToken = (event) => {
+  try {
+    const authHeader = event.headers?.Authorization || event.headers?.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new Error('No token provided');
+    }
+    const token = authHeader.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return decoded;
+  } catch (error) {
+    throw new Error('Invalid token');
+  }
+};
+
+// Helper function to build CORS headers
+const getCorsHeaders = () => ({
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Credentials': true,
+  'Access-Control-Allow-Headers': 'Content-Type,Authorization,x-api-key',
+  'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+  'Content-Type': 'application/json',
+});
+
+// Helper function to parse date range
+const parseDateRange = (queryParams) => {
+  const dateRange = {};
+
+  if (queryParams.startDate) {
+    dateRange.$gte = new Date(queryParams.startDate);
+  }
+
+  if (queryParams.endDate) {
+    const endDate = new Date(queryParams.endDate);
+    endDate.setHours(23, 59, 59, 999); // End of day
+    dateRange.$lte = endDate;
+  }
+
+  return Object.keys(dateRange).length > 0 ? dateRange : null;
+};
+
+// ==============================================
+// OVERVIEW REPORT
+// ==============================================
+module.exports.getOverviewReport = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    await connect();
+    const user = verifyToken(event);
+    const queryParams = event.queryStringParameters || {};
+
+    console.log('📊 Fetching overview report with params:', queryParams);
+
+    // Build query
+    const query = {};
+    if (user.role === 'manager' && user.branchId) {
+      query.branchId = user.branchId;
+    } else if (queryParams.branchId) {
+      query.branchId = queryParams.branchId;
+    }
+
+    // Add date range filter
+    const dateRange = parseDateRange(queryParams);
+    if (dateRange) {
+      query.createdAt = dateRange;
+    }
+
+    // Fetch orders with populated fields
+    const orders = await Order.find(query)
+      .populate('customerId', 'companyName name phone email')
+      .populate('branchId', 'name code location')
+      .populate('materialId', 'name')
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Calculate efficiency trends (last 7 days)
+    const efficiencyTrends = calculateEfficiencyTrends(orders);
+
+    // Calculate production output (last 7 days)
+    const productionOutput = calculateProductionOutput(orders);
+
+    // Calculate summary statistics
+    const summary = {
+      totalOrders: orders.length,
+      completedOrders: orders.filter(o => o.overallStatus === 'completed').length,
+      inProgressOrders: orders.filter(o => o.overallStatus === 'in_progress').length,
+      pendingOrders: orders.filter(o => o.overallStatus === 'pending').length,
+      cancelledOrders: orders.filter(o => o.overallStatus === 'cancelled').length,
+      totalProduction: orders.reduce((sum, o) => sum + (o.realTimeData?.totalNetWeight || 0), 0),
+      totalWastage: orders.reduce((sum, o) => sum + (o.realTimeData?.totalWastage || 0), 0),
+      averageEfficiency: calculateAverageEfficiency(orders),
+    };
+
+    return {
+      statusCode: 200,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: true,
+        data: {
+          orders,
+          efficiencyTrends,
+          productionOutput,
+          summary,
+        },
+        message: 'Overview report fetched successfully',
+      }),
+    };
+
+  } catch (error) {
+    console.error('❌ Error fetching overview report:', error);
+    return {
+      statusCode: error.message.includes('token') ? 401 : 500,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: false,
+        error: error.message || 'Internal server error',
+        message: 'Failed to fetch overview report',
+      }),
+    };
+  }
+};
+
+// ==============================================
+// ORDERS REPORT
+// ==============================================
+module.exports.getOrdersReport = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    await connect();
+    const user = verifyToken(event);
+    const queryParams = event.queryStringParameters || {};
+
+    console.log('📋 Fetching orders report with params:', queryParams);
+
+    // Build query
+    const query = {};
+    if (user.role === 'manager' && user.branchId) {
+      query.branchId = user.branchId;
+    } else if (queryParams.branchId) {
+      query.branchId = queryParams.branchId;
+    }
+
+    // Add filters
+    if (queryParams.status && queryParams.status !== 'all') {
+      query.overallStatus = queryParams.status;
+    }
+
+    if (queryParams.priority && queryParams.priority !== 'all') {
+      query.priority = queryParams.priority;
+    }
+
+    if (queryParams.customerId) {
+      query.customerId = queryParams.customerId;
+    }
+
+    // Add date range filter
+    const dateRange = parseDateRange(queryParams);
+    if (dateRange) {
+      query.createdAt = dateRange;
+    }
+
+    // Pagination
+    const page = parseInt(queryParams.page) || 1;
+    const limit = parseInt(queryParams.limit) || 50;
+    const skip = (page - 1) * limit;
+
+    // Fetch orders with populated fields (REMOVED createdBy populate)
+    const orders = await Order.find(query)
+      .populate('customerId', 'companyName name phone email')
+      .populate('branchId', 'name code location')
+      .populate('materialId', 'name')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    // Get total count for pagination
+    const totalCount = await Order.countDocuments(query);
+
+    // Calculate status counts
+    const statusCounts = await Order.aggregate([
+      { $match: query },
+      {
+        $group: {
+          _id: '$overallStatus',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    return {
+      statusCode: 200,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: true,
+        data: {
+          orders,
+          pagination: {
+            page,
+            limit,
+            totalCount,
+            totalPages: Math.ceil(totalCount / limit),
+          },
+          statusCounts: statusCounts.reduce((acc, item) => {
+            acc[item._id] = item.count;
+            return acc;
+          }, {}),
+        },
+        message: 'Orders report fetched successfully',
+      }),
+    };
+
+  } catch (error) {
+    console.error('❌ Error fetching orders report:', error);
+    return {
+      statusCode: error.message.includes('token') ? 401 : 500,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: false,
+        error: error.message || 'Internal server error',
+        message: 'Failed to fetch orders report',
+      }),
+    };
+  }
+};
+
+// ==============================================
+// PRODUCTION REPORT
+// ==============================================
+module.exports.getProductionReport = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    await connect();
+    const user = verifyToken(event);
+    const queryParams = event.queryStringParameters || {};
+
+    console.log('🏭 Fetching production report with params:', queryParams);
+
+    // Build query
+    const query = {};
+    if (user.role === 'manager' && user.branchId) {
+      query.branchId = user.branchId;
+    } else if (queryParams.branchId) {
+      query.branchId = queryParams.branchId;
+    }
+
+    // Add filters
+    if (queryParams.materialType && queryParams.materialType !== 'all') {
+      query.materialTypeId = queryParams.materialType;
+    }
+
+    // Add date range filter
+    const dateRange = parseDateRange(queryParams);
+    if (dateRange) {
+      query.createdAt = dateRange;
+    }
+
+    // Fetch orders
+    const orders = await Order.find(query)
+      .populate('customerId', 'companyName name')
+      .populate('branchId', 'name code')
+      .populate('materialId', 'name unit')
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Fetch materials
+    const materialQuery = {};
+    if (query.branchId) {
+      materialQuery.branchId = query.branchId;
+    }
+
+    const materials = await Material.find(materialQuery)
+      .lean();
+
+    // Calculate production output by date
+    const productionOutput = calculateProductionOutput(orders);
+
+    // Calculate material usage
+    const materialUsage = calculateMaterialUsage(orders);
+
+    // Calculate summary
+    const summary = {
+      totalOrders: orders.length,
+      totalProduction: orders.reduce((sum, o) => sum + (o.realTimeData?.totalNetWeight || 0), 0),
+      totalWastage: orders.reduce((sum, o) => sum + (o.realTimeData?.totalWastage || 0), 0),
+      totalRawWeight: orders.reduce((sum, o) => sum + (o.realTimeData?.totalRawWeight || 0), 0),
+      wastagePercentage: calculateWastagePercentage(orders),
+      averageEfficiency: calculateAverageEfficiency(orders),
+    };
+
+    return {
+      statusCode: 200,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: true,
+        data: {
+          orders,
+          materials,
+          productionOutput,
+          materialUsage,
+          summary,
+        },
+        message: 'Production report fetched successfully',
+      }),
+    };
+
+  } catch (error) {
+    console.error('❌ Error fetching production report:', error);
+    return {
+      statusCode: error.message.includes('token') ? 401 : 500,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: false,
+        error: error.message || 'Internal server error',
+        message: 'Failed to fetch production report',
+      }),
+    };
+  }
+};
+
+// ==============================================
+// MACHINES REPORT
+// ==============================================
+module.exports.getMachinesReport = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    await connect();
+    const user = verifyToken(event);
+    const queryParams = event.queryStringParameters || {};
+
+    console.log('🔧 Fetching machines report with params:', queryParams);
+
+    // Build query
+    const query = {};
+    if (user.role === 'manager' && user.branchId) {
+      query.branchId = user.branchId;
+    } else if (queryParams.branchId) {
+      query.branchId = queryParams.branchId;
+    }
+
+    // Add filters
+    if (queryParams.machineType && queryParams.machineType !== 'all') {
+      query.machineTypeId = queryParams.machineType;
+    }
+
+    if (queryParams.status && queryParams.status !== 'all') {
+      query.status = queryParams.status;
+    }
+
+    // Fetch machines
+    const machines = await Machine.find(query)
+      .populate('branchId', 'name code')
+      .populate('machineTypeId', 'type')
+      .populate('currentOrder', 'orderId overallStatus')
+      .sort({ name: 1 })
+      .lean();
+
+    // Fetch machine utilization data
+    const orderQuery = { ...query };
+    const dateRange = parseDateRange(queryParams);
+    if (dateRange) {
+      orderQuery.createdAt = dateRange;
+    }
+
+    const ordersForMachines = await Order.find(orderQuery)
+      .populate('machineId')
+      .lean();
+
+    // Calculate machine utilization
+    const machineUtilization = calculateMachineUtilization(machines, ordersForMachines);
+
+    // Calculate machine performance
+    const machinePerformance = await calculateMachinePerformance(machines);
+
+    // Calculate summary
+    const summary = {
+      totalMachines: machines.length,
+      activeMachines: machines.filter(m => m.status === 'active').length,
+      inactiveMachines: machines.filter(m => m.status === 'inactive').length,
+      maintenanceMachines: machines.filter(m => m.status === 'maintenance').length,
+      averageUtilization: calculateAverageUtilization(machineUtilization),
+      averageEfficiency: calculateAverageEfficiencyFromMachines(machines),
+    };
+
+    return {
+      statusCode: 200,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: true,
+        data: {
+          machines,
+          machineUtilization,
+          machinePerformance,
+          summary,
+        },
+        message: 'Machines report fetched successfully',
+      }),
+    };
+
+  } catch (error) {
+    console.error('❌ Error fetching machines report:', error);
+    return {
+      statusCode: error.message.includes('token') ? 401 : 500,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: false,
+        error: error.message || 'Internal server error',
+        message: 'Failed to fetch machines report',
+      }),
+    };
+  }
+};
+
+// ==============================================
+// CUSTOMERS REPORT
+// ==============================================
+module.exports.getCustomersReport = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    await connect();
+    const user = verifyToken(event);
+    const queryParams = event.queryStringParameters || {};
+
+    console.log('👥 Fetching customers report with params:', queryParams);
+
+    // Build query
+    const query = {};
+    if (user.role === 'manager' && user.branchId) {
+      query.branchId = user.branchId;
+    } else if (queryParams.branchId) {
+      query.branchId = queryParams.branchId;
+    }
+
+    // Fetch customers
+    const customers = await Customer.find(query)
+      .populate('branchId', 'name code')
+      .sort({ companyName: 1 })
+      .lean();
+
+    // Fetch orders for customer analysis
+    const orderQuery = { ...query };
+    const dateRange = parseDateRange(queryParams);
+    if (dateRange) {
+      orderQuery.createdAt = dateRange;
+    }
+
+    const orders = await Order.find(orderQuery)
+      .populate('customerId', 'companyName name')
+      .populate('materialId', 'name')
+      .lean();
+
+    // Calculate customer statistics
+    const customerStats = customers.map(customer => {
+      const customerOrders = orders.filter(o => o.customerId?._id?.toString() === customer._id.toString());
+
+      return {
+        ...customer,
+        totalOrders: customerOrders.length,
+        completedOrders: customerOrders.filter(o => o.overallStatus === 'completed').length,
+        pendingOrders: customerOrders.filter(o => ['pending', 'Wait for Approval'].includes(o.overallStatus)).length,
+        inProgressOrders: customerOrders.filter(o => o.overallStatus === 'in_progress').length,
+        cancelledOrders: customerOrders.filter(o => o.overallStatus === 'cancelled').length,
+        totalProduction: customerOrders.reduce((sum, o) => sum + (o.realTimeData?.totalNetWeight || 0), 0),
+        lastOrderDate: customerOrders.length > 0 ? customerOrders[0].createdAt : null,
+      };
+    });
+
+    // Sort by total orders
+    customerStats.sort((a, b) => b.totalOrders - a.totalOrders);
+
+    // Calculate summary
+    const summary = {
+      totalCustomers: customers.length,
+      activeCustomers: customerStats.filter(c => c.totalOrders > 0).length,
+      inactiveCustomers: customerStats.filter(c => c.totalOrders === 0).length,
+      totalOrders: orders.length,
+      totalProduction: orders.reduce((sum, o) => sum + (o.realTimeData?.totalNetWeight || 0), 0),
+    };
+
+    return {
+      statusCode: 200,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: true,
+        data: {
+          customers: customerStats,
+          orders,
+          summary,
+        },
+        message: 'Customers report fetched successfully',
+      }),
+    };
+
+  } catch (error) {
+    console.error('❌ Error fetching customers report:', error);
+    return {
+      statusCode: error.message.includes('token') ? 401 : 500,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: false,
+        error: error.message || 'Internal server error',
+        message: 'Failed to fetch customers report',
+      }),
+    };
+  }
+};
+
+// ==============================================
+// MATERIALS REPORT
+// ==============================================
+module.exports.getMaterialsReport = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    await connect();
+    const user = verifyToken(event);
+    const queryParams = event.queryStringParameters || {};
+
+    console.log('📦 Fetching materials report with params:', queryParams);
+
+    // Build query
+    const query = {};
+    if (user.role === 'manager' && user.branchId) {
+      query.branchId = user.branchId;
+    } else if (queryParams.branchId) {
+      query.branchId = queryParams.branchId;
+    }
+
+    // Fetch materials
+    const materials = await Material.find(query)
+      .populate('branchId', 'name code')
+      .sort({ name: 1 })
+      .lean();
+
+    // Fetch orders for material usage analysis
+    const orderQuery = { ...query };
+    const dateRange = parseDateRange(queryParams);
+    if (dateRange) {
+      orderQuery.createdAt = dateRange;
+    }
+
+    const orders = await Order.find(orderQuery)
+      .populate('materialId', 'name')
+      .lean();
+
+    // Calculate material usage statistics
+    const materialStats = materials.map(material => {
+      const materialOrders = orders.filter(o => o.materialId?._id?.toString() === material._id.toString());
+
+      return {
+        ...material,
+        totalOrders: materialOrders.length,
+        totalUsed: materialOrders.reduce((sum, o) => sum + (o.materialWeight || 0), 0),
+        totalProduction: materialOrders.reduce((sum, o) => sum + (o.realTimeData?.totalNetWeight || 0), 0),
+        totalWastage: materialOrders.reduce((sum, o) => sum + (o.realTimeData?.totalWastage || 0), 0),
+      };
+    });
+
+    // Calculate summary
+    const summary = {
+      totalMaterials: materials.length,
+      totalMaterialTypes: [...new Set(materials.map(m => m.materialTypeId?._id?.toString()))].length,
+      totalUsed: materialStats.reduce((sum, m) => sum + m.totalUsed, 0),
+      totalProduction: materialStats.reduce((sum, m) => sum + m.totalProduction, 0),
+      totalWastage: materialStats.reduce((sum, m) => sum + m.totalWastage, 0),
+    };
+
+    return {
+      statusCode: 200,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: true,
+        data: {
+          materials: materialStats,
+          summary,
+        },
+        message: 'Materials report fetched successfully',
+      }),
+    };
+
+  } catch (error) {
+    console.error('❌ Error fetching materials report:', error);
+    return {
+      statusCode: error.message.includes('token') ? 401 : 500,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: false,
+        error: error.message || 'Internal server error',
+        message: 'Failed to fetch materials report',
+      }),
+    };
+  }
+};
+
+// ==============================================
+// CUSTOM REPORT - Dynamic Report Builder
+// ==============================================
+module.exports.getCustomReport = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    await connect();
+    const user = verifyToken(event);
+    const queryParams = event.queryStringParameters || {};
+
+    console.log('🔍 Fetching custom report with params:', queryParams);
+
+    // Parse report configuration from query params or body
+    const reportConfig = event.body ? JSON.parse(event.body) : {};
+
+    // Build base query
+    const query = {};
+    if (user.role === 'manager' && user.branchId) {
+      query.branchId = user.branchId;
+    } else if (queryParams.branchId || reportConfig.branchId) {
+      query.branchId = queryParams.branchId || reportConfig.branchId;
+    }
+
+    // Apply filters from config
+    if (reportConfig.filters) {
+      Object.keys(reportConfig.filters).forEach(key => {
+        if (reportConfig.filters[key] && reportConfig.filters[key] !== 'all') {
+          query[key] = reportConfig.filters[key];
+        }
+      });
+    }
+
+    // Add date range filter
+    const dateRange = parseDateRange(queryParams);
+    if (dateRange) {
+      query.createdAt = dateRange;
+    }
+
+    // Determine which data to fetch based on report type
+    const reportType = queryParams.reportType || reportConfig.reportType || 'orders';
+
+    let data = {};
+
+    switch (reportType) {
+      case 'orders':
+        data.orders = await Order.find(query)
+          .populate('customerId', 'companyName name')
+          .populate('branchId', 'name code')
+          .populate('materialId', 'name')
+          .sort({ createdAt: -1 })
+          .lean();
+        break;
+
+      case 'machines':
+        data.machines = await Machine.find(query)
+          .populate('branchId', 'name code')
+          .populate('machineTypeId', 'type')
+          .lean();
+        break;
+
+      case 'customers':
+        data.customers = await Customer.find(query)
+          .populate('branchId', 'name code')
+          .lean();
+        break;
+
+      case 'materials':
+        data.materials = await Material.find(query)
+          .lean();
+        break;
+
+      default:
+        // Fetch all data types
+        data.orders = await Order.find(query).populate('customerId materialId branchId').lean();
+        data.machines = await Machine.find(query).populate('machineTypeId branchId').lean();
+        data.customers = await Customer.find(query).populate('branchId').lean();
+    }
+
+    return {
+      statusCode: 200,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: true,
+        data,
+        reportConfig,
+        message: 'Custom report fetched successfully',
+      }),
+    };
+
+  } catch (error) {
+    console.error('❌ Error fetching custom report:', error);
+    return {
+      statusCode: error.message.includes('token') ? 401 : 500,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({
+        success: false,
+        error: error.message || 'Internal server error',
+        message: 'Failed to fetch custom report',
+      }),
+    };
+  }
+};
+
+// ==============================================
+// HELPER FUNCTIONS
+// ==============================================
+
+function calculateEfficiencyTrends(orders) {
+  const trends = {};
+
+  orders.forEach(order => {
+    if (order.realTimeData?.overallEfficiency > 0) {
+      const date = new Date(order.createdAt).toISOString().split('T')[0];
+      if (!trends[date]) {
+        trends[date] = { total: 0, count: 0, orders: 0 };
+      }
+      trends[date].total += order.realTimeData.overallEfficiency;
+      trends[date].count += 1;
+      trends[date].orders += 1;
+    }
+  });
+
+  return Object.keys(trends)
+    .sort()
+    .slice(-7)
+    .map(date => ({
+      date,
+      efficiency: Math.round((trends[date].total / trends[date].count) * 10) / 10,
+      orders: trends[date].orders,
+    }));
+}
+
+function calculateProductionOutput(orders) {
+  const output = {};
+
+  orders.forEach(order => {
+    const date = new Date(order.createdAt).toISOString().split('T')[0];
+    if (!output[date]) {
+      output[date] = { netWeight: 0, wastage: 0, rawWeight: 0 };
+    }
+    output[date].netWeight += order.realTimeData?.totalNetWeight || 0;
+    output[date].wastage += order.realTimeData?.totalWastage || 0;
+    output[date].rawWeight += order.realTimeData?.totalRawWeight || 0;
+  });
+
+  return Object.keys(output)
+    .sort()
+    .slice(-7)
+    .map(date => ({
+      date,
+      netWeight: Math.round(output[date].netWeight * 100) / 100,
+      wastage: Math.round(output[date].wastage * 100) / 100,
+      rawWeight: Math.round(output[date].rawWeight * 100) / 100,
+    }));
+}
+
+function calculateMaterialUsage(orders) {
+  const usage = {};
+
+  orders.forEach(order => {
+    const materialName = order.materialId?.name || 'Unknown';
+    if (!usage[materialName]) {
+      usage[materialName] = { totalUsed: 0, totalProduction: 0, totalWastage: 0, orders: 0 };
+    }
+    usage[materialName].totalUsed += order.materialWeight || 0;
+    usage[materialName].totalProduction += order.realTimeData?.totalNetWeight || 0;
+    usage[materialName].totalWastage += order.realTimeData?.totalWastage || 0;
+    usage[materialName].orders += 1;
+  });
+
+  return Object.keys(usage).map(material => ({
+    material,
+    ...usage[material],
+  }));
+}
+
+function calculateAverageEfficiency(orders) {
+  const ordersWithEfficiency = orders.filter(o => o.realTimeData?.overallEfficiency > 0);
+  if (ordersWithEfficiency.length === 0) return 0;
+
+  const total = ordersWithEfficiency.reduce((sum, o) => sum + o.realTimeData.overallEfficiency, 0);
+  return Math.round((total / ordersWithEfficiency.length) * 10) / 10;
+}
+
+function calculateWastagePercentage(orders) {
+  const totalRaw = orders.reduce((sum, o) => sum + (o.realTimeData?.totalRawWeight || 0), 0);
+  const totalWastage = orders.reduce((sum, o) => sum + (o.realTimeData?.totalWastage || 0), 0);
+
+  if (totalRaw === 0) return 0;
+  return Math.round((totalWastage / totalRaw) * 100 * 10) / 10;
+}
+
+function calculateMachineUtilization(machines, orders) {
+  const last7Days = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (6 - i));
+    return date.toISOString().split('T')[0];
+  });
+
+  return last7Days.map(date => {
+    const dateOrders = orders.filter(o => {
+      const orderDate = new Date(o.createdAt).toISOString().split('T')[0];
+      return orderDate === date;
+    });
+
+    const activeMachines = new Set(dateOrders.map(o => o.machineId?._id?.toString()).filter(Boolean));
+    const utilizationRate = machines.length > 0 ? (activeMachines.size / machines.length) * 100 : 0;
+
+    return {
+      date,
+      utilizationRate: Math.round(utilizationRate * 10) / 10,
+      activeMachines: activeMachines.size,
+      totalMachines: machines.length,
+    };
+  });
+}
+
+async function calculateMachinePerformance(machines) {
+  const performance = [];
+
+  for (const machine of machines) {
+    const tableData = await MachineTableData.findOne({ machineId: machine._id })
+      .sort({ updatedAt: -1 })
+      .lean();
+
+    performance.push({
+      machineId: machine._id,
+      machineName: machine.name,
+      efficiency: tableData?.totalCalculations?.overallEfficiency || 0,
+      totalProduction: tableData?.totalCalculations?.totalNetWeight || 0,
+      totalWastage: tableData?.totalCalculations?.totalWastage || 0,
+      status: machine.status,
+    });
+  }
+
+  return performance;
+}
+
+function calculateAverageUtilization(utilization) {
+  if (utilization.length === 0) return 0;
+  const total = utilization.reduce((sum, u) => sum + u.utilizationRate, 0);
+  return Math.round((total / utilization.length) * 10) / 10;
+}
+
+function calculateAverageEfficiencyFromMachines(machines) {
+  const machinesWithEfficiency = machines.filter(m => m.efficiency && m.efficiency > 0);
+  if (machinesWithEfficiency.length === 0) return 0;
+
+  const total = machinesWithEfficiency.reduce((sum, m) => sum + m.efficiency, 0);
+  return Math.round((total / machinesWithEfficiency.length) * 10) / 10;
+}

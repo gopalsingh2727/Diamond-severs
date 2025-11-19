@@ -1,0 +1,80 @@
+# Get Subscription Dashboard Overview
+getSubscriptionDashboard:
+  handler: handlers/MasterAdmin/subscriptionDashboard.getSubscriptionDashboard
+  events:
+    - http:
+        path: master-admin/subscription-dashboard
+        method: GET
+        cors: true
+
+# Get All Companies
+getAllCompanies:
+  handler: handlers/MasterAdmin/subscriptionDashboard.getAllCompanies
+  events:
+    - http:
+        path: master-admin/companies
+        method: GET
+        cors: true
+
+# Get Company by ID
+getCompanyById:
+  handler: handlers/MasterAdmin/subscriptionDashboard.getCompanyById
+  events:
+    - http:
+        path: master-admin/companies/{id}
+        method: GET
+        cors: true
+
+# 4. Create Company
+createCompany:
+  handler: handlers/MasterAdmin/subscriptionDashboard.createCompany
+  events:
+    - http:
+        path: master-admin/companies
+        method: POST
+        cors: true
+
+# 5. Update Company
+updateCompany:
+  handler: handlers/MasterAdmin/subscriptionDashboard.updateCompany
+  events:
+    - http:
+        path: master-admin/companies/{id}
+        method: PUT
+        cors: true
+
+# 6. Get Pending Subscriptions
+getPendingSubscriptions:
+  handler: handlers/MasterAdmin/subscriptionDashboard.getPendingSubscriptions
+  events:
+    - http:
+        path: master-admin/subscription/pending
+        method: GET
+        cors: true
+
+# 7. Get Expiring Subscriptions
+getExpiringSubscriptions:
+  handler: handlers/MasterAdmin/subscriptionDashboard.getExpiringSubscriptions
+  events:
+    - http:
+        path: master-admin/subscription/expiring
+        method: GET
+        cors: true
+
+# 8. Get Support Statistics
+getSupportStats:
+  handler: handlers/MasterAdmin/subscriptionDashboard.getSupportStats
+  events:
+    - http:
+        path: master-admin/support-stats
+        method: GET
+        cors: true
+
+# 9. Get Revenue Analytics
+getRevenueAnalytics:
+  handler: handlers/MasterAdmin/subscriptionDashboard.getRevenueAnalytics
+  events:
+    - http:
+        path: master-admin/revenue-analytics
+        method: GET
+        cors: true

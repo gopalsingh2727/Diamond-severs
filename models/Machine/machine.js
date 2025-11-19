@@ -1,7 +1,173 @@
 // machine.js
 const mongoose = require('mongoose');
+const { z } = require('zod');
 
-// Machine Schema with Dynamic Table Integration
+// ============================================================================
+// ZOD VALIDATION SCHEMAS
+// ============================================================================
+
+// Zod schema for table column configuration
+const tableColumnSchema = z.object({
+  name: z.string()
+    .min(1, 'Column name is required')
+    .trim(),
+  dataType: z.enum(['text', 'number', 'formula', 'date'], {
+    errorMap: () => ({ message: 'Invalid data type' })
+  }),
+  isRequired: z.boolean()
+    .optional()
+    .default(false),
+  order: z.number()
+    .int('Order must be an integer')
+    .min(0, 'Order must be non-negative'),
+  placeholder: z.string()
+    .optional()
+    .default('')
+});
+
+// Zod schema for formula configuration
+const formulaSchema = z.object({
+  expression: z.string()
+    .min(1, 'Formula expression is required'),
+  dependencies: z.array(z.string())
+    .optional()
+    .default([]),
+  description: z.string()
+    .optional()
+    .default('')
+});
+
+// Zod schema for table configuration
+const tableConfigSchema = z.object({
+  columns: z.array(tableColumnSchema)
+    .min(1, 'At least one column is required'),
+  formulas: z.record(z.string(), formulaSchema)
+    .optional(),
+  settings: z.object({
+    autoCalculate: z.boolean()
+      .optional()
+      .default(true),
+    autoUpdateOrders: z.boolean()
+      .optional()
+      .default(true),
+    maxRows: z.number()
+      .int('Max rows must be an integer')
+      .positive('Max rows must be positive')
+      .optional()
+      .default(1000),
+    enableHistory: z.boolean()
+      .optional()
+      .default(true)
+  }).optional()
+});
+
+// Zod schema for operator view calculation
+const operatorCalculationSchema = z.object({
+  name: z.string()
+    .min(1, 'Calculation name is required')
+    .trim(),
+  displayName: z.string()
+    .min(1, 'Display name is required')
+    .trim(),
+  formula: z.string()
+    .min(1, 'Formula is required'),
+  unit: z.string()
+    .optional()
+    .default(''),
+  description: z.string()
+    .optional()
+    .default('')
+});
+
+// Zod schema for operator view configuration
+const operatorViewSchema = z.object({
+  productDimensions: z.array(z.string())
+    .optional()
+    .default([]),
+  materialDimensions: z.array(z.string())
+    .optional()
+    .default([]),
+  calculations: z.array(operatorCalculationSchema)
+    .optional()
+    .default([])
+}).optional();
+
+// Zod schema for machine specifications
+const specificationsSchema = z.object({
+  capacity: z.string().optional(),
+  powerConsumption: z.string().optional(),
+  operatingTemperature: z.string().optional(),
+  dimensions: z.string().optional()
+}).optional();
+
+// Zod schema for creating a new machine
+const createMachineSchema = z.object({
+  machineName: z.string()
+    .min(1, 'Machine name is required')
+    .max(200, 'Machine name must be less than 200 characters')
+    .trim(),
+  machineType: z.string()
+    .regex(/^[0-9a-fA-F]{24}$/, 'Invalid machineType ID format'),
+  sizeX: z.string()
+    .min(1, 'Size X is required'),
+  sizeY: z.string()
+    .min(1, 'Size Y is required'),
+  sizeZ: z.string()
+    .min(1, 'Size Z is required'),
+  branchId: z.string()
+    .regex(/^[0-9a-fA-F]{24}$/, 'Invalid branchId format'),
+  tableConfig: tableConfigSchema.optional(),
+  operatorView: operatorViewSchema,
+  status: z.enum(['active', 'inactive', 'maintenance', 'repair'], {
+    errorMap: () => ({ message: 'Invalid status' })
+  }).optional().default('active'),
+  location: z.string()
+    .max(200, 'Location must be less than 200 characters')
+    .trim()
+    .optional(),
+  specifications: specificationsSchema
+});
+
+// Zod schema for updating a machine
+const updateMachineSchema = z.object({
+  machineName: z.string()
+    .min(1, 'Machine name is required')
+    .max(200, 'Machine name must be less than 200 characters')
+    .trim()
+    .optional(),
+  machineType: z.string()
+    .regex(/^[0-9a-fA-F]{24}$/, 'Invalid machineType ID format')
+    .optional(),
+  sizeX: z.string()
+    .min(1, 'Size X is required')
+    .optional(),
+  sizeY: z.string()
+    .min(1, 'Size Y is required')
+    .optional(),
+  sizeZ: z.string()
+    .min(1, 'Size Z is required')
+    .optional(),
+  tableConfig: tableConfigSchema.optional(),
+  operatorView: operatorViewSchema,
+  status: z.enum(['active', 'inactive', 'maintenance', 'repair'], {
+    errorMap: () => ({ message: 'Invalid status' })
+  }).optional(),
+  location: z.string()
+    .max(200, 'Location must be less than 200 characters')
+    .trim()
+    .optional(),
+  specifications: specificationsSchema
+});
+
+// Zod schema for machine ID parameter
+const machineIdSchema = z.object({
+  id: z.string()
+    .regex(/^[0-9a-fA-F]{24}$/, 'Invalid machine ID format')
+});
+
+// ============================================================================
+// MONGOOSE SCHEMA - Machine Schema with Dynamic Table Integration
+// ============================================================================
 const machineSchema = new mongoose.Schema({
   machineName: {
     type: String,
@@ -60,7 +226,7 @@ const machineSchema = new mongoose.Schema({
         default: ''
       }
     }],
-    
+
     // Define formulas for automatic calculations
     formulas: {
       type: Map,
@@ -80,7 +246,7 @@ const machineSchema = new mongoose.Schema({
       },
       default: new Map()
     },
-    
+
     // Table settings
     settings: {
       autoCalculate: {
@@ -100,6 +266,67 @@ const machineSchema = new mongoose.Schema({
         default: true
       }
     }
+  },
+
+  // Operator View Configuration - Fixed view structure for this machine
+  // This defines what dimensions from Product Spec and Material Spec the operator sees
+  // Plus any machine-specific calculations
+  // NEW: Separated into "forFormulas" (hidden) and "toShow" (visible to operators)
+  operatorView: {
+    // Product specification dimensions
+    productDimensions: {
+      // Dimensions available for formulas but hidden from operators
+      forFormulas: {
+        type: [String],
+        default: []
+      },
+      // Dimensions displayed to operators (and also usable in formulas)
+      toShow: {
+        type: [String],
+        default: []
+      }
+    },
+
+    // Material specification dimensions
+    materialDimensions: {
+      // Dimensions available for formulas but hidden from operators
+      forFormulas: {
+        type: [String],
+        default: []
+      },
+      // Dimensions displayed to operators (and also usable in formulas)
+      toShow: {
+        type: [String],
+        default: []
+      }
+    },
+
+    // Machine-specific calculations using dimensions from both specs
+    // These calculations are ALWAYS shown to operators
+    calculations: [{
+      name: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      displayName: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      formula: {
+        type: String,
+        required: true
+      },
+      unit: {
+        type: String,
+        default: ''
+      },
+      description: {
+        type: String,
+        default: ''
+      }
+    }]
   },
   
   // Machine status and metadata
@@ -259,8 +486,21 @@ machineSchema.pre('save', function(next) {
   next();
 });
 
-// Export the model
-module.exports = mongoose.models.Machine || mongoose.model('Machine', machineSchema);
+// ============================================================================
+// EXPORTS
+// ============================================================================
+
+const Machine = mongoose.models.Machine || mongoose.model('Machine', machineSchema);
+
+module.exports = Machine;
+module.exports.createMachineSchema = createMachineSchema;
+module.exports.updateMachineSchema = updateMachineSchema;
+module.exports.machineIdSchema = machineIdSchema;
+module.exports.tableConfigSchema = tableConfigSchema;
+module.exports.tableColumnSchema = tableColumnSchema;
+module.exports.formulaSchema = formulaSchema;
+module.exports.operatorViewSchema = operatorViewSchema;
+module.exports.operatorCalculationSchema = operatorCalculationSchema;
 
 // ============================================================================
 // USAGE EXAMPLES

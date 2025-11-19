@@ -1,0 +1,206 @@
+# ==========================================
+# 🤖 CHATBOT ENDPOINTS
+# ==========================================
+
+# ---------- Chat Messages ----------
+chatSendMessage:
+  handler: handlers/chatbot/chat.sendMessage
+  events:
+    - http:
+        path: chat/message
+        method: post
+        cors: true
+  timeout: 29
+  memorySize: 512
+
+chatGetHistory:
+  handler: handlers/chatbot/chat.getHistory
+  events:
+    - http:
+        path: chat/history
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatHealthCheck:
+  handler: handlers/chatbot/chat.healthCheck
+  events:
+    - http:
+        path: chat/health
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+# ---------- Reminders ----------
+chatCreateReminder:
+  handler: handlers/chatbot/reminders.createReminder
+  events:
+    - http:
+        path: chat/reminder
+        method: post
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatGetReminders:
+  handler: handlers/chatbot/reminders.getReminders
+  events:
+    - http:
+        path: chat/reminders
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatGetPendingReminders:
+  handler: handlers/chatbot/reminders.getPendingReminders
+  events:
+    - http:
+        path: chat/reminders/pending
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatUpdateReminder:
+  handler: handlers/chatbot/reminders.updateReminder
+  events:
+    - http:
+        path: chat/reminder/{id}
+        method: put
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatDeleteReminder:
+  handler: handlers/chatbot/reminders.deleteReminder
+  events:
+    - http:
+        path: chat/reminder/{id}
+        method: delete
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatCompleteReminder:
+  handler: handlers/chatbot/reminders.completeReminder
+  events:
+    - http:
+        path: chat/reminder/{id}/complete
+        method: post
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatSnoozeReminder:
+  handler: handlers/chatbot/reminders.snoozeReminder
+  events:
+    - http:
+        path: chat/reminder/{id}/snooze
+        method: post
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatDismissReminder:
+  handler: handlers/chatbot/reminders.dismissReminder
+  events:
+    - http:
+        path: chat/reminder/{id}/dismiss
+        method: post
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatMarkReminderNotified:
+  handler: handlers/chatbot/reminders.markNotified
+  events:
+    - http:
+        path: chat/reminder/{id}/notified
+        method: post
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+# ---------- Settings ----------
+chatGetSettings:
+  handler: handlers/chatbot/settings.getSettings
+  events:
+    - http:
+        path: chat/settings
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatUpdateSettings:
+  handler: handlers/chatbot/settings.updateSettings
+  events:
+    - http:
+        path: chat/settings
+        method: put
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatUpdatePosition:
+  handler: handlers/chatbot/settings.updatePosition
+  events:
+    - http:
+        path: chat/settings/position
+        method: put
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatUpdateHardware:
+  handler: handlers/chatbot/settings.updateHardware
+  events:
+    - http:
+        path: chat/settings/hardware
+        method: put
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatAcceptRules:
+  handler: handlers/chatbot/settings.acceptRules
+  events:
+    - http:
+        path: chat/settings/accept-rules
+        method: post
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatGetRules:
+  handler: handlers/chatbot/settings.getRules
+  events:
+    - http:
+        path: chat/rules
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatGetStats:
+  handler: handlers/chatbot/settings.getStats
+  events:
+    - http:
+        path: chat/settings/stats
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+chatResetSettings:
+  handler: handlers/chatbot/settings.resetSettings
+  events:
+    - http:
+        path: chat/settings/reset
+        method: post
+        cors: true
+  timeout: 10
+  memorySize: 256

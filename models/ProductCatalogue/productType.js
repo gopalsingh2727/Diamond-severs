@@ -1,4 +1,19 @@
 const mongoose = require('mongoose');
+const { z } = require('zod');
+
+// Zod schema for creating ProductType
+const createProductTypeSchema = z.object({
+  productTypeName: z.string().min(1, 'Product type name is required'),
+  branchId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid branchId format'),
+  isActive: z.boolean().optional()
+});
+
+// Zod schema for updating ProductType
+const updateProductTypeSchema = z.object({
+  productTypeName: z.string().min(1, 'Product type name is required').optional(),
+  branchId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid branchId format').optional(),
+  isActive: z.boolean().optional()
+}).strict();
 
 const productTypeSchema = new mongoose.Schema({
   productTypeName: {
@@ -11,12 +26,15 @@ const productTypeSchema = new mongoose.Schema({
     ref: 'Branch',
     required: true
   },
-   product27InfinityId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product27Infinity',
-      required: true,
-     
-    }
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  
 }, { timestamps: true });
 
-module.exports = mongoose.model('ProductType', productTypeSchema);
+const ProductType = mongoose.model('ProductType', productTypeSchema);
+
+module.exports = ProductType;
+module.exports.createProductTypeSchema = createProductTypeSchema;
+module.exports.updateProductTypeSchema = updateProductTypeSchema;

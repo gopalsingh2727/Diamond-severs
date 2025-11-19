@@ -1,20 +1,42 @@
+# 👑 MASTER ADMIN ENDPOINTS
+# ${file(./ymlFile/masterAdmin.yml)}
 
+# # 💼 SUBSCRIPTION MANAGEMENT ENDPOINTS
+# ${file(./ymlFile/subscriptionManagement.yml)}
 
+# # ==========================================
+# # 📱 MOBILE & MONITORING ENDPOINTS
+# # ==========================================
+# ${file(./ymlFile/mobile.yml)}
+
+# ==========================================
+# 🖥️  WEB ADMIN ENDPOINTS
+# ==========================================
 
   # ---------- Admin ----------
-  createAdmin:
-    handler: handlers/Admin/admin.createAdmin
-    events:
-      - http:
-          path: admin/create
-          method: post
-          cors: true
 
   loginAdmin:
     handler: handlers/Admin/admin.loginAdmin
     events:
       - http:
           path: admin/login
+          method: post
+          cors: true
+
+  # Admin Password Reset
+  adminRequestPasswordReset:
+    handler: handlers/Admin/admin.requestPasswordReset
+    events:
+      - http:
+          path: admin/request-password-reset
+          method: post
+          cors: true
+
+  adminResetPassword:
+    handler: handlers/Admin/admin.resetPassword
+    events:
+      - http:
+          path: admin/reset-password
           method: post
           cors: true
 
@@ -107,6 +129,40 @@
       - http:
           path: manager/delete
           method: delete
+          cors: true
+
+  # Email Verification
+  sendEmailVerification:
+    handler: handlers/Manager/Manager.sendEmailVerification
+    events:
+      - http:
+          path: manager/send-verification
+          method: post
+          cors: true
+
+  verifyEmail:
+    handler: handlers/Manager/Manager.verifyEmail
+    events:
+      - http:
+          path: manager/verify-email
+          method: get
+          cors: true
+
+  # Password Reset
+  requestPasswordReset:
+    handler: handlers/Manager/Manager.requestPasswordReset
+    events:
+      - http:
+          path: manager/request-password-reset
+          method: post
+          cors: true
+
+  resetPassword:
+    handler: handlers/Manager/Manager.resetPassword
+    events:
+      - http:
+          path: manager/reset-password
+          method: post
           cors: true
 
   # ---------- Customer ----------
@@ -306,6 +362,274 @@
           method: delete
           cors: true
 
+  # ---------- Product Spec ----------
+  createProductSpec:
+    handler: handlers/productSpec/productSpec.createProductSpec
+    events:
+      - http:
+          path: productspec
+          method: post
+          cors: true
+
+  getProductSpecs:
+    handler: handlers/productSpec/productSpec.getProductSpecs
+    events:
+      - http:
+          path: productspec
+          method: get
+          cors: true
+
+  getProductSpecById:
+    handler: handlers/productSpec/productSpec.getProductSpecById
+    events:
+      - http:
+          path: productspec/{id}
+          method: get
+          cors: true
+
+  updateProductSpec:
+    handler: handlers/productSpec/productSpec.updateProductSpec
+    events:
+      - http:
+          path: productspec/{id}
+          method: put
+          cors: true
+
+  deleteProductSpec:
+    handler: handlers/productSpec/productSpec.deleteProductSpec
+    events:
+      - http:
+          path: productspec/{id}
+          method: delete
+          cors: true
+
+  activateProductSpec:
+    handler: handlers/productSpec/productSpec.activateProductSpec
+    events:
+      - http:
+          path: productspec/{id}/activate
+          method: patch
+          cors: true
+
+  deactivateProductSpec:
+    handler: handlers/productSpec/productSpec.deactivateProductSpec
+    events:
+      - http:
+          path: productspec/{id}/deactivate
+          method: patch
+          cors: true
+
+  getProductSpecsByProductType:
+    handler: handlers/productSpec/productSpec.getProductSpecsByProductType
+    events:
+      - http:
+          path: productspec/producttype/{productTypeId}
+          method: get
+          cors: true
+
+  # ---------- Material Spec ----------
+  createMaterialSpec:
+    handler: handlers/materialSpec/materialSpec.createMaterialSpec
+    events:
+      - http:
+          path: materialspec
+          method: post
+          cors: true
+
+  getMaterialSpecs:
+    handler: handlers/materialSpec/materialSpec.getMaterialSpecs
+    events:
+      - http:
+          path: materialspec
+          method: get
+          cors: true
+
+  getMaterialSpecById:
+    handler: handlers/materialSpec/materialSpec.getMaterialSpecById
+    events:
+      - http:
+          path: materialspec/{id}
+          method: get
+          cors: true
+
+  updateMaterialSpec:
+    handler: handlers/materialSpec/materialSpec.updateMaterialSpec
+    events:
+      - http:
+          path: materialspec/{id}
+          method: put
+          cors: true
+
+  deleteMaterialSpec:
+    handler: handlers/materialSpec/materialSpec.deleteMaterialSpec
+    events:
+      - http:
+          path: materialspec/{id}
+          method: delete
+          cors: true
+
+  activateMaterialSpec:
+    handler: handlers/materialSpec/materialSpec.activateMaterialSpec
+    events:
+      - http:
+          path: materialspec/{id}/activate
+          method: patch
+          cors: true
+
+  deactivateMaterialSpec:
+    handler: handlers/materialSpec/materialSpec.deactivateMaterialSpec
+    events:
+      - http:
+          path: materialspec/{id}/deactivate
+          method: patch
+          cors: true
+
+  getMaterialSpecsByMaterialType:
+    handler: handlers/materialSpec/materialSpec.getMaterialSpecsByMaterialType
+    events:
+      - http:
+          path: materialspec/materialtype/{materialTypeId}
+          method: get
+          cors: true
+
+  # ---------- Order Type ----------
+  createOrderType:
+    handler: handlers/OrderType/orderType.createOrderType
+    events:
+      - http:
+          path: ordertype
+          method: post
+          cors: true
+
+  getOrderTypes:
+    handler: handlers/OrderType/orderType.getOrderTypes
+    events:
+      - http:
+          path: ordertype
+          method: get
+          cors: true
+
+  getOrderTypeById:
+    handler: handlers/OrderType/orderType.getOrderTypeById
+    events:
+      - http:
+          path: ordertype/{id}
+          method: get
+          cors: true
+
+  updateOrderType:
+    handler: handlers/OrderType/orderType.updateOrderType
+    events:
+      - http:
+          path: ordertype/{id}
+          method: put
+          cors: true
+
+  deleteOrderType:
+    handler: handlers/OrderType/orderType.deleteOrderType
+    events:
+      - http:
+          path: ordertype/{id}
+          method: delete
+          cors: true
+
+  activateOrderType:
+    handler: handlers/OrderType/orderType.activateOrderType
+    events:
+      - http:
+          path: ordertype/{id}/activate
+          method: patch
+          cors: true
+
+  deactivateOrderType:
+    handler: handlers/OrderType/orderType.deactivateOrderType
+    events:
+      - http:
+          path: ordertype/{id}/deactivate
+          method: patch
+          cors: true
+
+  setDefaultOrderType:
+    handler: handlers/OrderType/orderType.setDefaultOrderType
+    events:
+      - http:
+          path: ordertype/{id}/set-default
+          method: patch
+          cors: true
+
+  getOrderTypesByBranch:
+    handler: handlers/OrderType/orderType.getOrderTypesByBranch
+    events:
+      - http:
+          path: ordertype/branch/{branchId}
+          method: get
+          cors: true
+
+  getDefaultOrderType:
+    handler: handlers/OrderType/orderType.getDefaultOrderType
+    events:
+      - http:
+          path: ordertype/default
+          method: get
+          cors: true
+
+  # ---------- Formula Management ----------
+  createFormula:
+    handler: handlers/formula/formula.createFormula
+    events:
+      - http:
+          path: formula
+          method: post
+          cors: true
+
+  getFormulas:
+    handler: handlers/formula/formula.getFormulas
+    events:
+      - http:
+          path: formula
+          method: get
+          cors: true
+
+  getFormulaByName:
+    handler: handlers/formula/formula.getFormulaByName
+    events:
+      - http:
+          path: formula/{name}
+          method: get
+          cors: true
+
+  updateFormula:
+    handler: handlers/formula/formula.updateFormula
+    events:
+      - http:
+          path: formula/{name}
+          method: put
+          cors: true
+
+  deleteFormula:
+    handler: handlers/formula/formula.deleteFormula
+    events:
+      - http:
+          path: formula/{name}
+          method: delete
+          cors: true
+
+  testFormula:
+    handler: handlers/formula/formula.testFormula
+    events:
+      - http:
+          path: formula/{name}/test
+          method: post
+          cors: true
+
+  batchCreateFormulas:
+    handler: handlers/formula/formula.batchCreateFormulas
+    events:
+      - http:
+          path: formula/batch
+          method: post
+          cors: true
+
   # ---------- Material Type ----------
   createMaterialType:
     handler: handlers/MaterialType/materialType.createMaterialType
@@ -386,6 +710,120 @@
           method: delete
           cors: true
 
+  # ---------- Material Formula ----------
+  createMaterialFormula:
+    handler: handlers/MaterialFormula/materialFormula.createMaterialFormula
+    events:
+      - http:
+          path: api/material-formula
+          method: post
+          cors: true
+
+  getAllMaterialFormulas:
+    handler: handlers/MaterialFormula/materialFormula.getAllMaterialFormulas
+    events:
+      - http:
+          path: api/material-formula
+          method: get
+          cors: true
+
+  getMaterialFormulaById:
+    handler: handlers/MaterialFormula/materialFormula.getMaterialFormulaById
+    events:
+      - http:
+          path: api/material-formula/{id}
+          method: get
+          cors: true
+
+  getFormulaByProduct:
+    handler: handlers/MaterialFormula/materialFormula.getFormulaByProduct
+    events:
+      - http:
+          path: api/material-formula/product/{productSpecId}
+          method: get
+          cors: true
+
+  getFormulaByProductType:
+    handler: handlers/MaterialFormula/materialFormula.getFormulaByProductType
+    events:
+      - http:
+          path: api/material-formula/product-type/{productType}
+          method: get
+          cors: true
+
+  calculateMaterialRequirements:
+    handler: handlers/MaterialFormula/materialFormula.calculateMaterialRequirements
+    events:
+      - http:
+          path: api/material-formula/calculate
+          method: post
+          cors: true
+
+  updateMaterialFormula:
+    handler: handlers/MaterialFormula/materialFormula.updateMaterialFormula
+    events:
+      - http:
+          path: api/material-formula/{id}
+          method: put
+          cors: true
+
+  deleteMaterialFormula:
+    handler: handlers/MaterialFormula/materialFormula.deleteMaterialFormula
+    events:
+      - http:
+          path: api/material-formula/{id}
+          method: delete
+          cors: true
+
+  cloneMaterialFormula:
+    handler: handlers/MaterialFormula/materialFormula.cloneMaterialFormula
+    events:
+      - http:
+          path: api/material-formula/{id}/clone
+          method: post
+          cors: true
+
+  # ---------- Analytics ----------
+  getMaterialUsageReport:
+    handler: handlers/Analytics/materialAnalytics.getMaterialUsageReport
+    events:
+      - http:
+          path: api/analytics/material-usage
+          method: get
+          cors: true
+
+  getProductPopularityReport:
+    handler: handlers/Analytics/materialAnalytics.getProductPopularityReport
+    events:
+      - http:
+          path: api/analytics/product-popularity
+          method: get
+          cors: true
+
+  getMixingTimeAnalytics:
+    handler: handlers/Analytics/materialAnalytics.getMixingTimeAnalytics
+    events:
+      - http:
+          path: api/analytics/mixing-time
+          method: get
+          cors: true
+
+  getDashboardAnalytics:
+    handler: handlers/Analytics/materialAnalytics.getDashboardAnalytics
+    events:
+      - http:
+          path: api/analytics/dashboard
+          method: get
+          cors: true
+
+  generateAnalyticsForPeriod:
+    handler: handlers/Analytics/materialAnalytics.generateAnalyticsForPeriod
+    events:
+      - http:
+          path: api/analytics/generate
+          method: post
+          cors: true
+
   # ---------- Step ----------
   createStep:
     handler: handlers/steps/steps.createStep
@@ -433,69 +871,15 @@
                 id: true
 
   # ---------- Email ----------
-  sendMarketingToSelected:
-    handler: handlers/email/sendMarketingToSelected.sendMarketingToSelected
-    events:
-      - http:
-          path: email/marketing/selected
-          method: post
-          cors: true
+  # sendMarketingToSelected:
+  #   handler: handlers/email/sendMarketingToSelected.sendMarketingToSelected
+  #   events:
+  #     - http:
+  #         path: email/marketing/selected
+  #         method: post
+  #         cors: true
 
-  # ---------- Machine Operator (httpApi) ----------
-  
-
-  operatorLogin:
-    handler: handlers/MachineOperator/MachineOperator.operatorLogin
-    events:
-      - httpApi:
-          path: /operators/login
-          method: post
-
-  getOperatorOrders:
-    handler: handlers/MachineOperator/MachineOperator.getOperatorOrders
-    events:
-      - httpApi:
-          path: /operators/orders
-          method: get
-
-  updateOrderStepStatus:
-    handler: handlers/MachineOperator/MachineOperator.updateMachineStatus
-    events:
-      - httpApi:
-          path: /operators/orders/{orderId}/status
-          method: put
-
-  getCompletedOrders:
-    handler: handlers/MachineOperator/MachineOperator.getCompletedOrders
-    events:
-      - http:
-          path: /operators/orders/completed
-          method: get
-          cors: true
       
-
-  getOneInProgressOrder:
-    handler: handlers/MachineOperator/MachineOperator.getOneInProgressOrder
-    events:
-      - httpApi:
-          path: /operators/orders/in-progress
-          method: get
-
-  updateOperatorPassword:
-    handler: handlers/MachineOperator/MachineOperator.updateOperatorPassword
-    events:
-      - httpApi:
-          path: /operators/update-password
-          method: put
-
-  getOnePendingOrder:
-    handler: handlers/MachineOperator/MachineOperator.getOnePendingOrder
-    events:
-      - http:
-          path: /operators/orders/pending
-          method: get
-          cors: true
-        
 
   # ---------- Orders ----------
   createOrder:
@@ -523,7 +907,91 @@
            method: get
            cors: true
 
+  getMachineTableData:
+    handler: handlers/oders/oders.getMachineTableData
+    events:
+      - http:
+          path: orders/{orderId}/machines/{machineId}/table-data
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                orderId: true
+                machineId: true
 
+  updateOrderStatus:
+    handler: handlers/oders/oders.updateOrderStatus
+    events:
+      - http:
+          path: orders/{orderId}/status
+          method: put
+          cors: true
+          request:
+            parameters:
+              paths:
+                orderId: true
+
+  updateOrderPriority:
+    handler: handlers/oders/oders.updateOrderPriority
+    events:
+      - http:
+          path: orders/{orderId}/priority
+          method: put
+          cors: true
+          request:
+            parameters:
+              paths:
+                orderId: true
+
+  addOrderNote:
+    handler: handlers/oders/oders.addOrderNote
+    events:
+      - http:
+          path: orders/{orderId}/notes
+          method: post
+          cors: true
+          request:
+            parameters:
+              paths:
+                orderId: true
+
+  updateOrder:
+    handler: handlers/oders/oders.updateOrder
+    events:
+      - http:
+          path: orders/{orderId}
+          method: put
+          cors: true
+          request:
+            parameters:
+              paths:
+                orderId: true
+
+  # ---------- Order Form Data (Optimized) ----------
+  getOrderFormData:
+    handler: handlers/order/orderFormData.getOrderFormData
+    events:
+      - http:
+          path: order/form-data
+          method: get
+          cors: true
+
+  getProductTypeData:
+    handler: handlers/order/orderFormData.getProductTypeData
+    events:
+      - http:
+          path: order/product-type-data/{id}
+          method: get
+          cors: true
+
+  getMaterialTypeData:
+    handler: handlers/order/orderFormData.getMaterialTypeData
+    events:
+      - http:
+          path: order/material-type-data/{id}
+          method: get
+          cors: true
 
   # getOrdersByBranchId:
   #   handler: handlers/oders/oders.getOrdersByBranchId
@@ -607,15 +1075,8 @@
                 id: true
 
 
-#------------------loginDeviceForControllPanel-------------
 
-  loginDeviceForControllPanel:
-    handler: handlers/devicesForControlPanelCreate/devicesForControlPanelCreate.loginDeviceForControllPanel
-    events:
-     - http:
-         path: device-access/login
-         method: post
-         cors: true
+
  
   getDeviceMachines:
     handler: handlers/deviceAddmachine/deviceAddmachine.getDeviceMachines
@@ -625,113 +1086,256 @@
         method: get
         cors: true
 
-  machineOperatorLogin:
-    handler: handlers/deviceAddmachine/deviceAddmachine.machineOperatorLogin
-    events:
-     - http:  
-        path: device-access/operator-login
-        method: post
-        cors: true
-
  
- # Add this to your serverless.yml
 
-  # ✅ CORRECT YAML FORMAT - Copy this exactly
-
-  machineAllPendingOrders:
-    handler: handlers/deviceAddmachine/deviceAddmachine.machineAllPendingOrders
-    events:
-      - http: 
-          path: device-access/machineAllPendingOrders
-          method: post
-          cors: true
-
-  MachineStartOrder:
-    handler: handlers/deviceAddmachine/deviceAddmachine.MachineStartOrder
-    events:
-      - http: 
-          path: device-access/MachineStartOrder
-          method: post
-          cors: true
- 
-  MachineOrderSave:
-    handler: handlers/deviceAddmachine/deviceAddmachine.MachineOrderSave
-    events:
-      - http: 
-          path: device-access/MachineOrderSave
-          method: post
-          cors: true
-
-  MachineOrderStop:
-    handler: handlers/deviceAddmachine/deviceAddmachine.MachineOrderStop
-    events:
-      - http: 
-          path: device-access/MachineOrderStop
-          method: post
-          cors: true
-  
-
-  startOrdersMachine:
-    handler: handlers/deviceAddmachine/deviceAddmachine.startOrdersMachine
+  # ---------- Reports API ----------
+  getOverviewReport:
+    handler: handlers/reports/reports.getOverviewReport
     events:
       - http:
-          path: device-access/startOrdersMachine
-          method: post
-          cors: true
-  
-  cancelOrderMachine:
-    handler: handlers/deviceAddmachine/deviceAddmachine.cancelOrderMachine
-    events:
-      - http: 
-          path: device-access/cancelOrderMachine
-          method: post
+          path: reports/overview
+          method: get
           cors: true
 
-  dispatchOrderMachine:
-    handler: handlers/deviceAddmachine/deviceAddmachine.dispatchOrderMachine
-    events:
-      - http: 
-          path: device-access/dispatchOrderMachine
-          method: post
-          cors: true
-
-  approveOrderMachine:
-    handler: handlers/deviceAddmachine/deviceAddmachine.approveOrderMachine
+  getOrdersReport:
+    handler: handlers/reports/reports.getOrdersReport
     events:
       - http:
-         path: device-access/approveOrderMachine
-         method: post
-         cors: true
-  
-  completeOrderMachine:
-    handler: handlers/deviceAddmachine/deviceAddmachine.completeOrderMachine
-    events:
-      - http: 
-         path: device-access/completeOrderMachine
-         method: post
-         cors: true 
+          path: reports/orders
+          method: get
+          cors: true
 
-  pauseOrderMachine:
-    handler: handlers/deviceAddmachine/deviceAddmachine.pauseOrderMachine
-    events:
-      - http: 
-          path: device-access/pauseOrderMachine
-          method: post
-          cors: true    
-
-  resumeOrderMachine:
-    handler: handlers/deviceAddmachine/deviceAddmachine.resumeOrderMachine
+  getProductionReport:
+    handler: handlers/reports/reports.getProductionReport
     events:
       - http:
-          path: device-access/resumeOrderMachine
-          method: post
-          cors: true 
-  
-  blockStepMachine:
-    handler: handlers/deviceAddmachine/deviceAddmachine.blockStepMachine  
+          path: reports/production
+          method: get
+          cors: true
+
+  getMachinesReport:
+    handler: handlers/reports/reports.getMachinesReport
     events:
-      - http: 
-         path: device-access/blockStepMachine 
-         method: post
-         cors: true 
-  
+      - http:
+          path: reports/machines
+          method: get
+          cors: true
+
+  getCustomersReport:
+    handler: handlers/reports/reports.getCustomersReport
+    events:
+      - http:
+          path: reports/customers
+          method: get
+          cors: true
+
+  getMaterialsReport:
+    handler: handlers/reports/reports.getMaterialsReport
+    events:
+      - http:
+          path: reports/materials
+          method: get
+          cors: true
+
+  getCustomReport:
+    handler: handlers/reports/reports.getCustomReport
+    events:
+      - http:
+          path: reports/custom
+          method: get
+          cors: true
+      - http:
+          path: reports/custom
+          method: post
+          cors: true
+
+  # ==========================================
+  # 🤖 CHATBOT ENDPOINTS
+  # ==========================================
+
+  # ---------- Chat Messages ----------
+  chatSendMessage:
+    handler: handlers/chatbot/chat.sendMessage
+    events:
+      - http:
+          path: chat/message
+          method: post
+          cors: true
+    timeout: 29
+    memorySize: 512
+
+  chatGetHistory:
+    handler: handlers/chatbot/chat.getHistory
+    timeout: 29
+    memorySize: 512
+    events:
+      - http:
+          path: chat/history
+          method: get
+          cors: true
+
+  chatHealthCheck:
+    handler: handlers/chatbot/chat.healthCheck
+    timeout: 10
+    events:
+      - http:
+          path: chat/health
+          method: get
+          cors: true
+
+  # ---------- Reminders ----------
+  chatCreateReminder:
+    handler: handlers/chatbot/reminders.createReminder
+    timeout: 15
+    events:
+      - http:
+          path: chat/reminder
+          method: post
+          cors: true
+
+  chatGetReminders:
+    handler: handlers/chatbot/reminders.getReminders
+    timeout: 15
+    events:
+      - http:
+          path: chat/reminders
+          method: get
+          cors: true
+
+  chatGetPendingReminders:
+    handler: handlers/chatbot/reminders.getPendingReminders
+    timeout: 15
+    events:
+      - http:
+          path: chat/reminders/pending
+          method: get
+          cors: true
+
+  chatUpdateReminder:
+    handler: handlers/chatbot/reminders.updateReminder
+    timeout: 15
+    events:
+      - http:
+          path: chat/reminder/{id}
+          method: put
+          cors: true
+
+  chatDeleteReminder:
+    handler: handlers/chatbot/reminders.deleteReminder
+    timeout: 15
+    events:
+      - http:
+          path: chat/reminder/{id}
+          method: delete
+          cors: true
+
+  chatCompleteReminder:
+    handler: handlers/chatbot/reminders.completeReminder
+    timeout: 15
+    events:
+      - http:
+          path: chat/reminder/{id}/complete
+          method: post
+          cors: true
+
+  chatSnoozeReminder:
+    handler: handlers/chatbot/reminders.snoozeReminder
+    timeout: 15
+    events:
+      - http:
+          path: chat/reminder/{id}/snooze
+          method: post
+          cors: true
+
+  chatDismissReminder:
+    handler: handlers/chatbot/reminders.dismissReminder
+    timeout: 15
+    events:
+      - http:
+          path: chat/reminder/{id}/dismiss
+          method: post
+          cors: true
+
+  chatMarkReminderNotified:
+    handler: handlers/chatbot/reminders.markNotified
+    timeout: 10
+    events:
+      - http:
+          path: chat/reminder/{id}/notified
+          method: post
+          cors: true
+
+  # ---------- Settings ----------
+  chatGetSettings:
+    handler: handlers/chatbot/settings.getSettings
+    timeout: 29
+    memorySize: 512
+    events:
+      - http:
+          path: chat/settings
+          method: get
+          cors: true
+
+  chatUpdateSettings:
+    handler: handlers/chatbot/settings.updateSettings
+    timeout: 29
+    memorySize: 512
+    events:
+      - http:
+          path: chat/settings
+          method: put
+          cors: true
+
+  chatUpdatePosition:
+    handler: handlers/chatbot/settings.updatePosition
+    timeout: 15
+    events:
+      - http:
+          path: chat/settings/position
+          method: put
+          cors: true
+
+  chatUpdateHardware:
+    handler: handlers/chatbot/settings.updateHardware
+    timeout: 15
+    events:
+      - http:
+          path: chat/settings/hardware
+          method: put
+          cors: true
+
+  chatAcceptRules:
+    handler: handlers/chatbot/settings.acceptRules
+    timeout: 15
+    events:
+      - http:
+          path: chat/settings/accept-rules
+          method: post
+          cors: true
+
+  chatGetRules:
+    handler: handlers/chatbot/settings.getRules
+    timeout: 10
+    events:
+      - http:
+          path: chat/rules
+          method: get
+          cors: true
+
+  chatGetStats:
+    handler: handlers/chatbot/settings.getStats
+    timeout: 15
+    events:
+      - http:
+          path: chat/settings/stats
+          method: get
+          cors: true
+
+  chatResetSettings:
+    handler: handlers/chatbot/settings.resetSettings
+    timeout: 15
+    events:
+      - http:
+          path: chat/settings/reset
+          method: post
+          cors: true

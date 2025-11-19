@@ -1,7 +1,60 @@
-// table.js
+// table.js - MachineTableData Model
 const mongoose = require('mongoose');
+const { z } = require('zod');
 
-// Machine Table Data Schema - stores actual data for each machine's table
+// Zod schema for row data item
+const rowDataItemZodSchema = z.object({
+  rowId: z.number().int().positive('Row ID must be positive'),
+  data: z.record(z.any()).optional(),
+  calculatedValues: z.record(z.any()).optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  createdBy: z.string().default('system')
+});
+
+// Zod schema for total calculations
+const totalCalculationsZodSchema = z.object({
+  totalNetWeight: z.number().default(0),
+  totalRawWeight: z.number().default(0),
+  totalWastage: z.number().default(0),
+  overallEfficiency: z.number().default(0),
+  totalRows: z.number().int().default(0),
+  averageEfficiency: z.number().default(0),
+  totalCost: z.number().default(0)
+});
+
+// Zod schema for creating MachineTableData
+const createMachineTableDataSchema = z.object({
+  machineId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid machineId format'),
+  orderId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid orderId format'),
+  rowData: z.array(rowDataItemZodSchema).optional(),
+  totalCalculations: totalCalculationsZodSchema.optional(),
+  status: z.enum(['active', 'completed', 'paused', 'cancelled']).default('active'),
+  currentOperator: z.string().nullable().optional(),
+  lastCalculatedAt: z.date().optional()
+});
+
+// Zod schema for updating MachineTableData
+const updateMachineTableDataSchema = z.object({
+  machineId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid machineId format').optional(),
+  orderId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid orderId format').optional(),
+  rowData: z.array(rowDataItemZodSchema).optional(),
+  totalCalculations: totalCalculationsZodSchema.optional(),
+  status: z.enum(['active', 'completed', 'paused', 'cancelled']).optional(),
+  currentOperator: z.string().nullable().optional(),
+  lastCalculatedAt: z.date().optional()
+}).strict();
+
+// Zod schema for adding row with data
+const addRowDataSchema = z.record(z.any());
+
+// Zod schema for updating row with data
+const updateRowDataSchema = z.object({
+  rowId: z.number().int().positive('Row ID must be positive'),
+  data: z.record(z.any())
+});
+
+// Machine Table Data Schema - stores actual data for each machine's table in an order
 const machineTableDataSchema = new mongoose.Schema({
   machineId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -13,7 +66,7 @@ const machineTableDataSchema = new mongoose.Schema({
     ref: 'Order',
     required: true
   },
-  
+
   // Array of rows with data
   rowData: [{
     rowId: {
@@ -43,7 +96,7 @@ const machineTableDataSchema = new mongoose.Schema({
       default: 'system'
     }
   }],
-  
+
   // Summary calculations for the entire table
   totalCalculations: {
     totalNetWeight: { type: Number, default: 0 },
@@ -54,51 +107,36 @@ const machineTableDataSchema = new mongoose.Schema({
     averageEfficiency: { type: Number, default: 0 },
     totalCost: { type: Number, default: 0 }
   },
-  
+
   // Table status and metadata
   status: {
     type: String,
     enum: ['active', 'completed', 'paused', 'cancelled'],
     default: 'active'
   },
-  
+
   // Operator information
   currentOperator: {
     type: String,
     default: null
   },
-  
-  // Production shift information
-  shiftInfo: {
-    shiftNumber: { type: Number, default: 1 },
-    startTime: { type: Date, default: Date.now },
-    endTime: { type: Date, default: null }
-  },
-  
-  // Notes and comments
-  notes: [{
-    message: String,
-    createdBy: String,
-    createdAt: { type: Date, default: Date.now }
-  }],
-  
+
   // Last calculation timestamp
   lastCalculatedAt: {
     type: Date,
     default: Date.now
   }
-  
-}, { 
+
+}, {
   timestamps: true,
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
 });
 
 // Indexes for better performance
-machineTableDataSchema.index({ machineId: 1, orderId: 1 });
+machineTableDataSchema.index({ machineId: 1, orderId: 1 }, { unique: true });
 machineTableDataSchema.index({ orderId: 1 });
 machineTableDataSchema.index({ status: 1 });
-machineTableDataSchema.index({ 'shiftInfo.startTime': -1 });
 
 // Virtual to get active row count
 machineTableDataSchema.virtual('activeRowCount').get(function() {
@@ -116,22 +154,17 @@ machineTableDataSchema.statics.initializeForOrder = async function(machineId, or
   // Get machine configuration
   const Machine = mongoose.model('Machine');
   const machine = await Machine.findById(machineId);
-  
-  if (!machine || !machine.tableConfig.columns.length) {
+
+  if (!machine || !machine.tableConfig || !machine.tableConfig.columns || machine.tableConfig.columns.length === 0) {
     throw new Error('Machine not found or table configuration missing');
   }
 
-  // Create new table data
+  // Create new table data with empty initial state
   const tableData = new this({
     machineId,
     orderId,
     currentOperator: operatorName,
-    rowData: [{
-      rowId: 1,
-      data: new Map(),
-      calculatedValues: new Map(),
-      createdBy: operatorName
-    }],
+    rowData: [],
     status: 'active'
   });
 
@@ -140,10 +173,9 @@ machineTableDataSchema.statics.initializeForOrder = async function(machineId, or
 
 // Instance method to add new row with data and calculations
 machineTableDataSchema.methods.addRowWithCalculation = async function(inputData, operatorName = 'system') {
-  // Get machine configuration
   const Machine = mongoose.model('Machine');
   const machine = await Machine.findById(this.machineId);
-  
+
   if (!machine) {
     throw new Error('Machine not found');
   }
@@ -153,15 +185,16 @@ machineTableDataSchema.methods.addRowWithCalculation = async function(inputData,
   const calculatedValues = new Map();
 
   // Calculate formulas
-  for (const [columnName, formula] of machine.tableConfig.formulas || new Map()) {
-    try {
-      const result = this.calculateFormula(formula.expression, dataMap);
-      calculatedValues.set(columnName, result);
-      // Also add calculated value to main data for further calculations
-      dataMap.set(columnName, result);
-    } catch (error) {
-      console.error(`Formula calculation error for ${columnName}:`, error.message);
-      calculatedValues.set(columnName, 'Error');
+  if (machine.tableConfig && machine.tableConfig.formulas) {
+    for (const [columnName, formula] of machine.tableConfig.formulas || new Map()) {
+      try {
+        const result = this.calculateFormula(formula.expression, dataMap);
+        calculatedValues.set(columnName, result);
+        dataMap.set(columnName, result);
+      } catch (error) {
+        console.error(`Formula calculation error for ${columnName}:`, error.message);
+        calculatedValues.set(columnName, 'Error');
+      }
     }
   }
 
@@ -176,14 +209,12 @@ machineTableDataSchema.methods.addRowWithCalculation = async function(inputData,
 
   // Update summary calculations
   this.updateTotalCalculations();
-  
-  // Mark as updated
   this.lastCalculatedAt = new Date();
-  
+
   await this.save();
 
   // Update related order if auto-update is enabled
-  if (machine.tableConfig.settings.autoUpdateOrders) {
+  if (machine.tableConfig && machine.tableConfig.settings && machine.tableConfig.settings.autoUpdateOrders) {
     await this.updateOrderData();
   }
 
@@ -197,7 +228,7 @@ machineTableDataSchema.methods.addRowWithCalculation = async function(inputData,
 // Instance method to update existing row
 machineTableDataSchema.methods.updateRow = async function(rowId, inputData, operatorName = 'system') {
   const rowIndex = this.rowData.findIndex(row => row.rowId === rowId);
-  
+
   if (rowIndex === -1) {
     throw new Error('Row not found');
   }
@@ -210,13 +241,15 @@ machineTableDataSchema.methods.updateRow = async function(rowId, inputData, oper
   const calculatedValues = new Map();
 
   // Recalculate formulas
-  for (const [columnName, formula] of machine.tableConfig.formulas || new Map()) {
-    try {
-      const result = this.calculateFormula(formula.expression, dataMap);
-      calculatedValues.set(columnName, result);
-      dataMap.set(columnName, result);
-    } catch (error) {
-      calculatedValues.set(columnName, 'Error');
+  if (machine.tableConfig && machine.tableConfig.formulas) {
+    for (const [columnName, formula] of machine.tableConfig.formulas || new Map()) {
+      try {
+        const result = this.calculateFormula(formula.expression, dataMap);
+        calculatedValues.set(columnName, result);
+        dataMap.set(columnName, result);
+      } catch (error) {
+        calculatedValues.set(columnName, 'Error');
+      }
     }
   }
 
@@ -231,10 +264,10 @@ machineTableDataSchema.methods.updateRow = async function(rowId, inputData, oper
 
   this.updateTotalCalculations();
   this.lastCalculatedAt = new Date();
-  
+
   await this.save();
 
-  if (machine.tableConfig.settings.autoUpdateOrders) {
+  if (machine.tableConfig && machine.tableConfig.settings && machine.tableConfig.settings.autoUpdateOrders) {
     await this.updateOrderData();
   }
 
@@ -254,13 +287,13 @@ machineTableDataSchema.methods.deleteRow = async function(rowId) {
   this.rowData = this.rowData.filter(row => row.rowId !== rowId);
   this.updateTotalCalculations();
   this.lastCalculatedAt = new Date();
-  
+
   await this.save();
 
   // Update order data
   const Machine = mongoose.model('Machine');
   const machine = await Machine.findById(this.machineId);
-  if (machine && machine.tableConfig.settings.autoUpdateOrders) {
+  if (machine && machine.tableConfig && machine.tableConfig.settings && machine.tableConfig.settings.autoUpdateOrders) {
     await this.updateOrderData();
   }
 
@@ -270,20 +303,19 @@ machineTableDataSchema.methods.deleteRow = async function(rowId) {
 // Formula calculation method
 machineTableDataSchema.methods.calculateFormula = function(formula, rowData) {
   let expression = formula;
-  
+
   // Replace column names with their values
   for (const [columnName, value] of rowData) {
     const numValue = parseFloat(value) || 0;
-    // Use word boundaries to avoid partial matches
     const regex = new RegExp(`\\b${columnName}\\b`, 'g');
     expression = expression.replace(regex, numValue.toString());
   }
-  
+
   try {
     // Remove any non-mathematical characters for security
     const sanitized = expression.replace(/[^0-9+\-*/.() ]/g, '');
     const result = Function('"use strict"; return (' + sanitized + ')')();
-    
+
     // Round to 2 decimal places
     return Math.round((result + Number.EPSILON) * 100) / 100;
   } catch (error) {
@@ -301,7 +333,6 @@ machineTableDataSchema.methods.updateTotalCalculations = function() {
   let efficiencyCount = 0;
 
   this.rowData.forEach(row => {
-    // Get common values
     const netWt = parseFloat(row.calculatedValues.get('Net Weight') || row.data.get('Net Weight')) || 0;
     const rawWt = parseFloat(row.data.get('Raw Weight')) || 0;
     const wastage = parseFloat(row.data.get('Wastage')) || 0;
@@ -312,7 +343,7 @@ machineTableDataSchema.methods.updateTotalCalculations = function() {
     totalRawWeight += rawWt;
     totalWastage += wastage;
     totalCost += cost;
-    
+
     if (efficiency > 0) {
       efficiencySum += efficiency;
       efficiencyCount++;
@@ -342,7 +373,7 @@ machineTableDataSchema.methods.updateOrderData = async function() {
   try {
     const Order = mongoose.model('Order');
     const order = await Order.findById(this.orderId);
-    
+
     if (!order) {
       console.log('Order not found for update');
       return;
@@ -350,15 +381,16 @@ machineTableDataSchema.methods.updateOrderData = async function() {
 
     // Find and update the machine progress in the order
     let machineFound = false;
-    
+
     for (let step of order.steps) {
       for (let machine of step.machines) {
-        if (machine.machineId.toString() === this.machineId.toString()) {
+        if (machine.machineId && machine.machineId.toString() === this.machineId.toString()) {
           machine.calculatedOutput = {
             netWeight: this.totalCalculations.totalNetWeight,
             wastageWeight: this.totalCalculations.totalWastage,
             efficiency: this.totalCalculations.overallEfficiency,
             totalCost: this.totalCalculations.totalCost,
+            rowsProcessed: this.totalCalculations.totalRows,
             lastUpdated: new Date()
           };
           machine.machineTableDataId = this._id;
@@ -371,10 +403,10 @@ machineTableDataSchema.methods.updateOrderData = async function() {
 
     // Calculate order-level totals from all machines
     this.calculateOrderTotals(order);
-    
+
     await order.save();
     console.log(`Order ${order.orderId} updated with machine table data`);
-    
+
   } catch (error) {
     console.error('Error updating order data:', error);
   }
@@ -406,20 +438,10 @@ machineTableDataSchema.methods.calculateOrderTotals = function(order) {
     totalCost: Math.round((totalCost + Number.EPSILON) * 100) / 100,
     overallEfficiency: machineCount > 0 ? Math.round(((totalEfficiency / machineCount) + Number.EPSILON) * 100) / 100 : 0,
     activeMachines: machineCount,
+    completedMachines: 0,
+    totalRowsProcessed: this.totalCalculations.totalRows,
     lastUpdated: new Date()
   };
-};
-
-// Instance method to add note
-machineTableDataSchema.methods.addNote = async function(message, createdBy = 'system') {
-  this.notes.push({
-    message,
-    createdBy,
-    createdAt: new Date()
-  });
-  
-  await this.save();
-  return this.notes[this.notes.length - 1];
 };
 
 // Instance method to get formatted table data for frontend
@@ -430,7 +452,6 @@ machineTableDataSchema.methods.getFormattedData = function() {
     orderId: this.orderId,
     status: this.status,
     operator: this.currentOperator,
-    shift: this.shiftInfo,
     rows: this.rowData.map(row => ({
       id: row.rowId,
       data: Object.fromEntries(row.data),
@@ -440,7 +461,6 @@ machineTableDataSchema.methods.getFormattedData = function() {
       createdBy: row.createdBy
     })),
     totals: this.totalCalculations,
-    notes: this.notes,
     lastCalculated: this.lastCalculatedAt
   };
 };
@@ -448,7 +468,7 @@ machineTableDataSchema.methods.getFormattedData = function() {
 // Static method to get summary for multiple tables
 machineTableDataSchema.statics.getOrderSummary = async function(orderId) {
   const tables = await this.find({ orderId }).populate('machineId', 'machineName');
-  
+
   const summary = {
     orderId,
     totalTables: tables.length,
@@ -472,7 +492,7 @@ machineTableDataSchema.statics.getOrderSummary = async function(orderId) {
     summary.combinedTotals.totalRawWeight += table.totalCalculations.totalRawWeight;
     summary.combinedTotals.totalWastage += table.totalCalculations.totalWastage;
     summary.combinedTotals.totalCost += table.totalCalculations.totalCost;
-    
+
     if (table.totalCalculations.overallEfficiency > 0) {
       efficiencySum += table.totalCalculations.overallEfficiency;
       activeMachines++;
@@ -487,82 +507,19 @@ machineTableDataSchema.statics.getOrderSummary = async function(orderId) {
     });
   });
 
-  summary.combinedTotals.overallEfficiency = activeMachines > 0 ? 
+  summary.combinedTotals.overallEfficiency = activeMachines > 0 ?
     Math.round(((efficiencySum / activeMachines) + Number.EPSILON) * 100) / 100 : 0;
 
   return summary;
 };
 
 // Export the model
-module.exports = mongoose.models.MachineTableData || mongoose.model('MachineTableData', machineTableDataSchema);
+const MachineTableData = mongoose.models.MachineTableData || mongoose.model('MachineTableData', machineTableDataSchema);
 
-// ============================================================================
-// USAGE EXAMPLES
-// ============================================================================
-
-/*
-// Example 1: Initialize table for order
-const tableData = await MachineTableData.initializeForOrder(
-  "64f7b1234567890123456789", // machineId
-  "64f7b1234567890123456788", // orderId
-  "John Operator"
-);
-
-// Example 2: Add row with calculations
-const newRow = await tableData.addRowWithCalculation({
-  "Material Type": "PVC Plastic",
-  "Raw Weight": 50,
-  "Wastage": 3,
-  "Cost per KG": 5.50
-}, "John Operator");
-
-// Output: 
-// {
-//   rowId: 2,
-//   data: {
-//     "Material Type": "PVC Plastic",
-//     "Raw Weight": 50,
-//     "Wastage": 3,
-//     "Net Weight": 47,
-//     "Efficiency %": 94,
-//     "Cost per KG": 5.50,
-//     "Total Cost": 275
-//   },
-//   calculatedValues: {
-//     "Net Weight": 47,
-//     "Efficiency %": 94,
-//     "Total Cost": 275
-//   }
-// }
-
-// Example 3: Update existing row
-const updatedRow = await tableData.updateRow(2, {
-  "Material Type": "PVC Plastic",
-  "Raw Weight": 55,
-  "Wastage": 2,
-  "Cost per KG": 5.50
-}, "John Operator");
-
-// Example 4: Add note
-await tableData.addNote("Quality check completed - all parameters within range", "John Operator");
-
-// Example 5: Get formatted data for frontend
-const formattedData = tableData.getFormattedData();
-
-// Example 6: Get order summary across all machines
-const orderSummary = await MachineTableData.getOrderSummary("64f7b1234567890123456788");
-
-// Example 7: Delete a row
-await tableData.deleteRow(3);
-
-// Example 8: Find all tables for a machine
-const machineTables = await MachineTableData.find({ 
-  machineId: "64f7b1234567890123456789" 
-}).populate('orderId', 'orderId materialWeight');
-
-// Example 9: Get active tables
-const activeTables = await MachineTableData.find({ 
-  status: 'active' 
-}).populate('machineId', 'machineName')
-  .populate('orderId', 'orderId customerId');
-*/
+module.exports = MachineTableData;
+module.exports.createMachineTableDataSchema = createMachineTableDataSchema;
+module.exports.updateMachineTableDataSchema = updateMachineTableDataSchema;
+module.exports.rowDataItemZodSchema = rowDataItemZodSchema;
+module.exports.totalCalculationsZodSchema = totalCalculationsZodSchema;
+module.exports.addRowDataSchema = addRowDataSchema;
+module.exports.updateRowDataSchema = updateRowDataSchema;

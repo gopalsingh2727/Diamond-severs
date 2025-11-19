@@ -1,0 +1,136 @@
+# ==========================================
+# 👑 MASTER ADMIN ENDPOINTS
+# ==========================================
+
+# ---------- Authentication ----------
+loginMasterAdmin:
+  handler: handlers/MasterAdmin/masterAdmin.loginMasterAdmin
+  events:
+    - http:
+        path: master-admin/login
+        method: post
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+changeMasterAdminPassword:
+  handler: handlers/MasterAdmin/masterAdmin.changeMasterAdminPassword
+  events:
+    - http:
+        path: master-admin/change-password
+        method: post
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+getCurrentMasterAdmin:
+  handler: handlers/MasterAdmin/masterAdmin.getCurrentMasterAdmin
+  events:
+    - http:
+        path: master-admin/me
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+# ---------- Master Admin Management ----------
+createMasterAdmin:
+  handler: handlers/MasterAdmin/masterAdmin.createMasterAdmin
+  events:
+    - http:
+        path: master-admin/create
+        method: post
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+getAllMasterAdmins:
+  handler: handlers/MasterAdmin/masterAdmin.getAllMasterAdmins
+  events:
+    - http:
+        path: master-admin/all
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+getMasterAdminById:
+  handler: handlers/MasterAdmin/masterAdmin.getMasterAdminById
+  events:
+    - http:
+        path: master-admin/{id}
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+updateMasterAdmin:
+  handler: handlers/MasterAdmin/masterAdmin.updateMasterAdmin
+  events:
+    - http:
+        path: master-admin/{id}
+        method: put
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+deleteMasterAdmin:
+  handler: handlers/MasterAdmin/masterAdmin.deleteMasterAdmin
+  events:
+    - http:
+        path: master-admin/{id}
+        method: delete
+        cors: true
+  timeout: 10
+  memorySize: 256
+
+# ---------- System Analytics & Monitoring ----------
+getSystemDashboard:
+  handler: handlers/MasterAdmin/analytics.getSystemDashboard
+  events:
+    - http:
+        path: master-admin/dashboard
+        method: get
+        cors: true
+  timeout: 20
+  memorySize: 512
+
+getBranchesOverview:
+  handler: handlers/MasterAdmin/analytics.getBranchesOverview
+  events:
+    - http:
+        path: master-admin/branches/overview
+        method: get
+        cors: true
+  timeout: 20
+  memorySize: 512
+
+getSystemAnalytics:
+  handler: handlers/MasterAdmin/analytics.getSystemAnalytics
+  events:
+    - http:
+        path: master-admin/analytics
+        method: get
+        cors: true
+  timeout: 20
+  memorySize: 512
+
+getActivityLogs:
+  handler: handlers/MasterAdmin/analytics.getActivityLogs
+  events:
+    - http:
+        path: master-admin/activity-logs
+        method: get
+        cors: true
+  timeout: 15
+  memorySize: 512
+
+getSystemHealth:
+  handler: handlers/MasterAdmin/analytics.getSystemHealth
+  events:
+    - http:
+        path: master-admin/system-health
+        method: get
+        cors: true
+  timeout: 10
+  memorySize: 256
