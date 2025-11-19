@@ -21,11 +21,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build TypeScript
+        run: npm run build
+
       - name: Prune dev dependencies (reduce package size)
         run: npm prune --production
 
-      - name: Install Serverless CLI
-        run: npm install -g serverless
+      - name: Setup Serverless v3
+        run: npm install -g serverless@3
 
       - name: Deploy to AWS
         env:
